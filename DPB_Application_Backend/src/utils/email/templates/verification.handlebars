@@ -1,0 +1,52 @@
+<html>
+
+<head>
+    <style>
+        .first-line {
+            margin-bottom: 32px;
+        }
+
+        .name {
+            font-weight: 700;
+        }
+
+        p {
+            font-size: medium;
+            max-width: 900;
+        }
+
+        a {
+            font-size: medium;
+            font-weight: 700;
+        }
+
+        .app-home,
+        .site-link {
+            text-decoration: none;
+        }
+
+        .app-owner {
+            font-weight: 700;
+        }
+
+        .note {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<br>
+<p class="first-line">Welcome! <span class="name">{{name}}</span>,</p>
+<p>I heartly welcome you and truly hope that you will enjoy your time with us while browsing through our platform, reading Blogs of your interest, and I also wish our blogs may help you become a better version of yourself, be it as a developer, reader or even as a person. We also hope to provide you solutions to the problems that you were struggling to find answers for elsewhere.</p>
+<p>However, before we let you login to our platform, as a last step, we need you to verify your email. This helps us provide a "somewhat" secure &amp; healthy environment to users like you, by allowing only verified users to have access to interact with each other through various user-specific features on our platform.</p>
+<p>So, please click on the link below to verify your email address.</p>
+<a href="{{link}}">Verification Link</a>
+<br>
+<br>
+<p>Wishing you good health &amp; happy learning! 😊</p>
+<p class="app-owner">{{appOwner}}</p>
+<p>Owner &amp; Developer, <a class="app-home" href="{{appHome}}">{{appName}}</a></p>
+<br>
+<p class="note">NOTE: You can ignore this email if this wasn't you. Also, please note above verification link is valid only for the next 3 days, after which you will need to create a new account <a class="site-link" href="{{appHome}}/Register">here</a>. You can also contact us <a class="site-link" href="mailto:{{appEmail}}">here</a> for any further queries.</p>
+</body>
+
+</html>

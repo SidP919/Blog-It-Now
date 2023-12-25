@@ -1,0 +1,29 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="theme-color" content="#aaffff" />
+  <link rel="icon" href="%PUBLIC_URL%/_favicon.png" />
+  <link rel="stylesheet" href="%PUBLIC_URL%/index.css" />
+  <title>Blog It Now</title>
+</head>
+
+<body>
+  <noscript> You need to enable JavaScript to run this app. </noscript>
+  <div id="root"></div>
+  <script>
+    async function updateFavicon() {
+      // logic for changing the favicon
+      const appColor = await localStorage.getItem('BIN95_APPv1_COLOR');
+      console.log({ appColor });
+      const favicon = document.querySelector('link[rel="icon"]');
+      favicon.href = appColor === 'PURPLE' ? '%PUBLIC_URL%/favicon.png' : '%PUBLIC_URL%/_favicon.png';
+    }
+    updateFavicon();
+  </script>
+</body>
+
+</html>
