@@ -1,1 +1,6 @@
 DPB_Application_Frontend/android/app/keystore/
+*/node_modules
+*/.env
+
+# Since we don't want to push new changes in android\app\build.gradle for now
+DPB_Application_Frontend/android/app/build.gradle
