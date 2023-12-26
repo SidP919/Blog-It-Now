@@ -10,10 +10,10 @@ export async function getWelcomeQuote() {
   const welcomeQuote = await fetch(
     'https://api.quotable.io/random?tags=famous-quotes&maxLength=48',
   ).then(res => res.json());
-  if(welcomeQuote?.content){
-  // logger('welcomeQuote:', welcomeQuote);
-  return ['Baba Ranchod Das - ', welcomeQuote.content];
+  if (welcomeQuote?.content) {
+    // logger('welcomeQuote:', welcomeQuote);
+    return ['Baba Ranchod Das - ', welcomeQuote.content];
   } else {
-    ['Never Forget.','Yes. You are Unstoppable!']
+    ['Baba Ranchod Das - ', 'Never Forget. Yes. You are Unstoppable!'];
   }
 }
