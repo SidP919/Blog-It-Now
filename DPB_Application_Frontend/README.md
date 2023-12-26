@@ -141,7 +141,7 @@ To learn more about React Native, take a look at the following resources:
 
 ## License
 
-This project is licensed under the [MIT License](https://github.com/SidP919/Blog-It-Now/tree/Main?tab=MIT-1-ov-file#MIT-1-ov-file).
+This project is licensed under the [MIT License](https://github.com/SidP919/Blog-It-Now#MIT-1-ov-file).
 
 <br>
 
@@ -155,10 +155,16 @@ This project is licensed under the [MIT License](https://github.com/SidP919/Blog
 
 <div style="font-size:large;">
 
-**Sidharth Pandey** :india:
-<div style="display: flex;">
+**Sidharth Pandey** <img src="./src/assets/india.png" width=24 />
 
-[![Email](https://img.shields.io/badge/-Gmail-FF671F?style=flat&logo=gmail&logoColor=FF671F&labelColor=ffffff)](mailto:Sidp0008@gmail.com) [![LinkedIn](https://img.shields.io/badge/-LinkedIn-06038D?logo=linkedin&logoColor=06038D&labelColor=ffffff)](https://linkedin.com/in/sidp919) <div style="display: flex; height: 20px; padding: 0 5px; margin-top: 2px;"><img src='./public/app_icon.png' alt='Blog It Now' width="14.66" height="16" style="background-color: #ffffff; border-radius: 3px 0 0 3px; padding: 2px 4px;"/><a href="mailto:blog.it.now.app@gmail.com" style="background-color:#046A38; color: #ffffff; text-decoration: none; font-size: 12px; padding:0px 6px; border-radius: 0 3px 3px 0; font-weight: 500;">Blog It Now</a></div>
+<div style="display: flex !important; flex-direction: row !important;">
+
+  [![Email](https://img.shields.io/badge/-Gmail-FF671F?style=flat&logo=gmail&logoColor=FF671F&labelColor=ffffff)](mailto:Sidp0008@gmail.com) 
+  [![LinkedIn](https://img.shields.io/badge/-LinkedIn-06038D?logo=linkedin&logoColor=06038D&labelColor=ffffff)](https://linkedin.com/in/sidp919) 
+  <div style="display: flex !important; height: 18px !important; padding: 0 5px !important;">
+    <img src='./public/app_icon.png' alt='Blog It Now' width="14.66" height="16" style="background-color: #ffffff !important; border-radius: 3px 0 0 3px !important; padding: 1px 4px !important;"/>
+    <a href="mailto:blog.it.now.app@gmail.com" style="background-color:#046A38 !important; color: #ffffff !important; text-decoration: none !important; font-size: 11px !important; padding:0px 6px !important; border-radius: 0 3px 3px 0 !important; font-weight: 500 !important;">Blog It Now</a>
+  </div>
 
 </div>
 
