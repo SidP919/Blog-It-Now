@@ -106,7 +106,7 @@ export const isProduction = isWeb
     : false
   : false; // set this true for production on native devices.
 
-const BASE_URL = isProduction ? PROD_URL : DEV_URL + API_ID; // localhost should be replaced with your machine
+const BASE_URL = isProduction ? PROD_URL + API_ID : DEV_URL + API_ID; // localhost should be replaced with your machine
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,

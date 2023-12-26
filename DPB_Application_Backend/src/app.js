@@ -22,10 +22,11 @@ const corsOptions = {
 
 function isOriginAllowed(origin) {
   // Check if the origin is in the allowed array or matches the Android app criteria
-  return (
-    corsOriginArr.includes(origin) || // Check against the array of allowed origins
-    (origin && origin.includes('Android')) // Check if the origin contains "Android"
-  );
+  return true;
+  // (
+  //   corsOriginArr.includes(origin) || // Check against the array of allowed origins
+  //   (origin && origin.includes('Android')) // Check if the origin contains "Android"
+  // );
 }
 
 // Middlewares:

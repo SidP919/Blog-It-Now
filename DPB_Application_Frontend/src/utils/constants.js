@@ -1,5 +1,5 @@
 // ======================================= App constants =======================================
-export const PROD_URL = '';
+export const PROD_URL = 'https://blog-it-now.vercel.app';
 // // If your backend is running in dev env at http://localhost:4000
 // // Then, android emulator will throw error when calling backend API
 // // To resolve this error, in command-prompt terminal, please run: ipconfig
