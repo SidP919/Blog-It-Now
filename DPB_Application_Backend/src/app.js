@@ -5,10 +5,28 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const ENV_CONSTANTS = require("./constants/config.contants");
 
+// Array of allowed origins
+const corsOriginArr = [ENV_CONSTANTS.CLIENT_URL, ENV_CONSTANTS.CLIENT_APP_URL];
+
 const corsOptions = {
-  origin: [ENV_CONSTANTS.CLIENT_URL, ENV_CONSTANTS.CLIENT_APP_URL],
+  origin: function (origin, callback) {
+    if (isOriginAllowed(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET','POST','DELETE','PUT'],
   exposedHeaders: ['Authorization'],
 };
+
+function isOriginAllowed(origin) {
+  // Check if the origin is in the allowed array or matches the Android app criteria
+  return (
+    corsOriginArr.includes(origin) || // Check against the array of allowed origins
+    (origin && origin.includes('Android')) // Check if the origin contains "Android"
+  );
+}
 
 // Middlewares:
 app.use(express.json());
