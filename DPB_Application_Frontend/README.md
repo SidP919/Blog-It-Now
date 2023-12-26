@@ -157,16 +157,9 @@ This project is licensed under the [MIT License](https://github.com/SidP919/Blog
 
 **Sidharth Pandey** <img src="./src/assets/india.png" width=24 />
 
-<div style="display: flex !important; flex-direction: row !important;">
-
-  [![Email](https://img.shields.io/badge/-Gmail-FF671F?style=flat&logo=gmail&logoColor=FF671F&labelColor=ffffff)](mailto:Sidp0008@gmail.com) 
-  [![LinkedIn](https://img.shields.io/badge/-LinkedIn-06038D?logo=linkedin&logoColor=06038D&labelColor=ffffff)](https://linkedin.com/in/sidp919) 
-  <div style="display: flex !important; height: 18px !important; padding: 0 5px !important;">
-    <img src='./public/app_icon.png' alt='Blog It Now' width="14.66" height="16" style="background-color: #ffffff !important; border-radius: 3px 0 0 3px !important; padding: 1px 4px !important;"/>
-    <a href="mailto:blog.it.now.app@gmail.com" style="background-color:#046A38 !important; color: #ffffff !important; text-decoration: none !important; font-size: 11px !important; padding:0px 6px !important; border-radius: 0 3px 3px 0 !important; font-weight: 500 !important;">Blog It Now</a>
-  </div>
-
-</div>
+[![Email](https://img.shields.io/badge/-Contact_Me-FF671F?style=flat&logo=gmail&logoColor=FF671F&labelColor=ffffff)](mailto:Sidp0008@gmail.com) 
+[![LinkedIn](https://img.shields.io/badge/-Connect_with_me-06038D?logo=linkedin&logoColor=06038D&labelColor=ffffff)](https://linkedin.com/in/sidp919) 
+[![Blog It Now](https://img.shields.io/badge/-Blog_It_Now-046A38?logo=gmail&logoColor=046A38&labelColor=ffffff)](mailto:blog.it.now.app@gmail.com) 
 
 **Happy Learning!** 😊
 
