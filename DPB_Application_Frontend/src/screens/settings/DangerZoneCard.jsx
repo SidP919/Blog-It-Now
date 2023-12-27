@@ -1,6 +1,6 @@
 import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   GENERIC_ALERT_TITLE,
   LOGIN_PWD_PLACEHOLDER,
@@ -18,10 +18,13 @@ import {
 import {GENERIC, bigSize, isWeb, logger} from '../../utils/utils';
 import useCommonParams from '../../hooks/useCommonParams';
 import webService, {
-  logoutHandler,
   showCustomAlert,
 } from '../../services/web-service';
-import {DEFAULT_ROUTE, DELETE_AC_API} from '../../utils/constants';
+import {
+  AUTH_TOKEN_LOCAL,
+  DEFAULT_ROUTE,
+  DELETE_AC_API,
+} from '../../utils/constants';
 import useCustomNavigate from '../../hooks/useCustomNavigate';
 import ButtonA from '../../components/ButtonA';
 import Img from '../../components/Img';
@@ -34,9 +37,11 @@ import {
 } from '../../utils/images';
 import Toast from '../../components/Toast';
 import {formCardStyle} from '../../utils/commonStyles';
-import {getAuthData} from '../../redux/slices/AuthSlice';
+import {getAuthData, resetLoginState} from '../../redux/slices/AuthSlice';
+import {deleteLocalData} from '../../utils/preferences';
 
 const DangerZoneCard = () => {
+  const dispatch = useDispatch();
   const {navigate} = useCustomNavigate();
 
   const {
@@ -103,6 +108,8 @@ const DangerZoneCard = () => {
               visibilityTime: 4000, // number of milliseconds
             });
           }
+          deleteLocalData(AUTH_TOKEN_LOCAL);
+          dispatch(resetLoginState());
           isWeb && navigate(DEFAULT_ROUTE, {replace: true});
         })
         .catch(err => {
