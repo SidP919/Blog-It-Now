@@ -121,7 +121,7 @@ const register = async (req, res) => {
 
     const link = `${ENV_CONSTANTS.CLIENT_URL}/verifyEmail?verifyToken=${verifyToken}&userId=${unverifiedUser._id}`;
 
-    sendEmail(
+    const isMailSent = await sendEmail(
       unverifiedUser.email,
       `${ENV_CONSTANTS.APP_NAME} - Welcome ${unverifiedUser.fullname}`,
       {
@@ -135,17 +135,23 @@ const register = async (req, res) => {
       "./templates/verification.handlebars"
     );
 
-    // send success response:
-    res.status(201).json({
-      success: true,
-      message: "User registered successfully",
-      userData: {
-        username: userResponse.username,
-        fullname: userResponse.fullname,
-        email: userResponse.email,
-        favoriteContent: userResponse.favoriteContent,
-      },
-    });
+    if (isMailSent === true) {
+      // send success response:
+      res.status(201).json({
+        success: true,
+        message: "User registered successfully",
+        userData: {
+          username: userResponse.username,
+          fullname: userResponse.fullname,
+          email: userResponse.email,
+          favoriteContent: userResponse.favoriteContent,
+        },
+      });
+    } else {
+      console.error(isMailSent);
+      const deletedUser = await User.findByIdAndDelete(unverifiedUser._id);
+      res.status(400).json({ success: false, message: 'Sorry! We were unable to send you a verification email. Please try registering again or contact us if this keeps happening for more than 24hrs.' });
+    }
   } catch (error) {
     logger("Registeration Error:", error);
     res.status(405).json({
@@ -336,9 +342,7 @@ const passwordResetRequest = async (req, res) => {
           "Password Reset Request: Error while fetching the user data from DB:",
           error
         );
-        return res
-          .status(401)
-          .json({ success: false, message: error.message });
+        return res.status(401).json({ success: false, message: error.message });
       });
     if (!user) {
       return res
@@ -419,9 +423,7 @@ const resetPassword = async (req, res) => {
           "Password Reset Request: Error while fetching the user data from DB:",
           error
         );
-        return res
-          .status(401)
-          .json({ success: false, message: error.message });
+        return res.status(401).json({ success: false, message: error.message });
       });
     if (!user) {
       return res.status(401).json({
@@ -522,9 +524,7 @@ const deleteAccount = async (req, res) => {
           "Delete Account: Error while fetching user data from DB:",
           error
         );
-        return res
-          .status(401)
-          .json({ success: false, message: error.message });
+        return res.status(401).json({ success: false, message: error.message });
       });
     if (!user) {
       return res.status(401).json({
@@ -625,9 +625,7 @@ const verifyEmail = async (req, res) => {
           "Password Reset Request: Error while fetching the user data from DB:",
           error
         );
-        return res
-          .status(401)
-          .json({ success: false, message: error.message });
+        return res.status(401).json({ success: false, message: error.message });
       });
     if (!user) {
       return res.status(401).json({
@@ -637,7 +635,7 @@ const verifyEmail = async (req, res) => {
       });
     }
 
-    if(user.verifiedUser) {
+    if (user.verifiedUser) {
       return res.status(401).json({
         success: false,
         message:
@@ -651,7 +649,8 @@ const verifyEmail = async (req, res) => {
     if (isValidVerificationToken === null) {
       return res.status(401).json({
         success: false,
-        message: "Your verification link seems to have been expired now! Please register again to create your account.",
+        message:
+          "Your verification link seems to have been expired now! Please register again to create your account.",
       });
     } else if (!isValidVerificationToken) {
       return res.status(401).json({

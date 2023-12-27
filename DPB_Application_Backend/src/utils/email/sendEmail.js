@@ -7,10 +7,10 @@ const { logger } = require("../logger");
 /**
  * Please note below sendEmail will only work when we fulfill below conditions in mentioned order:
  * 1) Login to google account, ensure we have setup 2-step verification on our gmail account
- * 2) Login to google account, then go to https://myaccount.google.com/apppasswords on 
+ * 2) Login to google account, then go to https://myaccount.google.com/apppasswords on
  *    another tab inside same window and setup App Password for our google account.
  * 3) Generate 16-character long app password and keep it in our .env file under
- *    EMAIL_PASSWORD variable.  
+ *    EMAIL_PASSWORD variable.
  */
 const sendEmail = async (email, subject, payload, template) => {
   try {
@@ -29,6 +29,21 @@ const sendEmail = async (email, subject, payload, template) => {
 
     const source = fs.readFileSync(path.join(__dirname, template), "utf8");
     const compiledTemplate = handlebars.compile(source);
+
+    await new Promise((resolve, reject) => {
+      // verify connection configuration
+      transporter.verify(function (error, success) {
+        if (error) {
+          console.error(error);
+          reject(error);
+        } else {
+          logger("Server is ready to take our messages");
+          resolve(success);
+        }
+      });
+    });
+
+    // setup maildata
     const options = () => {
       return {
         from: ENV_CONSTANTS.FROM_EMAIL,
@@ -39,16 +54,20 @@ const sendEmail = async (email, subject, payload, template) => {
     };
 
     // Send email
-    transporter.sendMail(options(), (error, info) => {
-      if (error) {
-        logger("transporter.sendMail:", { error });
-        return error;
-      } else {
-        return res.status(200).json({
-          success: true,
-        });
-      }
+    await new Promise((resolve, reject) => {
+      transporter.sendMail(options(), (error, info) => {
+        if (error) {
+          console.error("transporter.sendMail:", { error });
+          reject(error);
+        } else {
+          logger("transporter.sendMail:",'Email sent successfully.')
+          resolve(info);
+        }
+      });
     });
+
+    return true;
+
   } catch (error) {
     logger("sendEmail:", error);
     return error;
