@@ -584,18 +584,6 @@ const deleteAccount = async (req, res) => {
 
     res.setHeader("Authorization", "");
 
-    // send success response
-    res.status(200).json({
-      success: true,
-      message: `Your ${ENV_CONSTANTS.APP_NAME} Account has been successfully deleted.`,
-      userData: {
-        username: deletedUser.username,
-        fullname: deletedUser.fullname,
-        email: deletedUser.email,
-        favoriteContent: deletedUser.favoriteContent,
-      },
-    });
-
     const isMailSent = await sendEmail(
       deletedUser.email,
       `${ENV_CONSTANTS.APP_NAME} - Account Deletion Confirmation`,
@@ -615,7 +603,13 @@ const deleteAccount = async (req, res) => {
       // send success response
       return res.status(200).json({
         success: true,
-        message: `Your ${ENV_CONSTANTS.APP_NAME} account has been deleted successfully.`,
+        message: `Your ${ENV_CONSTANTS.APP_NAME} Account has been successfully deleted.`,
+        userData: {
+          username: deletedUser.username,
+          fullname: deletedUser.fullname,
+          email: deletedUser.email,
+          favoriteContent: deletedUser.favoriteContent,
+        },
       });
     } else {
       console.error(isMailSent);

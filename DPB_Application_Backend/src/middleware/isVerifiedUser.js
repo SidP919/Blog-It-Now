@@ -14,7 +14,7 @@ const isVerifiedUser = async (req, res, next) => {
       });
     }
   } catch (error) {
-    logger(err);
+    logger('isVerifiedUser Error:', error);
     // if invalid auth_token:
     return res.status(403).json({
       success: false,

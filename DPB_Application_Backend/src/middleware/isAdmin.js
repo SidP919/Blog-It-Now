@@ -13,7 +13,7 @@ const isAdmin = (req, res, next) => {
           });
     }
     } catch (error) {
-        logger(err);
+        logger('isAdmin Error:', error);
     // if invalid auth_token:
     return res.status(403).json({
       success: false,

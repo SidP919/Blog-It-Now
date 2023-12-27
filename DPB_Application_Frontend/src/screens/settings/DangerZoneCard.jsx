@@ -103,7 +103,6 @@ const DangerZoneCard = () => {
               visibilityTime: 4000, // number of milliseconds
             });
           }
-          await logoutHandler();
           isWeb && navigate(DEFAULT_ROUTE, {replace: true});
         })
         .catch(err => {
