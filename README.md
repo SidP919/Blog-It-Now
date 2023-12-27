@@ -1,6 +1,6 @@
 # Blog-It-Now
 
-A developer's personal blogging application built using [React Native, React.js, Node.js, MongoDB](#tech-stack-of-blog-it-now)
+A Developer's Personal Blogging App which is built using [React Native, React.js, Node.js, MongoDB, Redux, Express.js, Mongoose and few other additional libraries & resources](#tech-stack-of-blog-it-now).
 
 **NOTE:** _The frontend of this application has been developed **without** using Expo._
 
