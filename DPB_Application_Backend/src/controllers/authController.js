@@ -132,7 +132,7 @@ const register = async (req, res) => {
         appHome: ENV_CONSTANTS.CLIENT_URL,
         appEmail: ENV_CONSTANTS.APP_EMAIL,
       },
-      "./templates/verification.handlebars"
+      "verification.handlebars"
     );
 
     if (isMailSent === true) {
@@ -378,7 +378,7 @@ const passwordResetRequest = async (req, res) => {
         appHome: ENV_CONSTANTS.CLIENT_URL,
         appEmail: ENV_CONSTANTS.APP_EMAIL,
       },
-      "./templates/requestResetPassword.handlebars"
+      "requestResetPassword.handlebars"
     );
 
     // send success response
@@ -479,7 +479,7 @@ const resetPassword = async (req, res) => {
         appHome: ENV_CONSTANTS.CLIENT_URL,
         appEmail: ENV_CONSTANTS.APP_EMAIL,
       },
-      "./templates/confirmation.handlebars"
+      "confirmation.handlebars"
     );
 
     // send success response
@@ -586,7 +586,7 @@ const deleteAccount = async (req, res) => {
         appHome: ENV_CONSTANTS.CLIENT_URL,
         appEmail: ENV_CONSTANTS.APP_EMAIL,
       },
-      "./templates/confirmation.handlebars"
+      "confirmation.handlebars"
     );
   } catch (error) {
     logger("Delete Account Error:", error);
@@ -683,7 +683,7 @@ const verifyEmail = async (req, res) => {
         appHome: ENV_CONSTANTS.CLIENT_URL,
         appEmail: ENV_CONSTANTS.APP_EMAIL,
       },
-      "./templates/confirmation.handlebars"
+      "confirmation.handlebars"
     );
 
     // send success response

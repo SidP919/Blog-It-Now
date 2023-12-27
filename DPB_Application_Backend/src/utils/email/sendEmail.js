@@ -27,7 +27,8 @@ const sendEmail = async (email, subject, payload, template) => {
       // tls: { rejectUnauthorized: false },
     });
 
-    const source = fs.readFileSync(path.join(__dirname, template), "utf8");
+    const templatePath = path.join(__dirname, 'templates', template);
+    const source = fs.readFileSync(templatePath, "utf8");
     const compiledTemplate = handlebars.compile(source);
 
     await new Promise((resolve, reject) => {
