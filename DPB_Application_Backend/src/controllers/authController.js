@@ -137,7 +137,7 @@ const register = async (req, res) => {
 
     if (isMailSent === true) {
       // send success response:
-      res.status(201).json({
+      return res.status(201).json({
         success: true,
         message: "User registered successfully",
         userData: {
@@ -149,8 +149,12 @@ const register = async (req, res) => {
       });
     } else {
       console.error(isMailSent);
-      const deletedUser = await User.findByIdAndDelete(unverifiedUser._id);
-      res.status(400).json({ success: false, message: 'Sorry! We were unable to send you a verification email. Please try registering again or contact us if this keeps happening for more than 24hrs.' });
+      await User.findByIdAndDelete(unverifiedUser._id);
+      return res.status(400).json({
+        success: false,
+        message:
+          "Sorry! We were unable to send you a verification email. Please try registering again or contact us if this keeps happening for more than 24hrs.",
+      });
     }
   } catch (error) {
     logger("Registeration Error:", error);
@@ -228,7 +232,7 @@ const login = async (req, res) => {
     res.setHeader("Authorization", `Bearer ${token}`);
 
     // send success response
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "User logged in successfully",
       userData: {
@@ -263,7 +267,7 @@ const logOut = async (req, res) => {
     });
 
     res.setHeader("Authorization", "");
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "User logged out successfully.",
     });
@@ -289,12 +293,12 @@ const protectedRoute = async (req, res) => {
     // This route handler will only be executed if the user is authenticated
     const user = req.user;
     if (!user) {
-      res.status(403).json({
+      return res.status(403).json({
         success: true,
         message: "Either New Visitor or a Reload happened.",
       });
     } else {
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         message: "User has basic access rights",
         userData: {
@@ -367,7 +371,7 @@ const passwordResetRequest = async (req, res) => {
 
     const link = `${ENV_CONSTANTS.CLIENT_URL}/resetPassword?resetPasswordToken=${resetToken}&userId=${newUser._id}`;
 
-    sendEmail(
+    const isMailSent = await sendEmail(
       newUser.email,
       `${ENV_CONSTANTS.APP_NAME} - Password Reset Request`,
       {
@@ -381,11 +385,20 @@ const passwordResetRequest = async (req, res) => {
       "requestResetPassword.handlebars"
     );
 
-    // send success response
-    res.status(200).json({
-      success: true,
-      message: "Password reset link has been sent to registered email-id.",
-    });
+    if (isMailSent === true) {
+      // send success response
+      return res.status(200).json({
+        success: true,
+        message: "Password reset link has been sent to registered email-id.",
+      });
+    } else {
+      console.error(isMailSent);
+      return res.status(400).json({
+        success: false,
+        message:
+          "Sorry! We were unable to send you the password reset link. Please try again or contact us if this keeps happening for more than 24hrs.",
+      });
+    }
   } catch (error) {
     logger("Password Reset Request Error:", error);
     res.status(405).json({
@@ -466,12 +479,12 @@ const resetPassword = async (req, res) => {
       { new: true }
     );
 
-    sendEmail(
+    const isMailSent = await sendEmail(
       newUser.email,
       `${ENV_CONSTANTS.APP_NAME} - Password Change Confirmation`,
       {
         name: newUser.fullname,
-        mainMsg: `Your ${ENV_CONSTANTS.APP_NAME} account password has been reset successfully.`,
+        mainMsg: `Your ${ENV_CONSTANTS.APP_NAME} account password has been changed successfully.`,
         footerNote:
           "If this wasn't you, then please reset your password immediately",
         appOwner: ENV_CONSTANTS.CLIENT_NAME,
@@ -482,11 +495,20 @@ const resetPassword = async (req, res) => {
       "confirmation.handlebars"
     );
 
-    // send success response
-    res.status(200).json({
-      success: true,
-      message: "Password has been reset successfully.",
-    });
+    if (isMailSent === true) {
+      // send success response
+      return res.status(200).json({
+        success: true,
+        message: "Password has been changed successfully.",
+      });
+    } else {
+      console.error(isMailSent);
+      return res.status(400).json({
+        success: false,
+        message:
+          "Sorry! We were unable to send you the password change confirmation email. But, please consider this as the confirmation for the same.",
+      });
+    }
   } catch (error) {
     logger("Reset Password Error:", error);
     res.status(405).json({
@@ -574,7 +596,7 @@ const deleteAccount = async (req, res) => {
       },
     });
 
-    sendEmail(
+    const isMailSent = await sendEmail(
       deletedUser.email,
       `${ENV_CONSTANTS.APP_NAME} - Account Deletion Confirmation`,
       {
@@ -588,6 +610,21 @@ const deleteAccount = async (req, res) => {
       },
       "confirmation.handlebars"
     );
+
+    if (isMailSent === true) {
+      // send success response
+      return res.status(200).json({
+        success: true,
+        message: `Your ${ENV_CONSTANTS.APP_NAME} account has been deleted successfully.`,
+      });
+    } else {
+      console.error(isMailSent);
+      return res.status(400).json({
+        success: false,
+        message:
+          "Sorry! We were unable to send you the Account Deletion Confirmation email. But, Please consider this as the confirmation for the same.",
+      });
+    }
   } catch (error) {
     logger("Delete Account Error:", error);
     res.status(405).json({
@@ -671,7 +708,7 @@ const verifyEmail = async (req, res) => {
       { new: true }
     );
 
-    sendEmail(
+    const isMailSent = await sendEmail(
       newUser.email,
       `${ENV_CONSTANTS.APP_NAME} - Email Verified Successfully`,
       {
@@ -686,11 +723,20 @@ const verifyEmail = async (req, res) => {
       "confirmation.handlebars"
     );
 
-    // send success response
-    res.status(200).json({
-      success: true,
-      message: "Email verified successfully.",
-    });
+    if (isMailSent === true) {
+      // send success response
+      return res.status(200).json({
+        success: true,
+        message: "Email verified successfully.",
+      });
+    } else {
+      console.error(isMailSent);
+      return res.status(400).json({
+        success: false,
+        message:
+          "Sorry! We were unable to send you the Email Verification Success email. But, Please consider this as the confirmation for the same.",
+      });
+    }
   } catch (error) {
     logger("Email Verification Error:", error);
     res.status(405).json({
