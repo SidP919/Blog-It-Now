@@ -17,9 +17,7 @@ import {
 } from '../../utils/content';
 import {GENERIC, bigSize, isWeb, logger} from '../../utils/utils';
 import useCommonParams from '../../hooks/useCommonParams';
-import webService, {
-  showCustomAlert,
-} from '../../services/web-service';
+import webService, {showCustomAlert} from '../../services/web-service';
 import {
   AUTH_TOKEN_LOCAL,
   DEFAULT_ROUTE,
