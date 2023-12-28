@@ -7,7 +7,6 @@ import {
   ScrollView,
   Platform,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
 } from 'react-native';
 import React from 'react';
 import {useDispatch} from 'react-redux';
@@ -116,7 +115,7 @@ const SettingsScreen = () => {
           toggleSidePanel={toggleSidePanel}
         />
         <ScrollView>
-          <TouchableWithoutFeedback>
+          <Pressable style={[styles.screenContent]}>
             <KeyboardAvoidingView
               style={[styles.screenContent]}
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -185,7 +184,7 @@ const SettingsScreen = () => {
                 </View>
               </View>
             </KeyboardAvoidingView>
-          </TouchableWithoutFeedback>
+          </Pressable>
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -196,11 +195,12 @@ const style = (screenHeight, screenWidth, theme, isLandscapeMode, Colors) =>
   StyleSheet.create({
     container: {
       flex: isWeb ? null : 1,
-      height: screenHeight,
+      height: isWeb ? screenHeight : null,
       backgroundColor: Colors.bgColor[theme],
     },
     mainContainer: {
-      height: screenHeight,
+      flex: isWeb ? null : 1,
+      height: isWeb ? screenHeight : null,
     },
     screenContent: {
       justifyContent: 'center',
@@ -208,7 +208,7 @@ const style = (screenHeight, screenWidth, theme, isLandscapeMode, Colors) =>
       paddingLeft: isLandscapeMode ? 24 : 0,
       ...Platform.select({
         native: {
-          paddingBottom: 48,
+          marginBottom: 56,
         },
       }),
     },

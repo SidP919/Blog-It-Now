@@ -13,7 +13,7 @@ export const isMobileWeb = isWeb && isMobileOnly; // App running inside browser 
 
 //returns window width and height
 export const getWidth = () => Dimensions.get('window').width;
-export const getHeight = () => Dimensions.get('window').height;
+export const getHeight = () => Dimensions.get('window').height - 1;
 
 // returns true if app is in Landscape Mode
 export function ifLandscapeMode() {

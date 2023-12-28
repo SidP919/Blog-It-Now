@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {getHeight, getWidth} from '../utils/utils';
+import {getHeight, getWidth, logger} from '../utils/utils';
 import {useSelector} from 'react-redux';
 import {getAppColor, getAppTheme} from '../redux/slices/ThemeSlice';
 import {getIsLandscapeMode} from '../redux/slices/DeviceOrientationSlice';
@@ -19,9 +19,11 @@ const useCommonParams = () => {
   const [Colors, setColors] = useState(getColors(THEME_COLOR_PURPLE));
 
   useEffect(() => {
-    Dimensions.addEventListener('change', ({window, screen}) => {
-      setScreenHeight(getHeight());
-      setScreenWidth(getWidth());
+    Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setScreenWidth(width);
+      setScreenHeight(height - 1);
+      logger(`Dimensions: W: ${width}, H: ${height}`);
     });
   }, []);
 
