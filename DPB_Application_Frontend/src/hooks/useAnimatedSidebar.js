@@ -11,10 +11,6 @@ const useAnimatedSidebar = () => {
   const swipeThreshold = 50; // Adjust the threshold as needed
   const panResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponderCapture: (event, gestureState) => {
-        // Allow the responder capture if it's a vertical gesture
-        return Math.abs(gestureState.dy) > Math.abs(gestureState.dx);
-      },
       onStartShouldSetPanResponder: (event, gestureState) => {
         // Check if the user clicks away from sidebar to an extent towards the right
         if (
@@ -26,20 +22,23 @@ const useAnimatedSidebar = () => {
         }
         return true;
       },
-      onMoveShouldSetResponderCapture: () => true,
-      onMoveShouldSetResponder: () => true,
+      onMoveShouldSetPanResponder: (event, gestureState) => {
+        const {dx, dy} = gestureState;
+        return Math.abs(dx) > Math.abs(dy); // returns true if horizontal swipe
+      },
       onPanResponderMove: (event, gestureState) => {
-        // Check for left swipe
-        if (gestureState.dx < -swipeThreshold) {
-          // Your logic for left swipe
-          // logger('swipe left');
-          toggleSidePanel(false);
-        }
-        // Check for right swipe
-        else if (gestureState.dx > swipeThreshold) {
-          // Your logic for right swipe
-          // logger('swipe right');
-          toggleSidePanel(true);
+        const {dx, dy} = gestureState;
+        if (Math.abs(dx) > Math.abs(dy)) {
+          // Check for left swipe
+          if (dx < -swipeThreshold) {
+            // Your logic for left swipe
+            toggleSidePanel(false);
+          }
+          // Check for right swipe
+          else if (dx > swipeThreshold) {
+            // Your logic for right swipe
+            toggleSidePanel(true);
+          }
         }
       },
       onPanResponderRelease: () => {
@@ -47,7 +46,6 @@ const useAnimatedSidebar = () => {
       },
     }),
   ).current;
-
   function toggleSidePanel(isOpen) {
     const show =
       typeof isOpen === 'boolean' && isOpen !== undefined && isOpen !== null

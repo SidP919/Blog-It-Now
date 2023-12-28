@@ -278,6 +278,7 @@ const DasboardSidePanel = ({
           </View>
         )}
       </ScrollView>
+      <View style={{backgroundColor: 'transparent'}} />
     </Animated.View>
   );
 };
@@ -295,9 +296,16 @@ const style = (
 ) =>
   StyleSheet.create({
     sideContainer: {
-      backgroundColor: Colors.bgColor[theme],
       position: 'absolute',
+      zIndex: showView ? 2 : 0,
+      width: screenWidth,
+      height: screenHeight,
       left: animatedValue,
+      overflowY: 'auto',
+      overflowX: 'hidden',
+    },
+    sideContainerScrollView: {
+      backgroundColor: Colors.bgColor[theme],
       width: isLandscapeMode
         ? ifWebSmallLandscapeMode()
           ? screenWidth * 0.4
@@ -305,17 +313,11 @@ const style = (
         : screenWidth * 0.72,
       minWidth: isLandscapeMode ? (ifWebSmallLandscapeMode() ? 256 : 272) : 256,
       maxWidth: isLandscapeMode ? (ifWebSmallLandscapeMode() ? 280 : 350) : 280,
-      height: screenHeight,
-      zIndex: showView ? 2 : 0,
-      borderRightColor: Colors.border[theme],
-      borderRightWidth: 1,
-      overflowY: 'auto',
-      overflowX: 'hidden',
-    },
-    sideContainerScrollView: {
       minHeight: screenHeight,
       paddingTop: 8,
       paddingBottom: 40,
+      borderRightColor: Colors.border[theme],
+      borderRightWidth: 1,
     },
     sideSection: {
       flexDirection: 'row',

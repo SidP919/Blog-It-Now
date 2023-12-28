@@ -7,6 +7,7 @@ import {
   ScrollView,
   Platform,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import React from 'react';
 import {useDispatch} from 'react-redux';
@@ -115,70 +116,76 @@ const SettingsScreen = () => {
           toggleSidePanel={toggleSidePanel}
         />
         <ScrollView>
-          <KeyboardAvoidingView
-            style={[styles.screenContent]}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-            <View style={styles.sectionContainer}>
-              <Text style={[styles.sectionTitle]}>{SETTINGS_APP_HEADING}</Text>
-              <View style={[styles.dataContainer]}>
-                <Text style={[styles.dataTitle]}>
-                  {SETTINGS_APP_THEME_TITLE}
+          <TouchableWithoutFeedback>
+            <KeyboardAvoidingView
+              style={[styles.screenContent]}
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+              <View style={styles.sectionContainer}>
+                <Text style={[styles.sectionTitle]}>
+                  {SETTINGS_APP_HEADING}
                 </Text>
-                <View style={styles.dataContent}>
-                  <Pressable onPress={() => onToggleTheme(LIGHT_THEME)}>
-                    <Text style={[styles.dataText, styles.toggleLeftBtn]}>
-                      {SETTINGS_APP_THEME_LIGHT_TEXT}
-                    </Text>
-                  </Pressable>
-                  <ToggleSwitch
-                    onToggleSwitch={onToggleTheme}
-                    currentVal={theme === DARK_THEME ? true : false}
-                  />
-                  <Pressable onPress={() => onToggleTheme(DARK_THEME)}>
-                    <Text style={[styles.dataText, styles.toggleRightBtn]}>
-                      {SETTINGS_APP_THEME_DARK_TEXT}
-                    </Text>
-                  </Pressable>
+                <View style={[styles.dataContainer]}>
+                  <Text style={[styles.dataTitle]}>
+                    {SETTINGS_APP_THEME_TITLE}
+                  </Text>
+                  <View style={styles.dataContent}>
+                    <Pressable onPress={() => onToggleTheme(LIGHT_THEME)}>
+                      <Text style={[styles.dataText, styles.toggleLeftBtn]}>
+                        {SETTINGS_APP_THEME_LIGHT_TEXT}
+                      </Text>
+                    </Pressable>
+                    <ToggleSwitch
+                      onToggleSwitch={onToggleTheme}
+                      currentVal={theme === DARK_THEME ? true : false}
+                    />
+                    <Pressable onPress={() => onToggleTheme(DARK_THEME)}>
+                      <Text style={[styles.dataText, styles.toggleRightBtn]}>
+                        {SETTINGS_APP_THEME_DARK_TEXT}
+                      </Text>
+                    </Pressable>
+                  </View>
+                </View>
+                <View style={[styles.dataContainer]}>
+                  <Text style={[styles.dataTitle]}>
+                    {SETTINGS_APP_COLOR_TITLE}
+                  </Text>
+                  <View style={styles.dataContent}>
+                    <ImgButton
+                      onPress={() => onToggleColor(THEME_COLOR_PURPLE)}
+                      source={DEFAULT_ICON}
+                      color={colorProfiles[THEME_COLOR_PURPLE].LIGHT_PRIMARY}
+                      size={bigSize() * 2}
+                    />
+                    <ToggleSwitch
+                      onToggleSwitch={onToggleColor}
+                      currentVal={
+                        appColor === THEME_COLOR_ORANGE ? true : false
+                      }
+                    />
+                    <ImgButton
+                      onPress={() => onToggleColor(THEME_COLOR_ORANGE)}
+                      source={DEFAULT_ICON}
+                      color={colorProfiles[THEME_COLOR_ORANGE].LIGHT_PRIMARY}
+                      size={bigSize() * 2}
+                    />
+                  </View>
                 </View>
               </View>
-              <View style={[styles.dataContainer]}>
-                <Text style={[styles.dataTitle]}>
-                  {SETTINGS_APP_COLOR_TITLE}
+              <View style={styles.sectionContainer}>
+                <Text style={[styles.sectionTitle]}>
+                  {SETTINGS_ACCOUNT_HEADING}
                 </Text>
-                <View style={styles.dataContent}>
-                  <ImgButton
-                    onPress={() => onToggleColor(THEME_COLOR_PURPLE)}
-                    source={DEFAULT_ICON}
-                    color={colorProfiles[THEME_COLOR_PURPLE].LIGHT_PRIMARY}
-                    size={bigSize() * 2}
-                  />
-                  <ToggleSwitch
-                    onToggleSwitch={onToggleColor}
-                    currentVal={appColor === THEME_COLOR_ORANGE ? true : false}
-                  />
-                  <ImgButton
-                    onPress={() => onToggleColor(THEME_COLOR_ORANGE)}
-                    source={DEFAULT_ICON}
-                    color={colorProfiles[THEME_COLOR_ORANGE].LIGHT_PRIMARY}
-                    size={bigSize() * 2}
-                  />
+                <View style={[styles.dataContainer, styles.dataContainer2]}>
+                  <Text style={[styles.dataTitle]}>
+                    {SETTINGS_ACCOUNT_DANGER_ZONE_TITLE}
+                  </Text>
+                  <View style={[styles.cardContainer]}>
+                    <DangerZoneCard />
+                  </View>
                 </View>
               </View>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={[styles.sectionTitle]}>
-                {SETTINGS_ACCOUNT_HEADING}
-              </Text>
-              <View style={[styles.dataContainer, styles.dataContainer2]}>
-                <Text style={[styles.dataTitle]}>
-                  {SETTINGS_ACCOUNT_DANGER_ZONE_TITLE}
-                </Text>
-                <View style={[styles.cardContainer]}>
-                  <DangerZoneCard />
-                </View>
-              </View>
-            </View>
-          </KeyboardAvoidingView>
+            </KeyboardAvoidingView>
+          </TouchableWithoutFeedback>
         </ScrollView>
       </View>
     </SafeAreaView>
