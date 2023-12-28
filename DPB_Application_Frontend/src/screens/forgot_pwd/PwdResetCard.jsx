@@ -81,7 +81,7 @@ const PwdResetCard = () => {
             if (response && response.data) {
               logger('ResetPwdCard: Response Data', response.data);
               Toast({
-                type: 'success', // or 'error', 'info', 'warning'
+                type: 'success', // or 'error', 'info'
                 position: 'bottom', // or 'top'
                 text1: RESET_PWD_TOAST_SUCCESS_TITLE,
                 text2: RESET_PWD_TOAST_SUCCESS_MSG,
@@ -94,7 +94,7 @@ const PwdResetCard = () => {
             } else {
               logger('ResetPwdScreen: Response is empty');
               Toast({
-                type: 'success', // or 'error', 'info', 'warning'
+                type: 'success', // or 'error', 'info'
                 position: 'bottom', // or 'top'
                 text1: RESET_PWD_TOAST_SUCCESS_TITLE,
                 text2: RESET_PWD_TOAST_SUCCESS_MSG,
@@ -105,7 +105,7 @@ const PwdResetCard = () => {
           })
           .catch(err => {
             Toast({
-              type: 'error', // or 'error', 'info', 'warning'
+              type: 'error', // or 'error', 'info'
               position: 'bottom', // or 'top'
               text1: RESET_PWD_TOAST_FAILURE_TITLE,
               text2: RESET_PWD_TOAST_FAILURE_MSG,

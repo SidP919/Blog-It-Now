@@ -83,7 +83,7 @@ const RegisterCard = () => {
             setShowPassword(false);
             setFavContent('');
             await Toast({
-              type: 'success', // or 'error', 'info', 'warning'
+              type: 'success', // or 'error', 'info'
               position: 'bottom', // or 'top'
               align: 'center',
               text1: REGISTER_VERIFICATION_TOAST_TITLE,

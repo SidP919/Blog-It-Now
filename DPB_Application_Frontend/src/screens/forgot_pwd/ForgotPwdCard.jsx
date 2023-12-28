@@ -55,7 +55,7 @@ const ForgotPwdCard = () => {
           if (response && response.data) {
             logger('ForgotPwdScreen: Response Data', response.data);
             Toast({
-              type: 'success', // or 'error', 'info', 'warning'
+              type: 'success', // or 'error', 'info'
               position: 'top', // or 'bottom'
               align: 'center',
               text1: FORGOT_PWD_TOAST_SUCCESS_TITLE,
@@ -66,7 +66,7 @@ const ForgotPwdCard = () => {
           } else {
             logger('ForgotPwdCard: Response is empty');
             Toast({
-              type: 'success', // or 'error', 'info', 'warning'
+              type: 'success', // or 'error', 'info'
               position: 'top', // or 'top'
               align: 'center',
               text1: FORGOT_PWD_TOAST_SUCCESS_TITLE,
@@ -77,7 +77,7 @@ const ForgotPwdCard = () => {
         })
         .catch(err => {
           Toast({
-            type: 'error', // or 'error', 'info', 'warning'
+            type: 'error', // or 'error', 'info'
             position: 'top', // or 'top'
             align: 'center',
             text1: FORGOT_PWD_TOAST_FAILURE_TITLE,

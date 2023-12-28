@@ -67,7 +67,7 @@ const VerifyEmailCard = () => {
           if (response && response.data) {
             logger('VerifyEmail: Response Data', response.data);
             Toast({
-              type: 'success', // or 'error', 'info', 'warning'
+              type: 'success', // or 'error', 'info'
               position: 'bottom', // or 'top'
               text1: VERIFY_EMAIL_TOAST_SUCCESS_TITLE,
               text2: VERIFY_EMAIL_TOAST_SUCCESS_MSG,
@@ -77,7 +77,7 @@ const VerifyEmailCard = () => {
           } else {
             logger('VerifyEmail: Response is empty');
             Toast({
-              type: 'success', // or 'error', 'info', 'warning'
+              type: 'success', // or 'error', 'info'
               position: 'bottom', // or 'top'
               text1: VERIFY_EMAIL_TOAST_SUCCESS_TITLE,
               text2: VERIFY_EMAIL_TOAST_SUCCESS_MSG,
@@ -88,7 +88,7 @@ const VerifyEmailCard = () => {
         })
         .catch(err => {
           Toast({
-            type: 'error', // or 'success', 'info', 'warning'
+            type: 'error', // or 'success', 'info'
             position: 'bottom', // or 'top'
             text1: VERIFY_EMAIL_TOAST_FAILURE_TITLE,
             text2: VERIFY_EMAIL_TOAST_FAILURE_MSG,
@@ -98,7 +98,7 @@ const VerifyEmailCard = () => {
         });
     } else {
       Toast({
-        type: 'error', // or 'success', 'info', 'warning'
+        type: 'error', // or 'success', 'info'
         position: 'bottom', // or 'top'
         text1: VERIFY_EMAIL_TOAST_FAILURE_TITLE2,
         text2: VERIFY_EMAIL_TOAST_FAILURE_MSG,

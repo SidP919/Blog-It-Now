@@ -70,7 +70,7 @@ const ProfileScreen = () => {
   const onChangeData = (dataTitle, data, title) => {
     const toastTitle = title.replace(/[^\w\s]/g, '');
     Toast({
-      type: 'success', // or 'error', 'info', 'warning'
+      type: 'success', // or 'error', 'info'
       position: 'top', // or bottom
       text1: 'Hey!',
       text2: `${toastTitle} cannot be edited at the moment.`,

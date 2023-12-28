@@ -7,7 +7,7 @@ const index = options => {
 /**
  * Example options object to be passed to Toast() function above looks like below:
  * {
-        type: 'success', // or 'error', 'info', 'warning'
+        type: 'success', // or 'error', 'info'
         position: 'bottom', // or 'top'
         text1: 'Hey!',
         text2: `This is a Toast.`,

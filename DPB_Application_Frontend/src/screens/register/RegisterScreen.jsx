@@ -35,7 +35,7 @@ const RegisterScreen = () => {
       (async () => {
         const quote = await getWelcomeQuote();
         Toast({
-          type: 'success', // or 'error', 'info', 'warning'
+          type: 'success', // or 'error', 'info'
           position: 'bottom', // or 'top'
           text1: quote[0],
           text2: quote[1],

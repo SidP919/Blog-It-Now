@@ -87,7 +87,7 @@ const DangerZoneCard = () => {
           if (response && response.data) {
             logger('DangerZoneCard: Response Data', response.data);
             Toast({
-              type: 'success', // or 'error', 'info', 'warning'
+              type: 'success', // or 'error', 'info'
               position: 'top', // or 'top'
               align: 'center',
               text1: SETTINGS_ACCOUNT_DELETE_AC_SUCCESS_TITLE,
@@ -98,7 +98,7 @@ const DangerZoneCard = () => {
           } else {
             logger('DangerZoneCard: Response is empty');
             Toast({
-              type: 'success', // or 'error', 'info', 'warning'
+              type: 'success', // or 'error', 'info'
               position: 'top', // or 'top'
               align: 'center',
               text1: SETTINGS_ACCOUNT_DELETE_AC_SUCCESS_TITLE,
@@ -112,7 +112,7 @@ const DangerZoneCard = () => {
         })
         .catch(err => {
           Toast({
-            type: 'error', // or 'error', 'info', 'warning'
+            type: 'error', // or 'error', 'info'
             position: 'top', // or 'top'
             align: 'center',
             text1: SETTINGS_ACCOUNT_DELETE_AC_FAILURE_TITLE,
@@ -129,7 +129,7 @@ const DangerZoneCard = () => {
 
   const onDisabledDeleteBtn = () => {
     Toast({
-      type: 'warning', // or 'error', 'info', 'warning'
+      type: 'info', // or 'error', 'info',
       position: 'bottom', // or 'top'
       align: 'center',
       text1: GENERIC_ALERT_TITLE,
