@@ -7,6 +7,7 @@ A Developer's Personal Blogging App which is built using [React Native, React.js
 ## Table of Contents
 
 - [Tech Stack of Blog-It-Now](#tech-stack-of-blog-it-now)
+- [Blog-It-Now is a mobile-responsive application with multiple themes](#blog-it-now-is-a-mobile-responsive-application-with-multiple-themes)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -39,6 +40,20 @@ A Developer's Personal Blogging App which is built using [React Native, React.js
 ![Git](https://img.shields.io/badge/-Git-333333?style=flat&logo=git&labelColor=000000)
 ![GitHub](https://img.shields.io/badge/-GitHub-333333?style=flat&logo=github&labelColor=000000)
 ![ESLint](https://img.shields.io/badge/-ESLint-333333?style=flat&logo=eslint&logoColor=4B32C3&labelColor=000000)
+
+## Blog-It-Now is a mobile-responsive application with multiple themes
+
+### Blog-It-Now in Landscape mode
+
+![Blog-It-Now screenshot 01](screenshots/landscape_01.png)
+
+![Blog-It-Now screenshot 02](screenshots/landscape_02.png)
+
+### Blog-It-Now in portrait mode
+
+![Blog-It-Now screenshot 01](screenshots/portrait_01.png)
+
+![Blog-It-Now screenshot 02](screenshots/portrait_02.png)
 
 ## Getting Started
 
