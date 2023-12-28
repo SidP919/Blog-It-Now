@@ -106,7 +106,7 @@ const DangerZoneCard = () => {
               visibilityTime: 4000, // number of milliseconds
             });
           }
-          deleteLocalData(AUTH_TOKEN_LOCAL);
+          await deleteLocalData(AUTH_TOKEN_LOCAL);
           dispatch(resetLoginState());
           isWeb && navigate(DEFAULT_ROUTE, {replace: true});
         })
@@ -129,7 +129,7 @@ const DangerZoneCard = () => {
 
   const onDisabledDeleteBtn = () => {
     Toast({
-      type: 'success', // or 'error', 'info', 'warning'
+      type: 'warning', // or 'error', 'info', 'warning'
       position: 'bottom', // or 'top'
       align: 'center',
       text1: GENERIC_ALERT_TITLE,

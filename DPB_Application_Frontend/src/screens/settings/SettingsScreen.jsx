@@ -268,7 +268,8 @@ const style = (screenHeight, screenWidth, theme, isLandscapeMode, Colors) =>
       marginLeft: smText(),
     },
     cardContainer: {
-      flex: isLandscapeMode ? 1 : '100%',
+      flex: isLandscapeMode ? 1 : null,
+      width: isLandscapeMode ? null : '100%',
       paddingHorizontal: 12,
       paddingVertical: 16,
       alignItems: isLandscapeMode ? 'flex-start' : 'center',
