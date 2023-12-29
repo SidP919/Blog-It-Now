@@ -115,7 +115,7 @@ const style = (screenHeight, screenWidth, theme, isLandscapeMode, Colors) =>
   StyleSheet.create({
     container: {
       position: 'absolute',
-      width: screenWidth,
+      width: '100%',
       height: screenHeight,
       backgroundColor: 'transparent',
       justifyContent: 'center',

@@ -278,7 +278,7 @@ const DasboardSidePanel = ({
           </View>
         )}
       </ScrollView>
-      <View style={{backgroundColor: 'transparent'}} />
+      <View style={[styles.sideContainerRightView]} />
     </Animated.View>
   );
 };
@@ -298,7 +298,7 @@ const style = (
     sideContainer: {
       position: 'absolute',
       zIndex: showView ? 2 : 0,
-      width: screenWidth,
+      width: '100%',
       height: screenHeight,
       left: animatedValue,
       overflowY: 'auto',
@@ -318,6 +318,9 @@ const style = (
       paddingBottom: 40,
       borderRightColor: Colors.border[theme],
       borderRightWidth: 1,
+    },
+    sideContainerRightView: {
+      backgroundColor: 'transparent',
     },
     sideSection: {
       flexDirection: 'row',

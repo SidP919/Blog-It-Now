@@ -55,7 +55,7 @@ const useAnimatedSidebar = () => {
     Animated.timing(animatedValue, {
       toValue: !show ? -1000 : 0,
       duration: 300,
-      useNativeDriver: isWeb ? false : true,
+      useNativeDriver: false,
     }).start();
   }
 

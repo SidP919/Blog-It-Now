@@ -38,7 +38,7 @@ const TextWithLink = ({text, word, url, customStyle}) => {
 const style = (theme, customStyle, Colors) =>
   StyleSheet.create({
     container: {
-      margin: 10,
+      margin: 4,
     },
     linkButton: {
       flexDirection: 'row',

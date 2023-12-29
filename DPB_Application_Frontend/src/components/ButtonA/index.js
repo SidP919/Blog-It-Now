@@ -38,8 +38,8 @@ const style = (bg, color, border, customStyle) =>
     buttonView: {
       paddingHorizontal: 16,
       paddingVertical: 12,
-      marginVertical: 12,
-      marginHorizontal: 12,
+      marginVertical: 8,
+      marginHorizontal: 8,
       borderRadius: 14,
       backgroundColor: bg,
       borderColor: border,
