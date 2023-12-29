@@ -1,6 +1,13 @@
 import {Platform, StyleSheet} from 'react-native';
-import {bigSize, ifWebSmallLandscapeMode, isWeb, mdText, mdSize} from './utils';
-import {FONT_INTER_BOLD} from './fontUtils';
+import {
+  bigSize,
+  ifWebSmallLandscapeMode,
+  isWeb,
+  mdText,
+  mdSize,
+  ifMobileDevice,
+} from './utils';
+import {FONT_INTER_BOLD, FONT_INTER_REGULAR} from './fontUtils';
 
 export const authScreensStyle = (
   theme,
@@ -22,7 +29,7 @@ export const authScreensStyle = (
     },
     subContainer: {
       minHeight: isLandscapeMode ? screenHeight : screenHeight * 0.75,
-      width: isLandscapeMode ? screenWidth * 0.55 : screenWidth,
+      width: isLandscapeMode ? screenWidth * 0.55 : '100%',
       paddingHorizontal: isLandscapeMode ? 32 : 16,
       paddingVertical: isLandscapeMode
         ? ifWebSmallLandscapeMode()
@@ -35,7 +42,7 @@ export const authScreensStyle = (
     headerContainer: {
       minHeight: isLandscapeMode ? screenHeight : screenHeight * 0.25,
       maxHeight: isLandscapeMode ? screenHeight : screenHeight * 0.25,
-      width: isLandscapeMode ? screenWidth * 0.45 : screenWidth,
+      width: isLandscapeMode ? screenWidth * 0.45 : '100%',
       backgroundColor: Colors.main[theme],
       justifyContent: 'center',
       borderBottomWidth: isLandscapeMode ? null : 2,
@@ -63,6 +70,39 @@ export const authScreensStyle = (
       paddingHorizontal: 12,
       paddingVertical: 16,
       textAlign: 'center',
+    },
+    bigTitle: {
+      fontSize:
+        isLandscapeMode && !ifMobileDevice() ? bigSize() * 4 : bigSize() * 3,
+      fontWeight: '700',
+      fontFamily: FONT_INTER_BOLD,
+      color: Colors.title[theme],
+      paddingHorizontal: 12,
+      paddingVertical: isLandscapeMode && !ifMobileDevice() ? 16 : 6,
+      textAlign: 'center',
+    },
+    mdTitle: {
+      fontSize: mdSize(),
+      fontWeight: '700',
+      fontFamily: FONT_INTER_BOLD,
+      color: Colors.title[theme],
+      paddingHorizontal: 12,
+      paddingVertical: isLandscapeMode && !ifMobileDevice() ? 16 : 6,
+      textAlign: 'center',
+    },
+    subText: {
+      fontSize: mdText(),
+      fontWeight: '500',
+      fontFamily: FONT_INTER_REGULAR,
+      color: Colors.title[theme],
+      paddingHorizontal: 12,
+      paddingVertical: isLandscapeMode && !ifMobileDevice() ? 16 : 6,
+      textAlign: 'center',
+      maxWidth: 500,
+    },
+    btnView: {
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });
 
@@ -153,7 +193,7 @@ export const formCardStyle = (
       textDecorationLine: 'underline',
     },
     btnView: {
-      width: isLandscapeMode ? null : '100%',
+      width: isLandscapeMode && !ifMobileDevice() ? null : '100%',
       paddingHorizontal: 32,
     },
   });
