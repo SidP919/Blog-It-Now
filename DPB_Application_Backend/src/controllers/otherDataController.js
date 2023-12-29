@@ -29,7 +29,7 @@ const getOtherData = async function (req, res) {
     return res.status(200).json({
       success: true,
       message: `Fetched data successfully from the database!`,
-      downloadLink: data.value,
+      value: data.value,
     });
   } catch (error) {
     logger("Error 405: ", error);

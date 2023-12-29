@@ -103,7 +103,7 @@ const DasboardSidePanel = ({
     if (isWeb) {
       const link = webService
         .getData(API)
-        .then(response => response.data.downloadLink)
+        .then(response => response.data.value)
         .then(data => {
           return data;
         })
