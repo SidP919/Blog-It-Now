@@ -205,7 +205,7 @@ const style = (screenHeight, screenWidth, theme, isLandscapeMode, Colors) =>
     screenContent: {
       justifyContent: 'center',
       alignItems: 'flex-start',
-      paddingLeft: isLandscapeMode ? 24 : 0,
+      paddingLeft: isLandscapeMode ? 12 : 0,
       ...Platform.select({
         native: {
           marginBottom: 56,
