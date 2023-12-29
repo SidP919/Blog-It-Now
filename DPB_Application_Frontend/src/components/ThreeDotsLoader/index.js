@@ -23,32 +23,32 @@ const ThreeDotsLoader = ({theme, size = null, loaderMsg = null}) => {
       Animated.timing(dotOne, {
         toValue: 1,
         duration: 300,
-        useNativeDriver: true,
+        useNativeDriver: isWeb ? false : true,
       }),
       Animated.timing(dotTwo, {
         toValue: 1,
         duration: 300,
-        useNativeDriver: true,
+        useNativeDriver: isWeb ? false : true,
       }),
       Animated.timing(dotThree, {
         toValue: 1,
         duration: 300,
-        useNativeDriver: true,
+        useNativeDriver: isWeb ? false : true,
       }),
       Animated.timing(dotOne, {
         toValue: 0,
         duration: 200,
-        useNativeDriver: true,
+        useNativeDriver: isWeb ? false : true,
       }),
       Animated.timing(dotTwo, {
         toValue: 0,
         duration: 200,
-        useNativeDriver: true,
+        useNativeDriver: isWeb ? false : true,
       }),
       Animated.timing(dotThree, {
         toValue: 0,
         duration: 200,
-        useNativeDriver: true,
+        useNativeDriver: isWeb ? false : true,
       }),
     ]).start(() => {
       runDotsAnimation();

@@ -1,6 +1,6 @@
 import {useRef, useState} from 'react';
 import {Animated, PanResponder} from 'react-native';
-import {ifWebSmallLandscapeMode} from '../utils/utils';
+import {ifWebSmallLandscapeMode, isWeb} from '../utils/utils';
 import useCommonParams from './useCommonParams';
 
 const useAnimatedSidebar = () => {
@@ -55,7 +55,7 @@ const useAnimatedSidebar = () => {
     Animated.timing(animatedValue, {
       toValue: !show ? -1000 : 0,
       duration: 300,
-      useNativeDriver: false,
+      useNativeDriver: isWeb ? false : true,
     }).start();
   }
 
