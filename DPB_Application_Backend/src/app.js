@@ -49,6 +49,12 @@ app.use(
   })
 );
 
+// Set Content Security Policy header
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', 'default-src \'self\'');
+  next();
+});
+
 // Routes
 const authRoutes = require("./routes/authRoutes");
 const blogRoutes = require("./routes/blogsRoutes");

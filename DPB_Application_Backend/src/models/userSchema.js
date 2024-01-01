@@ -20,6 +20,7 @@ const userSchema = Schema(
         `Name cannot be less than ${USER_SCHEMA_CONSTS.FULLNAME_MIN_LENGTH} characters long!`,
       ],
       required: [true, "Name cannot be empty!"],
+      trim: true,
     },
     username: {
       type: String,
@@ -36,6 +37,8 @@ const userSchema = Schema(
         USER_SCHEMA_CONSTS.USERNAME_MATCH_REGEXP(),
         "Given Username contains invalid characters! Username must contain only alphanumeric characters or an underscore.",
       ],
+      trim: true,
+      index: true,
     },
     email: {
       type: String,
@@ -45,6 +48,7 @@ const userSchema = Schema(
         USER_SCHEMA_CONSTS.EMAIL_MATCH_REGEXP,
         "Given email address is invalid!",
       ],
+      index: true,
     },
     password: {
       type: String,
@@ -69,6 +73,7 @@ const userSchema = Schema(
         true,
         "Tell us atleast the name of the last movie/series/manga/book you enjoyed.",
       ],
+      trim: true,
     },
     role: {
       type: String,
@@ -83,6 +88,33 @@ const userSchema = Schema(
     },
     verifyToken: String,
     verifyTokenExpire: Date,
+    blogs: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Blog",
+        },
+      ],
+      default: [],
+    },
+    subscribers: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      default: [],
+    },
+    subscriptions: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      default: [],
+    }
   },
   {
     timestamps: true,
@@ -162,7 +194,10 @@ userSchema.methods = {
   },
 
   compareVerifyToken: async function (verifyToken) {
-    if (!(this.verifyToken && this.verifyTokenExpire) || Date.now() > this.verifyTokenExpire) {
+    if (
+      !(this.verifyToken && this.verifyTokenExpire) ||
+      Date.now() > this.verifyTokenExpire
+    ) {
       return null;
     } else {
       const encryptedVerifyToken = createHash("sha256")

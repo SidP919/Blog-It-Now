@@ -24,18 +24,18 @@ const authenticate = async (req, res, next) => {
     } else {
       return res.status(400).json({
         success: false,
-        message: "Auth Token Doesn't contain valid user's Id!",
+        message: "Auth Token doesn't contain valid user's Id!",
       });
     }
   } catch (err) {
-    logger(JSON.stringify(err));
+    // if invalid auth_token:
     if (err.name === "JsonWebTokenError") {
       return res.status(403).json({
         success: false,
         message: "Auth Token is Invalid! Please login and try again.",
       });
     }
-    // if invalid auth_token:
+    console.error(err);
     return res.status(405).json({
       success: false,
       message:
