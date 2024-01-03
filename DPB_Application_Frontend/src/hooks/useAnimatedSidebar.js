@@ -59,17 +59,10 @@ const useAnimatedSidebar = () => {
     }).start();
   }
 
-  function hideSidePanelOnOutsideClick() {
-    if (showView) {
-      toggleSidePanel(false);
-    }
-  }
-
   return {
     showView,
     animatedValue,
     toggleSidePanel,
-    hideSidePanelOnOutsideClick,
     panResponder,
   };
 };

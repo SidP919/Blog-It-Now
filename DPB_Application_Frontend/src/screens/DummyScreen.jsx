@@ -35,7 +35,6 @@ const DummyScreen = () => {
     showView,
     animatedValue,
     toggleSidePanel,
-    hideSidePanelOnOutsideClick,
     panResponder,
   } = useAnimatedSidebar();
 
