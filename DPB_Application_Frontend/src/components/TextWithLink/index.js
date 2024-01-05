@@ -3,7 +3,13 @@ import {Text, Pressable, StyleSheet} from 'react-native';
 import {openLink} from '../../utils/utils';
 import useCommonParams from '../../hooks/useCommonParams';
 
-const TextWithLink = ({text, word, url, customStyle}) => {
+const TextWithLink = ({
+  text,
+  word,
+  url = '/',
+  onPressDoThis = null,
+  customStyle,
+}) => {
   const {theme, Colors} = useCommonParams();
   const styles = style(theme, customStyle, Colors);
   const textArr = text.split(' ');
@@ -15,7 +21,7 @@ const TextWithLink = ({text, word, url, customStyle}) => {
           return (
             <Pressable
               key={index}
-              onPress={() => openLink(url)}
+              onPress={() => (onPressDoThis ? onPressDoThis() : openLink(url))}
               activeOpacity={0.5}
               style={[styles.linkButton]}>
               <Text style={[styles.linkText]}>{currWord}</Text>

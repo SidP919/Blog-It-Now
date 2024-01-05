@@ -1,18 +1,23 @@
 import {Animated, StyleSheet, Text, View} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
-import {bigSize, isWeb, mdSize, smSize, smText} from '../../utils/utils';
+import {isWeb} from '../../utils/utils';
 import {FONT_INTER_BOLD} from '../../utils/fontUtils';
 import Img from '../Img';
 import {BRAND_ICON} from '../../utils/images';
 import useCommonParams from '../../hooks/useCommonParams';
 
 const ThreeDotsLoader = ({theme, size = null, loaderMsg = null}) => {
-  const {Colors} = useCommonParams();
+  const {Colors, bigSize, mdSize, smSize, mdText, smText} = useCommonParams();
   const styles = style(
     theme,
-    size ? size : loaderMsg ? smText() : mdSize(),
+    size ? size : loaderMsg ? smText : mdSize,
     loaderMsg,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
   const [dotOne] = useState(new Animated.Value(0));
   const [dotTwo] = useState(new Animated.Value(0));
@@ -85,8 +90,8 @@ const ThreeDotsLoader = ({theme, size = null, loaderMsg = null}) => {
     <View style={[styles.apiLoaderView]}>
       <Img
         source={BRAND_ICON}
-        width={bigSize() * 6} //152
-        height={bigSize() * 4} //106
+        width={bigSize * 6} //152
+        height={bigSize * 4} //106
         color={Colors.dotOneColor[theme]}
       />
       <View style={[styles.dotsContainer]}>
@@ -134,7 +139,17 @@ const ThreeDotsLoader = ({theme, size = null, loaderMsg = null}) => {
 
 export default ThreeDotsLoader;
 
-const style = (theme, size, loaderMsg, Colors) =>
+const style = (
+  theme,
+  size,
+  loaderMsg,
+  Colors,
+  bigSize,
+  mdSize,
+  smSize,
+  mdText,
+  smText,
+) =>
   StyleSheet.create({
     apiLoaderView: {
       position: 'absolute',
@@ -143,10 +158,10 @@ const style = (theme, size, loaderMsg, Colors) =>
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: Colors.bgColor[theme],
-      zIndex: 9999,
+      zIndex: 3,
     },
     loaderTitle: {
-      fontSize: bigSize(),
+      fontSize: bigSize,
       fontWeight: '700',
       fontFamily: FONT_INTER_BOLD,
       color: Colors.dotOneColor[theme],
@@ -166,8 +181,8 @@ const style = (theme, size, loaderMsg, Colors) =>
       height: size,
       borderRadius: size / 2,
       backgroundColor: Colors.dotOneColor[theme],
-      marginRight: loaderMsg ? 6 : smSize(),
-      marginLeft: loaderMsg ? null : smSize(),
+      marginRight: loaderMsg ? 6 : smSize,
+      marginLeft: loaderMsg ? null : smSize,
       marginBottom: 6,
     },
   });

@@ -16,7 +16,7 @@ import {
   RESET_PWD_TOAST_SUCCESS_MSG,
   RESET_PWD_TOAST_SUCCESS_TITLE,
 } from '../../utils/content';
-import {GENERIC, bigSize, logger} from '../../utils/utils';
+import {GENERIC, logger} from '../../utils/utils';
 import useCommonParams from '../../hooks/useCommonParams';
 import webService, {
   logoutHandler,
@@ -42,6 +42,11 @@ const PwdResetCard = () => {
     isLandscapeMode,
     isLoggedIn,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   } = useCommonParams();
   const queryParams = useQueryParams();
   const [newPassword, setNewPassword] = useState('');
@@ -63,6 +68,11 @@ const PwdResetCard = () => {
     screenWidth,
     screenHeight,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
   const onConfirmResetPassword = () => {
@@ -131,7 +141,7 @@ const PwdResetCard = () => {
         <View style={[styles.inputContainer]}>
           <Img
             source={PWD_ICON}
-            size={bigSize()}
+            size={bigSize}
             color={Colors.inputIcon[theme]}
           />
           <TextInput
@@ -147,7 +157,7 @@ const PwdResetCard = () => {
           <Pressable onPress={toggleShowNewPassword}>
             <Img
               source={showNewPassword ? PWD_VISIBLE_ICON : PWD_HIDDEN_ICON}
-              size={bigSize()}
+              size={bigSize}
               color={Colors.inputIcon[theme]}
             />
           </Pressable>
@@ -156,7 +166,7 @@ const PwdResetCard = () => {
         <View style={[styles.inputContainer]}>
           <Img
             source={PWD_ICON}
-            size={bigSize()}
+            size={bigSize}
             color={Colors.inputIcon[theme]}
           />
           <TextInput
@@ -173,7 +183,7 @@ const PwdResetCard = () => {
           <Pressable onPress={toggleShowConfirmPassword}>
             <Img
               source={showConfirmPassword ? PWD_VISIBLE_ICON : PWD_HIDDEN_ICON}
-              size={bigSize()}
+              size={bigSize}
               color={Colors.inputIcon[theme]}
             />
           </Pressable>

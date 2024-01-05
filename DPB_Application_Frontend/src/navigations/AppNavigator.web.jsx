@@ -32,8 +32,12 @@ import usePageTitleWeb from '../hooks/usePageTitleWeb';
 import ForbiddenScreen from '../screens/errors/ForbiddenScreen';
 import NotFoundScreen from '../screens/errors/NotFoundScreen';
 import {
+  ABOUT_US_ROUTE,
+  EXPLORE_BLOGS_ROUTE,
+  CONTACT_US_ROUTE,
   DASHBOARD_ROUTE,
   FORGOT_PWD_ROUTE,
+  HOME_ROUTE,
   IS_TOKEN_VALID_API,
   LOGIN_ROUTE,
   LOGOUT_ROUTE,
@@ -53,6 +57,11 @@ import {
 } from '../redux/slices/ApiLoadingSlice';
 import ThreeDotsLoader from '../components/ThreeDotsLoader';
 import VerifyEmailScreen from '../screens/verify_email/VerifyEmailScreen';
+import HomeScreen from '../screens/home/HomeScreen';
+import ExploreBlogsScreen from '../screens/explore_blogs/ExploreBlogsScreen';
+import AboutUsScreen from '../screens/about_us/AboutUsScreen';
+import ContactUsScreen from '../screens/contact_us/ContactUsScreen';
+import useCommonParams from '../hooks/useCommonParams';
 
 const AppNavigator = () => {
   const dispatch = useDispatch();
@@ -60,6 +69,7 @@ const AppNavigator = () => {
   const theme = useSelector(getAppTheme);
   const isLoggedIn = useSelector(getIsLoggedIn);
   const isApiLoading = useSelector(getIsApiLoading);
+  const {screenWidth, screenHeight} = useCommonParams();
   usePageTitleWeb();
   useEffect(() => {
     const dimensionsChangeListener = Dimensions.addEventListener(
@@ -79,20 +89,20 @@ const AppNavigator = () => {
             isNativeLandscapeMode: isNativeLandscapeMode2,
           }),
         );
-        logger('OrientationData', {
-          isLandscapeMode,
-          isWebLargeLandscapeMode,
-          isWebSmallLandscapeMode,
-          isWebTabletPortraitMode,
-          isNativeLandscapeMode: isNativeLandscapeMode2,
-        });
+        // logger('OrientationData', {
+        //   isLandscapeMode,
+        //   isWebLargeLandscapeMode,
+        //   isWebSmallLandscapeMode,
+        //   isWebTabletPortraitMode,
+        //   isNativeLandscapeMode: isNativeLandscapeMode2,
+        // });
       },
     );
     return () => {
       dimensionsChangeListener.remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [screenWidth, screenHeight]);
 
   useEffect(() => {
     dispatch(setIsApiLoading(true));
@@ -122,7 +132,8 @@ const AppNavigator = () => {
   return (
     <>
       <Routes>
-        <Route path="/" end element={<LoginScreen />} />
+        <Route path="/" end element={<HomeScreen />} />
+        <Route path={`/${HOME_ROUTE}`} end element={<HomeScreen />} />
         <Route path={`/${LOGIN_ROUTE}`} end element={<LoginScreen />} />
         <Route path={`/${REGISTER_ROUTE}`} end element={<RegisterScreen />} />
         <Route
@@ -135,6 +146,17 @@ const AppNavigator = () => {
           path={`/${VERIFY_EMAIL_ROUTE}`}
           end
           element={<VerifyEmailScreen />}
+        />
+        <Route
+          path={`/${EXPLORE_BLOGS_ROUTE}`}
+          end
+          element={<ExploreBlogsScreen />}
+        />
+        <Route path={`/${ABOUT_US_ROUTE}`} end element={<AboutUsScreen />} />
+        <Route
+          path={`/${CONTACT_US_ROUTE}`}
+          end
+          element={<ContactUsScreen />}
         />
         {isLoggedIn ? (
           <Route path={`/${DASHBOARD_ROUTE}`} element={<DasboardScreen />} />

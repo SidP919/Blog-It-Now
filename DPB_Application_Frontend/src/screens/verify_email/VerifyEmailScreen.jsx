@@ -8,8 +8,18 @@ import {authScreensStyle} from '../../utils/commonStyles';
 import VerifyEmailCard from './VerifyEmailCard';
 
 const VerifyEmailScreen = () => {
-  const {screenHeight, screenWidth, theme, isLandscapeMode, Colors} =
-    useCommonParams();
+  const {
+    screenHeight,
+    screenWidth,
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
 
   const styles = authScreensStyle(
     theme,
@@ -17,6 +27,11 @@ const VerifyEmailScreen = () => {
     screenWidth,
     isLandscapeMode,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
   return (

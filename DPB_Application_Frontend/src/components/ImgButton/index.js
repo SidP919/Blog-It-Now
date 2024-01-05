@@ -1,15 +1,20 @@
 import {Image, StyleSheet, Pressable} from 'react-native';
 import React from 'react';
-import {bigSize, smText} from '../../utils/utils';
+import useCommonParams from '../../hooks/useCommonParams';
 
 const ImgButton = ({
   onPress = null,
   source = null,
   size = 24,
   color = null,
+  width = null,
+  height = null,
   customStyle = null,
 }) => {
-  const styles = style(size, customStyle);
+  const {bigSize, smText} = useCommonParams();
+  const imgWidth = width === null ? size : width;
+  const imgHeight = height === null ? size : height;
+  const styles = style(imgWidth, imgHeight, customStyle, bigSize, smText);
   return (
     <Pressable onPress={onPress} style={[styles.mainContainer]}>
       <Image source={source} style={[styles.imgStyle]} tintColor={color} />
@@ -19,14 +24,14 @@ const ImgButton = ({
 
 export default ImgButton;
 
-const style = (size, customStyle) =>
+const style = (imgWidth, imgHeight, customStyle, bigSize, smText) =>
   StyleSheet.create({
     mainContainer: {
-      width: size + bigSize(),
-      height: size + smText(),
-      paddingHorizontal: bigSize() / 2,
-      paddingVertical: smText() / 2,
+      width: imgWidth + bigSize,
+      height: imgHeight + smText,
+      paddingHorizontal: bigSize / 2,
+      paddingVertical: smText / 2,
       ...customStyle,
     },
-    imgStyle: {width: size, height: size},
+    imgStyle: {width: imgWidth, height: imgHeight},
   });

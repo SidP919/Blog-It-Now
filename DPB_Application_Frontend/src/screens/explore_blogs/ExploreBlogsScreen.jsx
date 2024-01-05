@@ -1,6 +1,5 @@
 import {
   SafeAreaView,
-  StyleSheet,
   Text,
   Pressable,
   View,
@@ -10,20 +9,15 @@ import {
 } from 'react-native';
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {isWeb, isDesktopWeb} from '../../utils/utils';
 import DasboardSidePanel from '../dashboard/DasboardSidePanel';
-import {
-  FONT_INTER_MEDIUM,
-  FONT_INTER_REGULAR,
-  FONT_INTER_SEMIBOLD,
-} from '../../utils/fontUtils';
 import useAnimatedSidebar from '../../hooks/useAnimatedSidebar';
 import Header from '../dashboard/Header';
 import useCommonParams from '../../hooks/useCommonParams';
-import {APP_NAME} from '../../utils/content';
-import {DEFAULT_ROUTE} from '../utils/constants';
+import {EXPLORE_BLOGS_TITLE} from '../../utils/content';
+import {EXPLORE_BLOGS_ROUTE} from '../../utils/constants';
+import {postAuthScreenStyle} from '../../utils/commonStyles';
 
-const DummyScreen = () => {
+const ExploreBlogsScreen = () => {
   const {
     screenHeight,
     screenWidth,
@@ -42,7 +36,7 @@ const DummyScreen = () => {
   const {showView, animatedValue, toggleSidePanel, panResponder} =
     useAnimatedSidebar();
 
-  let styles = style(
+  let styles = postAuthScreenStyle(
     screenHeight,
     screenWidth,
     theme,
@@ -65,7 +59,7 @@ const DummyScreen = () => {
         animatedValue={animatedValue}
         toggleSidePanel={toggleSidePanel}
         showView={showView}
-        currentScreen={DEFAULT_ROUTE}
+        currentScreen={EXPLORE_BLOGS_ROUTE}
         panResponder={panResponder}
       />
       <View style={[styles.mainContainer]} {...panResponder?.panHandlers}>
@@ -73,9 +67,9 @@ const DummyScreen = () => {
           style={[styles.mainContainer]}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <Header
-            headerTitle={APP_NAME}
+            headerTitle={EXPLORE_BLOGS_TITLE}
             toggleSidePanel={toggleSidePanel}
-            currentScreen={DEFAULT_ROUTE}
+            currentScreen={EXPLORE_BLOGS_ROUTE}
           />
           <ScrollView contentContainerStyle={[styles.screenContent]}>
             <Pressable>
@@ -117,87 +111,4 @@ const DummyScreen = () => {
   );
 };
 
-const style = (
-  screenHeight,
-  screenWidth,
-  theme,
-  isLandscapeMode,
-  Colors,
-  bigSize,
-  mdSize,
-  smSize,
-  mdText,
-  smText,
-) =>
-  StyleSheet.create({
-    container: {
-      flex: isWeb ? null : 1,
-      height: isWeb ? screenHeight : null,
-      backgroundColor: Colors.bgColor[theme],
-    },
-    mainContainer: {
-      flex: isWeb ? null : 1,
-      height: isWeb ? screenHeight : null,
-    },
-    screenContent: {
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-      paddingLeft: isLandscapeMode ? 12 : 0,
-      paddingTop: isLandscapeMode && isDesktopWeb ? 85 : 56,
-      ...Platform.select({
-        native: {
-          marginBottom: 56,
-        },
-      }),
-    },
-    sectionContainer: {
-      marginBottom: smSize,
-    },
-    sectionTitle: {
-      fontSize: bigSize,
-      fontWeight: '700',
-      fontFamily: FONT_INTER_SEMIBOLD,
-      textAlign: 'left',
-      color: Colors.title[theme],
-      paddingHorizontal: 12,
-      paddingVertical: 16,
-      textDecorationLine: 'underline',
-      textDecorationStyle: 'dotted',
-    },
-    dataContainer: {
-      width: screenWidth - (isLandscapeMode ? 48 : 0),
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      flexWrap: isLandscapeMode ? 'nowrap' : 'wrap',
-      marginBottom: smText,
-    },
-    dataTitle: {
-      fontSize: mdSize,
-      fontWeight: '700',
-      fontFamily: FONT_INTER_MEDIUM,
-      textAlign: 'center',
-      color: Colors.mdTitle[theme],
-      paddingHorizontal: 12,
-      paddingVertical: 16,
-    },
-    dataContent: {
-      flexDirection: 'row',
-      width: isLandscapeMode ? null : '100%',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    dataText: {
-      fontSize: mdText,
-      fontWeight: '700',
-      fontFamily: FONT_INTER_REGULAR,
-      textAlign: 'center',
-      color: Colors.text[theme],
-      paddingHorizontal: 12,
-      paddingVertical: 16,
-      alignSelf: 'center',
-      alignItems: 'center',
-    },
-  });
-
-export default DummyScreen;
+export default ExploreBlogsScreen;

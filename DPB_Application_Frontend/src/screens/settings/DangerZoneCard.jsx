@@ -15,7 +15,7 @@ import {
   SETTINGS_ACCOUNT_DELETE_AC_TEXT2,
   SETTINGS_ACCOUNT_DELETE_BTN_DISABLE_MSG,
 } from '../../utils/content';
-import {GENERIC, bigSize, isWeb, logger} from '../../utils/utils';
+import {GENERIC, isWeb, logger} from '../../utils/utils';
 import useCommonParams from '../../hooks/useCommonParams';
 import webService, {showCustomAlert} from '../../services/web-service';
 import {
@@ -49,6 +49,11 @@ const DangerZoneCard = () => {
     isLandscapeMode,
     isLoggedIn,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   } = useCommonParams();
   const {email} = useSelector(getAuthData);
   const [password, setPassword] = useState('');
@@ -64,6 +69,11 @@ const DangerZoneCard = () => {
     screenWidth,
     screenHeight,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
   const dangerCardStyles = dangerCardStyle(
@@ -72,6 +82,11 @@ const DangerZoneCard = () => {
     screenWidth,
     screenHeight,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
   const onDeleteAccount = () => {
@@ -143,11 +158,7 @@ const DangerZoneCard = () => {
       <Text style={[styles.mainTitle]}>{SETTINGS_ACCOUNT_DELETE_AC_TEXT1}</Text>
       <Text style={[styles.dataTitle]}>{LOGIN_PWD_TITLE}</Text>
       <View style={[styles.inputContainer]}>
-        <Img
-          source={PWD_ICON}
-          size={bigSize()}
-          color={Colors.inputIcon[theme]}
-        />
+        <Img source={PWD_ICON} size={bigSize} color={Colors.inputIcon[theme]} />
         <TextInput
           style={[styles.inputView]}
           placeholder={LOGIN_PWD_PLACEHOLDER}
@@ -160,7 +171,7 @@ const DangerZoneCard = () => {
         <Pressable onPress={toggleShowPassword}>
           <Img
             source={showPassword ? PWD_VISIBLE_ICON : PWD_HIDDEN_ICON}
-            size={bigSize()}
+            size={bigSize}
             color={Colors.inputIcon[theme]}
           />
         </Pressable>
@@ -174,7 +185,7 @@ const DangerZoneCard = () => {
         onPress={() => setCheckedMsg(!checkedMsg)}>
         <Img
           source={!checkedMsg ? UNCHECKED_ICON : CHECKED_ICON}
-          size={bigSize()}
+          size={bigSize}
           color={Colors.iconOnBgColor[theme]}
         />
         <Text style={[styles.dataTitle, dangerCardStyles.dataTitle]}>
@@ -204,12 +215,17 @@ const dangerCardStyle = (
   screenWidth,
   screenHeight,
   Colors,
+  bigSize,
+  mdSize,
+  smSize,
+  mdText,
+  smText,
 ) =>
   StyleSheet.create({
     cardContainer: {
       width: isLandscapeMode ? '100%' : '90%',
       minWidth: 280,
-      maxWidth: 900,
+      maxWidth: 600,
     },
     dataTitle: {
       flex: 1,

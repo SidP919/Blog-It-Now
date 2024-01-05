@@ -13,12 +13,22 @@ import {
   FORBIDDEN_SUB_TITLE,
   FORBIDDEN_TITLE,
 } from '../../utils/content';
-import {APP_EMAIL, DEFAULT_ROUTE} from '../../utils/constants';
+import {CONTACT_US_ROUTE, DEFAULT_ROUTE} from '../../utils/constants';
 import {authScreensStyle} from '../../utils/commonStyles';
 
 const ForbiddenScreen = () => {
-  const {screenHeight, screenWidth, theme, isLandscapeMode, Colors} =
-    useCommonParams();
+  const {
+    screenHeight,
+    screenWidth,
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
   const {navigate} = useCustomNavigate();
   const styles = authScreensStyle(
     theme,
@@ -26,6 +36,11 @@ const ForbiddenScreen = () => {
     screenWidth,
     isLandscapeMode,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
   const goToScreen = screenName => {
@@ -47,7 +62,8 @@ const ForbiddenScreen = () => {
         <TextWithLink
           text={FORBIDDEN_SUBTEXT}
           word={FORBIDDEN_SUBTEXT_LINK_TEXT}
-          url={`mailto:${APP_EMAIL}`}
+          url={`/ContactUs`}
+          onPressDoThis={() => goToScreen(CONTACT_US_ROUTE)}
           customStyle={styles.subText}
         />
         <View style={[styles.btnView]}>

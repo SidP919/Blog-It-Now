@@ -1,6 +1,7 @@
 import {BackHandler, StyleSheet, Text, View, Platform} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {getDispatch, logoutHandler} from '../../services/web-service';
+import {useDispatch} from 'react-redux';
+import {logoutHandler} from '../../services/web-service';
 import {
   CB_TYPES_WITH_CANCEL,
   EXIT_APP,
@@ -8,8 +9,6 @@ import {
   INVALID_USER,
   ifWebSmallLandscapeMode,
   isWeb,
-  mdSize,
-  smSize,
 } from '../../utils/utils';
 import {FONT_INTER_BOLD, FONT_INTER_REGULAR} from '../../utils/fontUtils';
 import {resetAlertData} from '../../redux/slices/AlertSlice';
@@ -24,8 +23,18 @@ const CustomAlert = ({title = '', msg = '', callbackType = ''}) => {
   const [isOpen, setIsOpen] = useState(true);
   const [showCancel, setShowCancel] = useState(false);
 
-  const {screenHeight, screenWidth, theme, isLandscapeMode, Colors} =
-    useCommonParams();
+  const {
+    screenHeight,
+    screenWidth,
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
 
   const styles = style(
     screenHeight,
@@ -33,9 +42,14 @@ const CustomAlert = ({title = '', msg = '', callbackType = ''}) => {
     theme,
     isLandscapeMode,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
-  const dispatch = getDispatch();
+  const dispatch = useDispatch();
 
   const {navigate} = useCustomNavigate();
 
@@ -111,7 +125,18 @@ const CustomAlert = ({title = '', msg = '', callbackType = ''}) => {
 
 export default CustomAlert;
 
-const style = (screenHeight, screenWidth, theme, isLandscapeMode, Colors) =>
+const style = (
+  screenHeight,
+  screenWidth,
+  theme,
+  isLandscapeMode,
+  Colors,
+  bigSize,
+  mdSize,
+  smSize,
+  mdText,
+  smText,
+) =>
   StyleSheet.create({
     container: {
       position: 'absolute',
@@ -145,14 +170,14 @@ const style = (screenHeight, screenWidth, theme, isLandscapeMode, Colors) =>
       }),
     },
     alertTitle: {
-      fontSize: mdSize(),
+      fontSize: mdSize,
       fontWeight: '700',
       fontFamily: FONT_INTER_BOLD,
       margin: 8,
       color: Colors.alertTitle[theme],
     },
     alertMsg: {
-      fontSize: smSize(),
+      fontSize: smSize,
       fontWeight: '500',
       fontFamily: FONT_INTER_REGULAR,
       margin: 8,

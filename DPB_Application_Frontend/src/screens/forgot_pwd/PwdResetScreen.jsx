@@ -8,8 +8,18 @@ import PwdResetCard from './PwdResetCard';
 import {authScreensStyle} from '../../utils/commonStyles';
 
 const PwdResetScreen = () => {
-  const {screenHeight, screenWidth, theme, isLandscapeMode, Colors} =
-    useCommonParams();
+  const {
+    screenHeight,
+    screenWidth,
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
 
   const styles = authScreensStyle(
     theme,
@@ -17,6 +27,11 @@ const PwdResetScreen = () => {
     screenWidth,
     isLandscapeMode,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
   return (

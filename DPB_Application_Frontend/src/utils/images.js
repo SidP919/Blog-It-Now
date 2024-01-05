@@ -22,3 +22,6 @@ export const CHECKED_ICON = require('../assets/checked.png');
 export const UNCHECKED_ICON = require('../assets/unchecked.png');
 export const ANDROID_ICON = require('../assets/android.png');
 export const IOS_ICON = require('../assets/ios.png');
+export const HOME_ICON = require('../assets/home.png');
+export const CONTACT_US_ICON = require('../assets/contact_us.png');
+export const ABOUT_US_ICON = require('../assets/about_us.png');

@@ -8,8 +8,18 @@ import ForgotPwdCard from './ForgotPwdCard';
 import {authScreensStyle} from '../../utils/commonStyles';
 
 const ForgotPwdScreen = () => {
-  const {screenHeight, screenWidth, theme, isLandscapeMode, Colors} =
-    useCommonParams();
+  const {
+    screenHeight,
+    screenWidth,
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
 
   const styles = authScreensStyle(
     theme,
@@ -17,6 +27,11 @@ const ForgotPwdScreen = () => {
     screenWidth,
     isLandscapeMode,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
   return (

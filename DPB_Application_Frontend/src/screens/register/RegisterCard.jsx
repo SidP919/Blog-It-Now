@@ -20,7 +20,7 @@ import {
   REGISTER_VERIFICATION_TOAST_MSG,
   REGISTER_VERIFICATION_TOAST_TITLE,
 } from '../../utils/content';
-import {GENERIC, bigSize, isWeb, logger} from '../../utils/utils';
+import {GENERIC, isWeb, logger} from '../../utils/utils';
 import useCommonParams from '../../hooks/useCommonParams';
 import webService, {showCustomAlert} from '../../services/web-service';
 import {LOGIN_ROUTE, REGISTER_API} from '../../utils/constants';
@@ -41,8 +41,18 @@ import Toast from '../../components/Toast';
 
 const RegisterCard = () => {
   const {navigate} = useCustomNavigate();
-  const {screenHeight, screenWidth, theme, isLandscapeMode, Colors} =
-    useCommonParams();
+  const {
+    screenHeight,
+    screenWidth,
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
 
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -61,6 +71,11 @@ const RegisterCard = () => {
     screenWidth,
     screenHeight,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
   const onSignUpPress = () => {
@@ -111,7 +126,7 @@ const RegisterCard = () => {
       <View style={[styles.inputContainer]}>
         <Img
           source={NAME_ICON}
-          size={bigSize()}
+          size={bigSize}
           color={Colors.inputIcon[theme]}
         />
         <TextInput
@@ -126,7 +141,7 @@ const RegisterCard = () => {
       <View style={[styles.inputContainer]}>
         <Img
           source={EMAIL_ICON}
-          size={bigSize()}
+          size={bigSize}
           color={Colors.inputIcon[theme]}
         />
         <TextInput
@@ -142,7 +157,7 @@ const RegisterCard = () => {
       <View style={[styles.inputContainer]}>
         <Img
           source={USERNAME_ICON}
-          size={bigSize()}
+          size={bigSize}
           color={Colors.inputIcon[theme]}
         />
         <TextInput
@@ -155,11 +170,7 @@ const RegisterCard = () => {
       </View>
       <Text style={[styles.dataTitle]}>{REGISTER_PWD_TITLE}</Text>
       <View style={[styles.inputContainer]}>
-        <Img
-          source={PWD_ICON}
-          size={bigSize()}
-          color={Colors.inputIcon[theme]}
-        />
+        <Img source={PWD_ICON} size={bigSize} color={Colors.inputIcon[theme]} />
         <TextInput
           style={[styles.inputView]}
           placeholder={REGISTER_PWD_PLACEHOLDER}
@@ -172,7 +183,7 @@ const RegisterCard = () => {
         <Pressable onPress={toggleShowPassword}>
           <Img
             source={showPassword ? PWD_VISIBLE_ICON : PWD_HIDDEN_ICON}
-            size={bigSize()}
+            size={bigSize}
             color={Colors.inputIcon[theme]}
           />
         </Pressable>
@@ -181,7 +192,7 @@ const RegisterCard = () => {
       <View style={[styles.inputContainer]}>
         <Img
           source={FAV_CONTENT_ICON}
-          size={bigSize()}
+          size={bigSize}
           color={Colors.inputIcon[theme]}
         />
         <TextInput

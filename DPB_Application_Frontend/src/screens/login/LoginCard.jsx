@@ -13,7 +13,7 @@ import {
   LOGIN_TITLE,
   MANDATORY_FIELDS_MSG,
 } from '../../utils/content';
-import {GENERIC, bigSize, isWeb, logger} from '../../utils/utils';
+import {GENERIC, isWeb, logger} from '../../utils/utils';
 import useCommonParams from '../../hooks/useCommonParams';
 import webService, {showCustomAlert} from '../../services/web-service';
 import {
@@ -39,8 +39,18 @@ import {formCardStyle} from '../../utils/commonStyles';
 const LoginCard = () => {
   const dispatch = useDispatch();
   const {navigate} = useCustomNavigate();
-  const {screenHeight, screenWidth, theme, isLandscapeMode, Colors} =
-    useCommonParams();
+  const {
+    screenHeight,
+    screenWidth,
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
 
   const [emailOrUsername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -56,6 +66,11 @@ const LoginCard = () => {
     screenWidth,
     screenHeight,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
   const onLoginPress = () => {
@@ -103,7 +118,7 @@ const LoginCard = () => {
       <View style={[styles.inputContainer]}>
         <Img
           source={USERNAME_ICON}
-          size={bigSize()}
+          size={bigSize}
           color={Colors.inputIcon[theme]}
         />
         <TextInput
@@ -116,11 +131,7 @@ const LoginCard = () => {
       </View>
       <Text style={[styles.dataTitle]}>{LOGIN_PWD_TITLE}</Text>
       <View style={[styles.inputContainer]}>
-        <Img
-          source={PWD_ICON}
-          size={bigSize()}
-          color={Colors.inputIcon[theme]}
-        />
+        <Img source={PWD_ICON} size={bigSize} color={Colors.inputIcon[theme]} />
         <TextInput
           style={[styles.inputView]}
           placeholder={LOGIN_PWD_PLACEHOLDER}
@@ -135,7 +146,7 @@ const LoginCard = () => {
         <Pressable onPress={toggleShowPassword}>
           <Img
             source={showPassword ? PWD_VISIBLE_ICON : PWD_HIDDEN_ICON}
-            size={bigSize()}
+            size={bigSize}
             color={Colors.inputIcon[theme]}
           />
         </Pressable>

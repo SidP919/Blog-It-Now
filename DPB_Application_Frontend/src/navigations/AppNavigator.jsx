@@ -29,13 +29,21 @@ import {getAlertData} from '../redux/slices/AlertSlice';
 import CustomAlert from '../components/CustomAlert';
 import {getAppTheme} from '../redux/slices/ThemeSlice';
 import {
+  ABOUT_US_ROUTE,
+  EXPLORE_BLOGS_ROUTE,
+  CONTACT_US_ROUTE,
   DASHBOARD_ROUTE,
+  HOME_ROUTE,
   LOGOUT_ROUTE,
   PROFILE_ROUTE,
   SETTINGS_ROUTE,
 } from '../utils/constants';
 import {getIsApiLoading} from '../redux/slices/ApiLoadingSlice';
 import ThreeDotsLoader from '../components/ThreeDotsLoader';
+import HomeScreen from '../screens/home/HomeScreen';
+import ExploreBlogsScreen from '../screens/explore_blogs/ExploreBlogsScreen';
+import AboutUsScreen from '../screens/about_us/AboutUsScreen';
+import ContactUsScreen from '../screens/contact_us/ContactUsScreen';
 
 const Stack = createStackNavigator();
 
@@ -92,7 +100,27 @@ const AppNavigator = () => {
 
   return (
     <>
-      <Stack.Navigator initialRouteName={DASHBOARD_ROUTE}>
+      <Stack.Navigator initialRouteName={HOME_ROUTE}>
+        <Stack.Screen
+          name={HOME_ROUTE}
+          component={HomeScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={EXPLORE_BLOGS_ROUTE}
+          component={ExploreBlogsScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={ABOUT_US_ROUTE}
+          component={AboutUsScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={CONTACT_US_ROUTE}
+          component={ContactUsScreen}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name={DASHBOARD_ROUTE}
           component={DasboardScreen}

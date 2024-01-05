@@ -22,7 +22,12 @@ import {
 } from '../utils/utils';
 import Orientation from 'react-native-orientation-locker';
 import {
+  ABOUT_US_ROUTE,
+  CONTACT_US_ROUTE,
+  DEFAULT_ROUTE,
+  EXPLORE_BLOGS_ROUTE,
   FORGOT_PWD_ROUTE,
+  HOME_ROUTE,
   LOGIN_ROUTE,
   PWD_RESET_ROUTE,
   REGISTER_ROUTE,
@@ -36,6 +41,10 @@ import {getAppTheme} from '../redux/slices/ThemeSlice';
 import {getIsApiLoading} from '../redux/slices/ApiLoadingSlice';
 import ThreeDotsLoader from '../components/ThreeDotsLoader';
 import Toast from 'react-native-toast-message';
+import HomeScreen from '../screens/home/HomeScreen';
+import ExploreBlogsScreen from '../screens/explore_blogs/ExploreBlogsScreen';
+import AboutUsScreen from '../screens/about_us/AboutUsScreen';
+import ContactUsScreen from '../screens/contact_us/ContactUsScreen';
 
 const Stack = createStackNavigator();
 
@@ -92,7 +101,12 @@ const AuthNavigator = () => {
 
   return (
     <>
-      <Stack.Navigator initialRouteName={LOGIN_ROUTE}>
+      <Stack.Navigator initialRouteName={DEFAULT_ROUTE}>
+        <Stack.Screen
+          name={HOME_ROUTE}
+          component={HomeScreen}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name={LOGIN_ROUTE}
           component={LoginScreen}
@@ -111,6 +125,21 @@ const AuthNavigator = () => {
         <Stack.Screen
           name={PWD_RESET_ROUTE}
           component={PwdResetScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={EXPLORE_BLOGS_ROUTE}
+          component={ExploreBlogsScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={ABOUT_US_ROUTE}
+          component={AboutUsScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={CONTACT_US_ROUTE}
+          component={ContactUsScreen}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

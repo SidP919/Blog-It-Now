@@ -10,38 +10,51 @@ import React, {useEffect, useState} from 'react';
 import ImgButton from '../../components/ImgButton';
 import Img from '../../components/Img';
 import {
-  bigSize,
   ifMobileDevice,
   ifWebSmallLandscapeMode,
+  isDesktopWeb,
   isWeb,
   logger,
-  mdText,
   openLink,
-  smSize,
 } from '../../utils/utils';
 import {useSelector, useDispatch} from 'react-redux';
 import {getAuthData} from '../../redux/slices/AuthSlice';
 import webService, {showCustomAlert} from '../../services/web-service';
 import {
+  ABOUT_US_MENU,
   ANDROID_DOWNLOAD_TEXT,
+  EXPLORE_BLOGS_MENU,
+  CONTACT_US_MENU,
   EXIT_APP_MSG,
   EXIT_APP_TITLE,
+  HOME_MENU,
   IOS_DOWNLOAD_TEXT,
   LOG_OUT_MSG,
   LOG_OUT_TITLE,
   SIDE_PANEL_DASHBOARD_OPTION,
   SIDE_PANEL_EXIT_OPTION,
+  SIDE_PANEL_LOGIN_OPTION,
   SIDE_PANEL_LOGOUT_OPTION,
   SIDE_PANEL_PROFILE_OPTION,
+  SIDE_PANEL_REGISTER_OPTION,
   SIDE_PANEL_SETTINGS_OPTION,
+  SIDE_PANEL_HOME_OPTION,
+  SIDE_PANEL_EXPLORE_BLOGS_OPTION,
+  SIDE_PANEL_ABOUT_US_OPTION,
+  SIDE_PANEL_CONTACT_US_OPTION,
 } from '../../utils/content';
 import {EXIT_APP, LOG_OUT} from '../../utils/utils';
 import {
+  ABOUT_US_ICON,
   ANDROID_ICON,
   BRAND_ICON,
+  CONTACT_US_ICON,
   CROSS_ICON,
   DASHBOARD_ICON,
+  EMAIL_ICON,
   EXIT_ICON,
+  FAV_CONTENT_ICON,
+  HOME_ICON,
   IOS_ICON,
   LOGOUT_ICON,
   PROFILE_ICON,
@@ -51,11 +64,18 @@ import {
 import {FONT_INTER_BOLD} from '../../utils/fontUtils';
 import useCustomNavigate from '../../hooks/useCustomNavigate';
 import {
+  ABOUT_US_ROUTE,
+  CONTACT_US_ROUTE,
   DASHBOARD_ROUTE,
+  DEFAULT_ROUTE,
+  EXPLORE_BLOGS_ROUTE,
   GET_ANDROID_LINK,
   GET_IOS_LINK,
+  HOME_ROUTE,
+  LOGIN_ROUTE,
   LOGOUT_ROUTE,
   PROFILE_ROUTE,
+  REGISTER_ROUTE,
   SETTINGS_ROUTE,
 } from '../../utils/constants';
 import useCommonParams from '../../hooks/useCommonParams';
@@ -77,7 +97,17 @@ const DasboardSidePanel = ({
 }) => {
   const dispatch = useDispatch();
   const {navigate} = useCustomNavigate();
-  const {theme, isLandscapeMode, Colors} = useCommonParams();
+  const {
+    theme,
+    isLandscapeMode,
+    Colors,
+    isLoggedIn,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
   const [androidLink, setAndroidLink] = useState('');
   const [iosLink, setIosLink] = useState('');
   const androidDownloadLink = useSelector(getAndroidDownloadLink);
@@ -92,11 +122,20 @@ const DasboardSidePanel = ({
     showView,
     isLandscapeMode,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
   const goToScreen = screenName => {
     toggleSidePanel(false);
-    navigate(screenName, {replace: true});
+    if (currentScreen === DEFAULT_ROUTE && screenName !== DEFAULT_ROUTE) {
+      navigate(screenName);
+    } else {
+      navigate(screenName, {replace: true});
+    }
   };
 
   function getDownloadLink(API) {
@@ -138,6 +177,9 @@ const DasboardSidePanel = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if (isLandscapeMode && isDesktopWeb) {
+    return null;
+  }
   return (
     <Animated.View
       style={[styles.sideContainer]}
@@ -147,7 +189,7 @@ const DasboardSidePanel = ({
           <Img
             source={BRAND_ICON}
             color={Colors.sideBarHeaderLogo[theme]}
-            size={bigSize() * 5}
+            size={bigSize * 5}
           />
           <ImgButton
             source={CROSS_ICON}
@@ -156,77 +198,179 @@ const DasboardSidePanel = ({
             onPress={() => toggleSidePanel(false)}
           />
         </View>
-        <View
-          style={[
-            styles.sectionItem,
-            currentScreen === PROFILE_ROUTE && styles.currentScreen,
-          ]}>
-          <Img
-            source={PROFILE_ICON}
-            size={bigSize()}
-            color={Colors.sideBarItemLogo[theme]}
-          />
-          <Text
-            numberOfLines={1}
-            style={[styles.sideItemTitle, styles.profileTitle]}>
-            {SIDE_PANEL_PROFILE_OPTION}
-            {username}
-          </Text>
-          <ImgButton
-            source={RIGHT_ARROW_ICON}
-            size={smSize()}
-            color={Colors.sideBarItemLogo[theme]}
-            onPress={() => goToScreen(PROFILE_ROUTE)}
-          />
-        </View>
+        {isLoggedIn && (
+          <View
+            style={[
+              styles.sectionItem,
+              currentScreen === PROFILE_ROUTE && styles.currentScreen,
+            ]}>
+            <Img
+              source={PROFILE_ICON}
+              size={bigSize}
+              color={Colors.sideBarItemLogo[theme]}
+            />
+            <Text
+              numberOfLines={1}
+              style={[styles.sideItemTitle, styles.profileTitle]}>
+              {SIDE_PANEL_PROFILE_OPTION}
+              {username}
+            </Text>
+            <ImgButton
+              source={RIGHT_ARROW_ICON}
+              size={smSize}
+              color={Colors.sideBarItemLogo[theme]}
+              onPress={() => goToScreen(PROFILE_ROUTE)}
+            />
+          </View>
+        )}
         <Pressable
-          onPress={() => goToScreen(DASHBOARD_ROUTE)}
+          onPress={() => goToScreen(HOME_ROUTE)}
           style={[
             styles.sectionItem,
-            currentScreen === DASHBOARD_ROUTE && styles.currentScreen,
+            currentScreen === HOME_ROUTE && styles.currentScreen,
           ]}>
           <Img
-            source={DASHBOARD_ICON}
-            size={bigSize()}
+            source={HOME_ICON}
+            size={bigSize}
             color={Colors.sideBarItemLogo[theme]}
           />
           <Text numberOfLines={1} style={[styles.sideItemTitle]}>
-            {SIDE_PANEL_DASHBOARD_OPTION}
+            {SIDE_PANEL_HOME_OPTION}
           </Text>
         </Pressable>
+
+        {isLoggedIn && (
+          <Pressable
+            onPress={() => goToScreen(DASHBOARD_ROUTE)}
+            style={[
+              styles.sectionItem,
+              currentScreen === DASHBOARD_ROUTE && styles.currentScreen,
+            ]}>
+            <Img
+              source={DASHBOARD_ICON}
+              size={bigSize}
+              color={Colors.sideBarItemLogo[theme]}
+            />
+            <Text numberOfLines={1} style={[styles.sideItemTitle]}>
+              {SIDE_PANEL_DASHBOARD_OPTION}
+            </Text>
+          </Pressable>
+        )}
         <Pressable
-          onPress={() => goToScreen(SETTINGS_ROUTE)}
+          onPress={() => goToScreen(EXPLORE_BLOGS_ROUTE)}
           style={[
             styles.sectionItem,
-            currentScreen === SETTINGS_ROUTE && styles.currentScreen,
+            currentScreen === EXPLORE_BLOGS_ROUTE && styles.currentScreen,
           ]}>
           <Img
-            source={SETTINGS_ICON}
-            size={bigSize()}
+            source={FAV_CONTENT_ICON}
+            size={bigSize}
             color={Colors.sideBarItemLogo[theme]}
           />
           <Text numberOfLines={1} style={[styles.sideItemTitle]}>
-            {SIDE_PANEL_SETTINGS_OPTION}
+            {SIDE_PANEL_EXPLORE_BLOGS_OPTION}
           </Text>
         </Pressable>
+        {isLoggedIn && (
+          <Pressable
+            onPress={() => goToScreen(SETTINGS_ROUTE)}
+            style={[
+              styles.sectionItem,
+              currentScreen === SETTINGS_ROUTE && styles.currentScreen,
+            ]}>
+            <Img
+              source={SETTINGS_ICON}
+              size={bigSize}
+              color={Colors.sideBarItemLogo[theme]}
+            />
+            <Text numberOfLines={1} style={[styles.sideItemTitle]}>
+              {SIDE_PANEL_SETTINGS_OPTION}
+            </Text>
+          </Pressable>
+        )}
         <Pressable
-          onPress={() => {
-            showCustomAlert(LOG_OUT_TITLE, LOG_OUT_MSG, LOG_OUT);
-            // goToScreen(LOGOUT_ROUTE);
-          }}
+          onPress={() => goToScreen(ABOUT_US_ROUTE)}
           style={[
             styles.sectionItem,
-            currentScreen === LOGOUT_ROUTE && styles.currentScreen,
+            currentScreen === ABOUT_US_ROUTE && styles.currentScreen,
           ]}>
           <Img
-            source={LOGOUT_ICON}
-            size={bigSize()}
+            source={ABOUT_US_ICON}
+            size={bigSize}
             color={Colors.sideBarItemLogo[theme]}
           />
           <Text numberOfLines={1} style={[styles.sideItemTitle]}>
-            {SIDE_PANEL_LOGOUT_OPTION}
+            {SIDE_PANEL_ABOUT_US_OPTION}
           </Text>
         </Pressable>
+        <Pressable
+          onPress={() => goToScreen(CONTACT_US_ROUTE)}
+          style={[
+            styles.sectionItem,
+            currentScreen === CONTACT_US_ROUTE && styles.currentScreen,
+          ]}>
+          <Img
+            source={CONTACT_US_ICON}
+            size={bigSize}
+            color={Colors.sideBarItemLogo[theme]}
+          />
+          <Text numberOfLines={1} style={[styles.sideItemTitle]}>
+            {SIDE_PANEL_CONTACT_US_OPTION}
+          </Text>
+        </Pressable>
+        {!isLoggedIn && (
+          <Pressable
+            onPress={() => goToScreen(LOGIN_ROUTE)}
+            style={[
+              styles.sectionItem,
+              currentScreen === LOGIN_ROUTE && styles.currentScreen,
+            ]}>
+            <Img
+              source={EMAIL_ICON}
+              size={bigSize}
+              color={Colors.sideBarItemLogo[theme]}
+            />
+            <Text numberOfLines={1} style={[styles.sideItemTitle]}>
+              {SIDE_PANEL_LOGIN_OPTION}
+            </Text>
+          </Pressable>
+        )}
+        {!isLoggedIn && (
+          <Pressable
+            onPress={() => goToScreen(REGISTER_ROUTE)}
+            style={[
+              styles.sectionItem,
+              currentScreen === REGISTER_ROUTE && styles.currentScreen,
+            ]}>
+            <Img
+              source={PROFILE_ICON}
+              size={bigSize}
+              color={Colors.sideBarItemLogo[theme]}
+            />
+            <Text numberOfLines={1} style={[styles.sideItemTitle]}>
+              {SIDE_PANEL_REGISTER_OPTION}
+            </Text>
+          </Pressable>
+        )}
+        {isLoggedIn && (
+          <Pressable
+            onPress={() => {
+              showCustomAlert(LOG_OUT_TITLE, LOG_OUT_MSG, LOG_OUT);
+            }}
+            style={[
+              styles.sectionItem,
+              currentScreen === LOGOUT_ROUTE && styles.currentScreen,
+            ]}>
+            <Img
+              source={LOGOUT_ICON}
+              size={bigSize}
+              color={Colors.sideBarItemLogo[theme]}
+            />
+            <Text numberOfLines={1} style={[styles.sideItemTitle]}>
+              {SIDE_PANEL_LOGOUT_OPTION}
+            </Text>
+          </Pressable>
+        )}
         {!isWeb && (
           <Pressable
             onPress={() =>
@@ -235,7 +379,7 @@ const DasboardSidePanel = ({
             style={[styles.sectionItem]}>
             <Img
               source={EXIT_ICON}
-              size={bigSize()}
+              size={bigSize}
               color={Colors.sideBarItemLogo[theme]}
             />
             <Text numberOfLines={1} style={[styles.sideItemTitle]}>
@@ -252,7 +396,7 @@ const DasboardSidePanel = ({
                 <Img
                   source={ANDROID_ICON}
                   color={Colors.sideBarHeaderLogo[theme]}
-                  size={bigSize() * 1.5}
+                  size={bigSize * 1.5}
                 />
                 <Text style={[styles.nativeLinkText]}>
                   {ANDROID_DOWNLOAD_TEXT}
@@ -268,7 +412,7 @@ const DasboardSidePanel = ({
                 <Img
                   source={IOS_ICON}
                   color={Colors.sideBarHeaderLogo[theme]}
-                  size={bigSize() * 1.5}
+                  size={bigSize * 1.5}
                 />
                 <Text style={[styles.nativeLinkText]}>{IOS_DOWNLOAD_TEXT}</Text>
               </Pressable>
@@ -293,6 +437,11 @@ const style = (
   showView,
   isLandscapeMode,
   Colors,
+  bigSize,
+  mdSize,
+  smSize,
+  mdText,
+  smText,
 ) =>
   StyleSheet.create({
     sideContainer: {
@@ -357,10 +506,10 @@ const style = (
     sideItemTitle: {
       maxWidth: isLandscapeMode
         ? ifWebSmallLandscapeMode()
-          ? 260 - (bigSize() + 32)
-          : 330 - (bigSize() + 32)
-        : 260 - (bigSize() + 32),
-      fontSize: mdText(),
+          ? 260 - (bigSize + 32)
+          : 330 - (bigSize + 32)
+        : 260 - (bigSize + 32),
+      fontSize: mdText,
       fontWeight: '700',
       fontFamily: FONT_INTER_BOLD,
       textAlign: 'left',
@@ -373,7 +522,7 @@ const style = (
       flexWrap: 'wrap',
       paddingTop: 32,
       paddingHorizontal: 16,
-      gap: smSize(),
+      gap: smSize,
       justifyContent: 'flex-end',
       alignItems: 'center',
     },
@@ -387,7 +536,7 @@ const style = (
       alignItems: 'center',
     },
     nativeLinkText: {
-      fontSize: mdText(),
+      fontSize: mdText,
       fontWeight: '700',
       fontFamily: FONT_INTER_BOLD,
       textAlign: 'left',

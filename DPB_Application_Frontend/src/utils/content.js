@@ -49,16 +49,33 @@ export const CONFIRM_EMAIL_ERROR_MSG =
 
 // ============================SCREENS=========================================================
 // Search for below keywords to jump to the content of specific screen:
+// Header,
 // RegisterScreen
 // LoginScreen,
 // ForgotPwdScreen,
 // PwdResetScreen,
-// VerifyEmailScreen
+// VerifyEmailScreen,
+// HomeScreen,
 // DashboardScreen,
+// ExploreBlogsScreen,
+// DashboardSidePanel,
 // ProfileScreen,
 // SettingsScreen,
+// AboutUsScreen,
+// ContactUsScreen,
 // LogoutScreen,
-// ForbiddenScreen
+// ForbiddenScreen,
+// NotFoundScreen
+
+// Header content
+export const HOME_MENU = 'HOME';
+export const DASHBOARD_MENU = 'DASHBOARD';
+export const EXPLORE_BLOGS_MENU = 'EXPLORE BLOGS';
+export const ABOUT_US_MENU = 'ABOUT US';
+export const CONTACT_US_MENU = 'CONTACT US';
+export const MY_PROFILE_MENU = 'MY PROFILE';
+export const SETTINGS_MENU = 'SETTINGS';
+export const LOG_OUT_MENU = 'LOG OUT';
 
 // RegisterScreen content
 export const REGISTER_TITLE = 'Create an Account';
@@ -135,20 +152,32 @@ export const VERIFY_EMAIL_TOAST_FAILURE_TITLE2 = 'Invalid Verification Link!';
 export const VERIFY_EMAIL_TOAST_FAILURE_MSG =
   'Please check the link & try again!';
 
+// HomeScreen content
+export const HOME_TITLE = APP_NAME;
+
 // DashboardScreen content
-export const DASHBOARD_TITLE = 'Blog It Now';
+export const DASHBOARD_TITLE = 'DASHBOARD';
 
 // DashboardSidePanel content
+export const SIDE_PANEL_LOGIN_OPTION = 'Log In';
+export const SIDE_PANEL_REGISTER_OPTION = 'Sign Up';
 export const SIDE_PANEL_PROFILE_OPTION = 'Hi, ';
+export const SIDE_PANEL_HOME_OPTION = 'Home';
 export const SIDE_PANEL_DASHBOARD_OPTION = 'Dashboard';
+export const SIDE_PANEL_EXPLORE_BLOGS_OPTION = 'Explore Blogs';
 export const SIDE_PANEL_SETTINGS_OPTION = 'Settings';
+export const SIDE_PANEL_ABOUT_US_OPTION = 'About Us';
+export const SIDE_PANEL_CONTACT_US_OPTION = 'Contact Us';
 export const SIDE_PANEL_LOGOUT_OPTION = 'Log Out';
 export const SIDE_PANEL_EXIT_OPTION = 'Exit';
 export const ANDROID_DOWNLOAD_TEXT = 'Download for Android';
 export const IOS_DOWNLOAD_TEXT = 'Download for Apple iOS';
 
+// ExploreBlogsScreen content
+export const EXPLORE_BLOGS_TITLE = 'EXPLORE BLOGS';
+
 // ProfileScreen content
-export const PROFILE_TITLE = 'My Profile';
+export const PROFILE_TITLE = 'MY PROFILE';
 export const PROFILE_HEADING = 'Profile Information';
 export const PROFILE_USERNAME_TITLE = 'Username:';
 export const PROFILE_USERNAME_PLACEHOLDER =
@@ -164,7 +193,7 @@ export const PROFILE_FAV_CONTENT_PLACEHOLDER =
   'Name of your favorite Show/Movie/Anime/Manga';
 
 // SettingsScreen content
-export const SETTINGS_TITLE = 'Settings';
+export const SETTINGS_TITLE = 'SETTINGS';
 export const SETTINGS_APP_HEADING = 'App Settings';
 export const SETTINGS_APP_THEME_TITLE = 'App Theme:';
 export const SETTINGS_APP_COLOR_TITLE = 'App Color:';
@@ -186,8 +215,14 @@ export const SETTINGS_ACCOUNT_DELETE_AC_FAILURE_MSG =
 export const SETTINGS_ACCOUNT_DELETE_BTN_DISABLE_MSG =
   'Please read and click on the acknowledgement statement.';
 
+// AboutUsScreen content
+export const ABOUT_US_TITLE = 'ABOUT US';
+
+// ContactUsScreen content
+export const CONTACT_US_TITLE = 'CONTACT US';
+
 // LogoutScreen content
-export const LOGOUT_TITLE = 'Log Out';
+export const LOGOUT_TITLE = 'LOG OUT';
 
 // ForbiddenScreen content:
 export const FORBIDDEN_TITLE = '403';

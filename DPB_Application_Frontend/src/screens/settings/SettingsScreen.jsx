@@ -10,14 +10,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {
-  bigSize,
-  isWeb,
-  mdText,
-  mdSize,
-  smText,
-  smSize,
-} from '../../utils/utils';
+import {isWeb, isDesktopWeb} from '../../utils/utils';
 import {colorProfiles} from '../../utils/theme';
 import DasboardSidePanel from '../dashboard/DasboardSidePanel';
 import {
@@ -53,15 +46,38 @@ import {
 import DangerZoneCard from './DangerZoneCard';
 import ImgButton from '../../components/ImgButton';
 import {DEFAULT_ICON} from '../../utils/images';
+import {postAuthScreenStyle} from '../../utils/commonStyles';
 
 const SettingsScreen = () => {
-  const {screenHeight, screenWidth, theme, isLandscapeMode, appColor, Colors} =
-    useCommonParams();
+  const {
+    screenHeight,
+    screenWidth,
+    theme,
+    isLandscapeMode,
+    appColor,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
 
   const {showView, animatedValue, toggleSidePanel, panResponder} =
     useAnimatedSidebar();
 
-  let styles = style(screenHeight, screenWidth, theme, isLandscapeMode, Colors);
+  let styles = style(
+    screenHeight,
+    screenWidth,
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  );
 
   const dispatch = useDispatch();
 
@@ -110,15 +126,16 @@ const SettingsScreen = () => {
         panResponder={panResponder}
       />
       <View style={[styles.mainContainer]} {...panResponder?.panHandlers}>
-        <Header
-          headerTitle={SETTINGS_TITLE}
-          toggleSidePanel={toggleSidePanel}
-        />
-        <ScrollView>
-          <Pressable style={[styles.screenContent]}>
-            <KeyboardAvoidingView
-              style={[styles.screenContent]}
-              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <KeyboardAvoidingView
+          style={[styles.mainContainer]}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <Header
+            headerTitle={SETTINGS_TITLE}
+            toggleSidePanel={toggleSidePanel}
+            currentScreen={SETTINGS_ROUTE}
+          />
+          <ScrollView contentContainerStyle={[styles.screenContent]}>
+            <Pressable>
               <View style={styles.sectionContainer}>
                 <Text style={[styles.sectionTitle]}>
                   {SETTINGS_APP_HEADING}
@@ -153,7 +170,7 @@ const SettingsScreen = () => {
                       onPress={() => onToggleColor(THEME_COLOR_PURPLE)}
                       source={DEFAULT_ICON}
                       color={colorProfiles[THEME_COLOR_PURPLE].LIGHT_PRIMARY}
-                      size={bigSize() * 2}
+                      size={bigSize * 2}
                     />
                     <ToggleSwitch
                       onToggleSwitch={onToggleColor}
@@ -165,7 +182,7 @@ const SettingsScreen = () => {
                       onPress={() => onToggleColor(THEME_COLOR_ORANGE)}
                       source={DEFAULT_ICON}
                       color={colorProfiles[THEME_COLOR_ORANGE].LIGHT_PRIMARY}
-                      size={bigSize() * 2}
+                      size={bigSize * 2}
                     />
                   </View>
                 </View>
@@ -183,101 +200,56 @@ const SettingsScreen = () => {
                   </View>
                 </View>
               </View>
-            </KeyboardAvoidingView>
-          </Pressable>
-        </ScrollView>
+            </Pressable>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </View>
     </SafeAreaView>
   );
 };
 
-const style = (screenHeight, screenWidth, theme, isLandscapeMode, Colors) =>
+const style = (
+  screenHeight,
+  screenWidth,
+  theme,
+  isLandscapeMode,
+  Colors,
+  bigSize,
+  mdSize,
+  smSize,
+  mdText,
+  smText,
+) =>
   StyleSheet.create({
-    container: {
-      flex: isWeb ? null : 1,
-      height: isWeb ? screenHeight : null,
-      backgroundColor: Colors.bgColor[theme],
-    },
-    mainContainer: {
-      flex: isWeb ? null : 1,
-      height: isWeb ? screenHeight : null,
-    },
-    screenContent: {
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-      paddingLeft: isLandscapeMode ? 12 : 0,
-      ...Platform.select({
-        native: {
-          marginBottom: 56,
-        },
-      }),
-    },
-    sectionContainer: {
-      marginBottom: smSize(),
-    },
-    sectionTitle: {
-      fontSize: bigSize(),
-      fontWeight: '700',
-      fontFamily: FONT_INTER_SEMIBOLD,
-      textAlign: 'left',
-      color: Colors.title[theme],
-      paddingHorizontal: 12,
-      paddingVertical: 16,
-      textDecorationLine: 'underline',
-      textDecorationStyle: 'dotted',
-    },
-    dataContainer: {
-      width: screenWidth - (isLandscapeMode ? 48 : 0),
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      flexWrap: isLandscapeMode ? 'nowrap' : 'wrap',
-      marginBottom: smText(),
-    },
-    dataTitle: {
-      fontSize: mdSize(),
-      fontWeight: '700',
-      fontFamily: FONT_INTER_MEDIUM,
-      textAlign: 'center',
-      color: Colors.mdTitle[theme],
-      paddingHorizontal: 12,
-      paddingVertical: 16,
-    },
-    dataContent: {
-      flexDirection: 'row',
-      width: isLandscapeMode ? null : '100%',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    dataText: {
-      fontSize: mdText(),
-      fontWeight: '700',
-      fontFamily: FONT_INTER_REGULAR,
-      textAlign: 'center',
-      color: Colors.text[theme],
-      paddingHorizontal: 12,
-      paddingVertical: 16,
-      alignSelf: 'center',
-      alignItems: 'center',
-    },
+    ...postAuthScreenStyle(
+      screenHeight,
+      screenWidth,
+      theme,
+      isLandscapeMode,
+      Colors,
+      bigSize,
+      mdSize,
+      smSize,
+      mdText,
+      smText,
+    ),
     toggleLeftBtn: {
       color: Colors.bgColor[LIGHT_THEME],
       backgroundColor: Colors.main[LIGHT_THEME],
       borderTopLeftRadius: 20,
       borderBottomLeftRadius: 20,
-      marginRight: smText(),
+      marginHorizontal: smText,
     },
     toggleRightBtn: {
       color: Colors.bgColor[DARK_THEME],
       backgroundColor: Colors.main[DARK_THEME],
       borderTopRightRadius: 20,
       borderBottomRightRadius: 20,
-      marginLeft: smText(),
+      marginHorizontal: smText,
     },
     cardContainer: {
       flex: isLandscapeMode ? 1 : null,
       width: isLandscapeMode ? null : '100%',
-      paddingHorizontal: 12,
       paddingVertical: 16,
       alignItems: isLandscapeMode ? 'flex-start' : 'center',
     },

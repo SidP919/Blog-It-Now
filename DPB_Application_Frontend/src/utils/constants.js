@@ -30,7 +30,8 @@ export const GET_ANDROID_LINK = `/otherData/getData?key=${ANDROID_DOWNLOAD_LINK}
 export const GET_IOS_LINK = `/otherData/getData?key=${IOS_DOWNLOAD_LINK}`;
 
 // ======================================= Navigation-Route constants =======================================
-export const DEFAULT_ROUTE = 'Login';
+export const DEFAULT_ROUTE = 'Home';
+export const HOME_ROUTE = 'Home';
 export const LOGIN_ROUTE = 'Login';
 export const DASHBOARD_ROUTE = 'Dashboard';
 export const PROFILE_ROUTE = 'Profile';
@@ -40,6 +41,9 @@ export const REGISTER_ROUTE = 'Register';
 export const FORGOT_PWD_ROUTE = 'ForgotPwd';
 export const PWD_RESET_ROUTE = 'resetPassword';
 export const VERIFY_EMAIL_ROUTE = 'verifyEmail';
+export const EXPLORE_BLOGS_ROUTE = 'ExploreBlogs';
+export const ABOUT_US_ROUTE = 'AboutUs';
+export const CONTACT_US_ROUTE = 'ContactUs';
 
 // ======================================= Theme constants ================================
 export const THEME_NAME_LOCAL = `${APP_ID}_APPv1_THEME`;

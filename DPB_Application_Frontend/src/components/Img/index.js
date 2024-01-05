@@ -1,6 +1,6 @@
 import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
-import {mdSize, smText} from '../../utils/utils';
+import useCommonParams from '../../hooks/useCommonParams';
 
 const Img = ({
   source = null,
@@ -10,9 +10,19 @@ const Img = ({
   height = null,
   customStyle = null,
 }) => {
+  const {bigSize, mdSize, smSize, mdText, smText} = useCommonParams();
   const imgWidth = width === null ? size : width;
   const imgHeight = height === null ? size : height;
-  const styles = style(imgWidth, imgHeight, customStyle);
+  const styles = style(
+    imgWidth,
+    imgHeight,
+    customStyle,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  );
   return (
     <View style={[styles.mainContainer]}>
       <Image source={source} style={[styles.imgStyle]} tintColor={color} />
@@ -22,13 +32,22 @@ const Img = ({
 
 export default Img;
 
-const style = (imgWidth, imgHeight, customStyle) =>
+const style = (
+  imgWidth,
+  imgHeight,
+  customStyle,
+  bigSize,
+  mdSize,
+  smSize,
+  mdText,
+  smText,
+) =>
   StyleSheet.create({
     mainContainer: {
-      width: imgWidth + mdSize(),
-      height: imgHeight + smText(),
-      paddingHorizontal: mdSize() / 2,
-      paddingVertical: smText() / 2,
+      width: imgWidth + mdSize,
+      height: imgHeight + smText,
+      paddingHorizontal: mdSize / 2,
+      paddingVertical: smText / 2,
       justifyContent: 'center',
       ...customStyle,
     },

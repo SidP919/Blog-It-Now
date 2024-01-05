@@ -15,8 +15,18 @@ import {DEFAULT_ROUTE} from '../../utils/constants';
 import {authScreensStyle} from '../../utils/commonStyles';
 
 const NotFoundScreen = () => {
-  const {screenHeight, screenWidth, theme, isLandscapeMode, Colors} =
-    useCommonParams();
+  const {
+    screenHeight,
+    screenWidth,
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
   const {navigate} = useCustomNavigate();
   const styles = authScreensStyle(
     theme,
@@ -24,6 +34,11 @@ const NotFoundScreen = () => {
     screenWidth,
     isLandscapeMode,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
   const goToScreen = screenName => {

@@ -1,13 +1,16 @@
 import {Platform, StyleSheet} from 'react-native';
 import {
-  bigSize,
   ifWebSmallLandscapeMode,
   isWeb,
-  mdText,
-  mdSize,
   ifMobileDevice,
+  isDesktopWeb,
 } from './utils';
-import {FONT_INTER_BOLD, FONT_INTER_REGULAR} from './fontUtils';
+import {
+  FONT_INTER_BOLD,
+  FONT_INTER_MEDIUM,
+  FONT_INTER_REGULAR,
+  FONT_INTER_SEMIBOLD,
+} from './fontUtils';
 
 export const authScreensStyle = (
   theme,
@@ -15,6 +18,11 @@ export const authScreensStyle = (
   screenWidth,
   isLandscapeMode,
   Colors,
+  bigSize,
+  mdSize,
+  smSize,
+  mdText,
+  smText,
 ) =>
   StyleSheet.create({
     mainContainer: {
@@ -63,7 +71,7 @@ export const authScreensStyle = (
       paddingVertical: 32,
     },
     mainTitle: {
-      fontSize: bigSize(),
+      fontSize: bigSize,
       fontWeight: '700',
       fontFamily: FONT_INTER_BOLD,
       color: Colors.title[theme],
@@ -73,7 +81,7 @@ export const authScreensStyle = (
     },
     bigTitle: {
       fontSize:
-        isLandscapeMode && !ifMobileDevice() ? bigSize() * 4 : bigSize() * 3,
+        isLandscapeMode && !ifMobileDevice() ? bigSize * 4 : bigSize * 3,
       fontWeight: '700',
       fontFamily: FONT_INTER_BOLD,
       color: Colors.title[theme],
@@ -82,7 +90,7 @@ export const authScreensStyle = (
       textAlign: 'center',
     },
     mdTitle: {
-      fontSize: mdSize(),
+      fontSize: mdSize,
       fontWeight: '700',
       fontFamily: FONT_INTER_BOLD,
       color: Colors.title[theme],
@@ -91,7 +99,7 @@ export const authScreensStyle = (
       textAlign: 'center',
     },
     subText: {
-      fontSize: mdText(),
+      fontSize: mdText,
       fontWeight: '500',
       fontFamily: FONT_INTER_REGULAR,
       color: Colors.title[theme],
@@ -112,10 +120,15 @@ export const formCardStyle = (
   screenWidth,
   screenHeight,
   Colors,
+  bigSize,
+  mdSize,
+  smSize,
+  mdText,
+  smText,
 ) =>
   StyleSheet.create({
     cardContainer: {
-      width: isLandscapeMode ? screenWidth * 0.55 - 64 : screenWidth - 32,
+      width: isLandscapeMode ? screenWidth * 0.55 - 56 : screenWidth - 32,
       maxWidth: 520,
       backgroundColor: Colors.cardBg[theme],
       borderRadius: 32,
@@ -125,7 +138,7 @@ export const formCardStyle = (
       paddingVertical: 8,
     },
     mainTitle: {
-      fontSize: mdSize(),
+      fontSize: mdSize,
       fontWeight: '700',
       fontFamily: FONT_INTER_BOLD,
       color: Colors.cardText[theme],
@@ -140,7 +153,7 @@ export const formCardStyle = (
     dataTitle: {
       justifyContent: 'flex-start',
       alignItems: 'center',
-      fontSize: mdText(),
+      fontSize: mdText,
       fontWeight: '700',
       fontFamily: FONT_INTER_BOLD,
       color: Colors.cardText[theme],
@@ -163,7 +176,7 @@ export const formCardStyle = (
       minWidth: 0,
       borderColor: 'transparent',
       color: Colors.inputText[theme],
-      fontSize: mdText(),
+      fontSize: mdText,
       fontWeight: '500',
       fontFamily: FONT_INTER_BOLD,
       borderRadius: 12,
@@ -189,11 +202,118 @@ export const formCardStyle = (
       justifyContent: 'space-between',
     },
     linkText: {
-      fontSize: mdText(),
+      fontSize: mdText,
       textDecorationLine: 'underline',
     },
     btnView: {
       width: isLandscapeMode && !ifMobileDevice() ? null : '100%',
       paddingHorizontal: 32,
+    },
+  });
+
+export const postAuthScreenStyle = (
+  screenHeight,
+  screenWidth,
+  theme,
+  isLandscapeMode,
+  Colors,
+  bigSize,
+  mdSize,
+  smSize,
+  mdText,
+  smText,
+) =>
+  StyleSheet.create({
+    container: {
+      flex: isWeb ? null : 1,
+      height: isWeb ? screenHeight : null,
+      backgroundColor: Colors.bgColor[theme],
+    },
+    mainContainer: {
+      flex: isWeb ? null : 1,
+      height: isWeb ? screenHeight : null,
+    },
+    apiLoadingView: {
+      height: screenHeight - (ifMobileDevice() ? 56 : 85),
+      marginTop: ifMobileDevice() ? 56 : 85,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    screenContent: {
+      justifyContent: 'center',
+      alignItems: 'flex-start',
+      paddingHorizontal: isLandscapeMode ? 16 : 8,
+      paddingTop: isLandscapeMode && isDesktopWeb ? 85 : 56,
+      ...Platform.select({
+        native: {
+          marginBottom: 56,
+        },
+      }),
+    },
+    sectionContainer: {
+      marginBottom: smSize,
+    },
+    sectionTitle: {
+      fontSize: bigSize,
+      fontWeight: '700',
+      fontFamily: FONT_INTER_SEMIBOLD,
+      textAlign: 'left',
+      color: Colors.title[theme],
+      paddingHorizontal: 12,
+      paddingVertical: 16,
+      textDecorationLine: 'underline',
+      textDecorationStyle: 'dotted',
+    },
+    dataContainer: {
+      width: '100%', //screenWidth - (isLandscapeMode ? 48 : 0),
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      flexWrap: 'wrap', // isLandscapeMode ? 'nowrap' : 'wrap',
+      marginBottom: smText,
+    },
+    dataTitle: {
+      width: screenWidth * 0.45,
+      maxWidth: isLandscapeMode ? 400 : 300,
+      fontSize: mdText,
+      fontWeight: '700',
+      fontFamily: FONT_INTER_MEDIUM,
+      textAlign: 'left',
+      color: Colors.mdTitle[theme],
+      paddingHorizontal: 12,
+      paddingVertical: 16,
+    },
+    dataContent: {
+      flexDirection: 'row',
+      width: isLandscapeMode ? null : '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    dataText: {
+      fontSize: mdText,
+      fontWeight: '700',
+      fontFamily: FONT_INTER_REGULAR,
+      textAlign: 'center',
+      color: Colors.text[theme],
+      paddingHorizontal: 12,
+      paddingVertical: 16,
+      alignSelf: 'center',
+      alignItems: 'center',
+    },
+    dataInput: {
+      width: screenWidth * 0.5,
+      maxWidth: 300,
+      fontSize: mdText,
+      fontWeight: '700',
+      fontFamily: FONT_INTER_REGULAR,
+      textAlign: 'left',
+      color: Colors.text[theme],
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      ...Platform.select({
+        web: {
+          textOverflow: 'ellipsis',
+        },
+      }),
     },
   });

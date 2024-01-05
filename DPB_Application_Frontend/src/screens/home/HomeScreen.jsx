@@ -1,28 +1,32 @@
 import {
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
   SafeAreaView,
-  ScrollView,
   Text,
+  Pressable,
   View,
+  ScrollView,
+  Platform,
+  KeyboardAvoidingView,
 } from 'react-native';
 import React, {useState} from 'react';
-import DasboardSidePanel from './DasboardSidePanel';
-import ThreeDotsLoader from '../../components/ThreeDotsLoader';
+import {useDispatch} from 'react-redux';
+import DasboardSidePanel from '../dashboard/DasboardSidePanel';
 import useAnimatedSidebar from '../../hooks/useAnimatedSidebar';
-import Header from './Header';
+import Header from '../dashboard/Header';
 import useCommonParams from '../../hooks/useCommonParams';
-import {DASHBOARD_ROUTE} from '../../utils/constants';
-import {DASHBOARD_TITLE, PLEASE_WAIT_TEXT} from '../../utils/content';
+import {HOME_ROUTE} from '../../utils/constants';
+import {HOME_TITLE, PLEASE_WAIT_TEXT} from '../../utils/content';
 import {postAuthScreenStyle} from '../../utils/commonStyles';
+import ThreeDotsLoader from '../../components/ThreeDotsLoader';
 
-const DasboardScreen = () => {
+const HomeScreen = () => {
+  const [isApiLoading, setIsApiLoading] = useState(true);
   const {
     screenHeight,
     screenWidth,
     theme,
+    appColor,
     isLandscapeMode,
+    isLoggedIn,
     Colors,
     bigSize,
     mdSize,
@@ -47,17 +51,17 @@ const DasboardScreen = () => {
     smText,
   );
 
-  const [isApiLoading, setIsApiLoading] = useState(true);
+  const dispatch = useDispatch();
 
   return (
     <SafeAreaView style={[styles.container]}>
       <DasboardSidePanel
-        animatedValue={animatedValue}
         screenHeight={screenHeight}
         screenWidth={screenWidth}
+        animatedValue={animatedValue}
         toggleSidePanel={toggleSidePanel}
         showView={showView}
-        currentScreen={DASHBOARD_ROUTE}
+        currentScreen={HOME_ROUTE}
         panResponder={panResponder}
       />
       <View style={[styles.mainContainer]} {...panResponder?.panHandlers}>
@@ -65,9 +69,9 @@ const DasboardScreen = () => {
           style={[styles.mainContainer]}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <Header
-            headerTitle={DASHBOARD_TITLE}
+            headerTitle={HOME_TITLE}
             toggleSidePanel={toggleSidePanel}
-            currentScreen={DASHBOARD_ROUTE}
+            currentScreen={HOME_ROUTE}
           />
           {isApiLoading ? (
             <View style={styles.apiLoadingView}>
@@ -115,4 +119,4 @@ const DasboardScreen = () => {
   );
 };
 
-export default DasboardScreen;
+export default HomeScreen;

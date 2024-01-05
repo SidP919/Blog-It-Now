@@ -2,23 +2,48 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import ImgButton from '../../components/ImgButton';
 import {FAVICON_ICON, MENU_ICON} from '../../utils/images';
-import {bigSize, getWidth, ifMobileDevice} from '../../utils/utils';
+import {ifMobileDevice, isDesktopWeb} from '../../utils/utils';
 import {FONT_INTER_BOLD} from '../../utils/fontUtils';
 import useCommonParams from '../../hooks/useCommonParams';
 import useCustomNavigate from '../../hooks/useCustomNavigate';
-import {DASHBOARD_ROUTE, DEFAULT_ROUTE} from '../../utils/constants';
+import {DEFAULT_ROUTE} from '../../utils/constants';
+import HeaderLandscape from './HeaderLandscape';
 
-const Header = ({headerTitle, toggleSidePanel}) => {
-  const {theme, isLandscapeMode, isLoggedIn, Colors} = useCommonParams();
+const Header = ({headerTitle, toggleSidePanel, currentScreen}) => {
+  const {
+    screenWidth,
+    screenHeight,
+    theme,
+    isLandscapeMode,
+    isLoggedIn,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
   const {navigate} = useCustomNavigate();
-  const styles = style(theme, Colors);
+  const styles = style(
+    screenWidth,
+    screenHeight,
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  );
 
   const onHomePress = () => {
-    isLoggedIn
-      ? navigate(DASHBOARD_ROUTE, {replace: true})
-      : navigate(DEFAULT_ROUTE, {replace: true});
+    navigate(DEFAULT_ROUTE, {replace: true});
   };
 
+  if (isLandscapeMode && isDesktopWeb) {
+    return <HeaderLandscape currentScreen={currentScreen} />;
+  }
   return (
     <View style={[styles.headerContainer]}>
       <ImgButton
@@ -34,7 +59,7 @@ const Header = ({headerTitle, toggleSidePanel}) => {
         <ImgButton
           onPress={onHomePress}
           source={FAVICON_ICON}
-          size={40}
+          size={32}
           color={Colors.headerLogo[theme]}
         />
       </View>
@@ -44,18 +69,35 @@ const Header = ({headerTitle, toggleSidePanel}) => {
 
 export default Header;
 
-const style = (theme, Colors) =>
+const style = (
+  screenWidth,
+  screenHeight,
+  theme,
+  isLandscapeMode,
+  Colors,
+  bigSize,
+  mdSize,
+  smSize,
+  mdText,
+  smText,
+) =>
   StyleSheet.create({
     headerContainer: {
-      height: ifMobileDevice() ? 64 : 75,
+      height: !isLandscapeMode || ifMobileDevice() ? 56 : 85,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
       backgroundColor: Colors.main[theme],
+      zIndex: 4,
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: 0,
+      paddingHorizontal: 8,
     },
     headerTitle: {
-      width: (getWidth() - 64) * 0.6,
-      fontSize: bigSize(),
+      width: (screenWidth - 56) * 0.6,
+      fontSize: bigSize,
       fontWeight: '700',
       fontFamily: FONT_INTER_BOLD,
       textAlign: 'center',

@@ -39,6 +39,11 @@ const VerifyEmailCard = () => {
     isLandscapeMode,
     isLoggedIn,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   } = useCommonParams();
   const queryParams = useQueryParams();
   const verifyToken = queryParams.get('verifyToken') || null;
@@ -50,6 +55,11 @@ const VerifyEmailCard = () => {
     screenWidth,
     screenHeight,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
   const onVerifyEmail = e => {

@@ -9,6 +9,7 @@ export const isAndroid = Platform.OS === 'android';
 export const isIOS = Platform.OS === 'ios';
 export const isMobileNative = isAndroid || isIOS;
 export const isNotDesktopWeb = isWeb && (isMobileOnly || isTablet); // App running inside browser on Mobile or Tablet
+export const isDesktopWeb = isWeb && !(isMobileOnly || isTablet); // App running inside browser on Mobile or Tablet
 export const isMobileWeb = isWeb && isMobileOnly; // App running inside browser on Mobile
 
 //returns window width and height
@@ -24,6 +25,16 @@ export function ifLandscapeMode() {
   );
 }
 
+// A sanity check or an attempt to ensure
+// window resizing to smaller screen sizes
+// doesn't get considered as a large device.
+function isLargeDeviceSanityCheck() {
+  return (
+    Math.max(getWidth(), getHeight()) > 640 &&
+    Math.min(getWidth(), getHeight()) > 320
+  );
+}
+
 // returns true if app is in Landscape Mode
 export function ifMobileDevice() {
   if (isWeb) {
@@ -36,7 +47,7 @@ export function ifMobileDevice() {
 // returns true if app is running in a web-browser on a large device like Tablet/Desktop/Laptop in Landscape Mode
 export function ifWebLargeLandscapeMode() {
   const {width, height} = Dimensions.get('window');
-  return isWeb && !isMobileOnly && width > height;
+  return isWeb && !isMobileOnly && width > height && isLargeDeviceSanityCheck();
 }
 
 // returns true if app is running in a web-browser on a Mobile device in Landscape Mode
@@ -93,27 +104,42 @@ export function logger(title = 'Logging', ...data) {
  * @returns different size value for small and bigger devices
  */
 export const bigSize = () => {
-  return !ifWebLargeLandscapeMode() && !isTablet && !ifNativeLandscapeMode() // isSmallerDevice
+  return (!ifWebLargeLandscapeMode() &&
+    !isTablet &&
+    !ifNativeLandscapeMode()) ||
+    !isLargeDeviceSanityCheck() // isSmallerDevice
     ? 24
     : 32;
 };
 export const mdSize = () => {
-  return !ifWebLargeLandscapeMode() && !isTablet && !ifNativeLandscapeMode() // isSmallerDevice
+  return (!ifWebLargeLandscapeMode() &&
+    !isTablet &&
+    !ifNativeLandscapeMode()) ||
+    !isLargeDeviceSanityCheck() // isSmallerDevice
     ? 20
     : 28;
 };
 export const smSize = () => {
-  return !ifWebLargeLandscapeMode() && !isTablet && !ifNativeLandscapeMode() // isSmallerDevice
+  return (!ifWebLargeLandscapeMode() &&
+    !isTablet &&
+    !ifNativeLandscapeMode()) ||
+    !isLargeDeviceSanityCheck() // isSmallerDevice
     ? 16
     : 22;
 };
 export const mdText = () => {
-  return !ifWebLargeLandscapeMode() && !isTablet && !ifNativeLandscapeMode() // isSmallerDevice
+  return (!ifWebLargeLandscapeMode() &&
+    !isTablet &&
+    !ifNativeLandscapeMode()) ||
+    !isLargeDeviceSanityCheck() // isSmallerDevice
     ? 14
     : 20;
 };
 export const smText = () => {
-  return !ifWebLargeLandscapeMode() && !isTablet && !ifNativeLandscapeMode() // isSmallerDevice
+  return (!ifWebLargeLandscapeMode() &&
+    !isTablet &&
+    !ifNativeLandscapeMode()) ||
+    !isLargeDeviceSanityCheck() // isSmallerDevice
     ? 10
     : 14;
 };

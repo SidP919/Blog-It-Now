@@ -2,7 +2,7 @@ import {Text, StyleSheet, Pressable, Platform} from 'react-native';
 import React, {useState} from 'react';
 import {FONT_INTER_BOLD} from '../../utils/fontUtils';
 import {DEFAULT_BTN_TEXT} from '../../utils/content';
-import {smSize} from '../../utils/utils';
+import useCommonParams from '../../hooks/useCommonParams';
 
 const ButtonA = ({
   func = () => {},
@@ -12,7 +12,18 @@ const ButtonA = ({
   border = null,
   customStyle = null,
 }) => {
-  const styles = style(bg, color, border, customStyle);
+  const {bigSize, mdSize, smSize, mdText, smText} = useCommonParams();
+  const styles = style(
+    bg,
+    color,
+    border,
+    customStyle,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  );
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePressIn = () => {
@@ -33,7 +44,17 @@ const ButtonA = ({
   );
 };
 
-const style = (bg, color, border, customStyle) =>
+const style = (
+  bg,
+  color,
+  border,
+  customStyle,
+  bigSize,
+  mdSize,
+  smSize,
+  mdText,
+  smText,
+) =>
   StyleSheet.create({
     buttonView: {
       paddingHorizontal: 16,
@@ -49,7 +70,7 @@ const style = (bg, color, border, customStyle) =>
       ...customStyle,
     },
     buttonText: {
-      fontSize: smSize(),
+      fontSize: mdText,
       fontWeight: '700',
       fontFamily: FONT_INTER_BOLD,
       color: color,

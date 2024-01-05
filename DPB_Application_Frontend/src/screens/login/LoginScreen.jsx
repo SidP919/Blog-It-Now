@@ -18,6 +18,11 @@ const LoginScreen = () => {
     isLandscapeMode,
     isLoggedIn,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   } = useCommonParams();
 
   const styles = authScreensStyle(
@@ -26,6 +31,11 @@ const LoginScreen = () => {
     screenWidth,
     isLandscapeMode,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
   const {navigate} = useCustomNavigate();

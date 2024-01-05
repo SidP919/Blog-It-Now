@@ -14,7 +14,7 @@ import {
   GENERIC_ALERT_TITLE,
   MANDATORY_FIELDS_MSG,
 } from '../../utils/content';
-import {GENERIC, bigSize, isWeb, logger} from '../../utils/utils';
+import {GENERIC, isWeb, logger} from '../../utils/utils';
 import useCommonParams from '../../hooks/useCommonParams';
 import webService, {showCustomAlert} from '../../services/web-service';
 import {
@@ -31,8 +31,18 @@ import {formCardStyle} from '../../utils/commonStyles';
 
 const ForgotPwdCard = () => {
   const {navigate} = useCustomNavigate();
-  const {screenHeight, screenWidth, theme, isLandscapeMode, Colors} =
-    useCommonParams();
+  const {
+    screenHeight,
+    screenWidth,
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
 
   const [email, setEmail] = useState('');
 
@@ -42,6 +52,11 @@ const ForgotPwdCard = () => {
     screenWidth,
     screenHeight,
     Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
   );
 
   const onSendPwdResetReq = () => {
@@ -100,7 +115,7 @@ const ForgotPwdCard = () => {
         <View style={[styles.inputContainer]}>
           <Img
             source={EMAIL_ICON}
-            size={bigSize()}
+            size={bigSize}
             color={Colors.inputIcon[theme]}
           />
           <TextInput

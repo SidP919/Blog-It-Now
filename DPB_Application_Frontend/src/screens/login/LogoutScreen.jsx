@@ -1,7 +1,7 @@
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import ImgButton from '../../components/ImgButton';
-import {bigSize, isWeb} from '../../utils/utils';
+import {isWeb} from '../../utils/utils';
 import DasboardSidePanel from '../dashboard/DasboardSidePanel';
 import {logoutHandler} from '../../services/web-service';
 import {LOGOUT_ICON} from '../../utils/images';
@@ -12,11 +12,30 @@ import Header from '../dashboard/Header';
 import {LOGOUT_ROUTE} from '../../utils/constants';
 
 const LogoutScreen = () => {
-  const {screenHeight, screenWidth, theme, isLandscapeMode, Colors} =
-    useCommonParams();
+  const {
+    screenHeight,
+    screenWidth,
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
 
   const {showView, animatedValue, toggleSidePanel} = useAnimatedSidebar();
-  let styles = style(theme, screenHeight, Colors);
+  let styles = style(
+    theme,
+    screenHeight,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  );
 
   return (
     <SafeAreaView style={[styles.container]}>
@@ -39,7 +58,7 @@ const LogoutScreen = () => {
           </Text>
           <ImgButton
             source={LOGOUT_ICON}
-            size={bigSize()}
+            size={bigSize}
             color={Colors.btnText[theme]}
             onPress={logoutHandler}
           />
@@ -49,7 +68,16 @@ const LogoutScreen = () => {
   );
 };
 
-const style = (theme, screenHeight, Colors) =>
+const style = (
+  theme,
+  screenHeight,
+  Colors,
+  bigSize,
+  mdSize,
+  smSize,
+  mdText,
+  smText,
+) =>
   StyleSheet.create({
     container: {
       flex: isWeb ? null : 1,
@@ -64,7 +92,7 @@ const style = (theme, screenHeight, Colors) =>
       alignItems: 'center',
     },
     bigTitle: {
-      fontSize: bigSize(),
+      fontSize: bigSize,
       fontWeight: '700',
       fontFamily: FONT_INTER_SEMIBOLD,
       textAlign: 'center',
