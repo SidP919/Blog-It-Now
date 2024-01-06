@@ -17,6 +17,7 @@ import {
   PROFILE_ROUTE,
   REGISTER_ROUTE,
   SETTINGS_ROUTE,
+  LOGOUT_ROUTE,
 } from '../../utils/constants';
 import {
   ABOUT_US_MENU,
@@ -61,6 +62,38 @@ const HeaderLandscape = ({currentScreen = 'Home'}) => {
     }
   };
 
+  const CENTER_MENUS_ARRAY = [
+    {
+      route: HOME_ROUTE,
+      title: HOME_MENU,
+      isLoggedIn: 0, // 0 signifies isLoggedIn not required
+    },
+    {
+      route: DASHBOARD_ROUTE,
+      title: DASHBOARD_MENU,
+      isLoggedIn: 1, // 1 signifies isLoggedIn needs to be true
+    },
+    {
+      route: EXPLORE_BLOGS_ROUTE,
+      title: EXPLORE_BLOGS_MENU,
+      isLoggedIn: 0,
+    },
+    {
+      route: ABOUT_US_ROUTE,
+      title: ABOUT_US_MENU,
+      isLoggedIn: 0,
+    },
+    {
+      route: CONTACT_US_ROUTE,
+      title: CONTACT_US_MENU,
+      isLoggedIn: 0,
+    },
+  ];
+
+  const AUTH_BUTTONS_ARRAY = [
+    {route: LOGIN_ROUTE, title: LOGIN_BTN_TEXT},
+    {route: REGISTER_ROUTE, title: REGISTER_BTN_TEXT},
+  ];
   return (
     <Pressable
       style={[styles.headerContainer]}
@@ -74,74 +107,33 @@ const HeaderLandscape = ({currentScreen = 'Home'}) => {
       />
       {isLandscapeMode && (
         <View style={[styles.headerMenuView]}>
-          <Pressable onPress={() => goToScreen(HOME_ROUTE)}>
-            <Text
-              style={[
-                styles.headerTitle,
-                currentScreen === HOME_ROUTE && styles.currentScreen,
-              ]}>
-              {HOME_MENU}
-            </Text>
-          </Pressable>
-          {isLoggedIn && (
-            <Pressable onPress={() => goToScreen(DASHBOARD_ROUTE)}>
-              <Text
-                style={[
-                  styles.headerTitle,
-                  currentScreen === DASHBOARD_ROUTE && styles.currentScreen,
-                ]}>
-                {DASHBOARD_MENU}
-              </Text>
-            </Pressable>
-          )}
-          <Pressable onPress={() => goToScreen(EXPLORE_BLOGS_ROUTE)}>
-            <Text
-              style={[
-                styles.headerTitle,
-                currentScreen === EXPLORE_BLOGS_ROUTE && styles.currentScreen,
-              ]}>
-              {EXPLORE_BLOGS_MENU}
-            </Text>
-          </Pressable>
-          <Pressable onPress={() => goToScreen(ABOUT_US_ROUTE)}>
-            <Text
-              style={[
-                styles.headerTitle,
-                currentScreen === ABOUT_US_ROUTE && styles.currentScreen,
-              ]}>
-              {ABOUT_US_MENU}
-            </Text>
-          </Pressable>
-          <Pressable onPress={() => goToScreen(CONTACT_US_ROUTE)}>
-            <Text
-              style={[
-                styles.headerTitle,
-                currentScreen === CONTACT_US_ROUTE && styles.currentScreen,
-              ]}>
-              {CONTACT_US_MENU}
-            </Text>
-          </Pressable>
+          {CENTER_MENUS_ARRAY.map(menu => {
+            return menu.isLoggedIn === 0 || isLoggedIn ? (
+              <CenterMenu
+                goToScreen={goToScreen}
+                route={menu.route}
+                headerTitle={menu.title}
+                headerTitleStyle={styles.headerTitle}
+                currentScreen={currentScreen}
+                currentScreenStyle={styles.currentScreen}
+              />
+            ) : null;
+          })}
         </View>
       )}
       <View>
         {!isLoggedIn && (
           <View style={[styles.headerMenuView]}>
-            <ButtonA
-              func={() => goToScreen(LOGIN_ROUTE)}
-              bg={Colors.btnBgColor[theme]}
-              color={Colors.btnText[theme]}
-              border={Colors.border[theme]}
-              title={LOGIN_BTN_TEXT}
-              customStyle={styles.headerTitle}
-            />
-            <ButtonA
-              func={() => goToScreen(REGISTER_ROUTE)}
-              bg={Colors.btnBgColor[theme]}
-              color={Colors.btnText[theme]}
-              border={Colors.border[theme]}
-              title={REGISTER_BTN_TEXT}
-              customStyle={styles.headerTitle}
-            />
+            {AUTH_BUTTONS_ARRAY.map(button => (
+              <ButtonA
+                func={() => goToScreen(button.route)}
+                bg={Colors.btnBgColor[theme]}
+                color={Colors.btnText[theme]}
+                border={Colors.border[theme]}
+                title={button.title}
+                customStyle={styles.headerTitle}
+              />
+            ))}
           </View>
         )}
         {isLoggedIn && (
@@ -160,10 +152,10 @@ const HeaderLandscape = ({currentScreen = 'Home'}) => {
               <Pressable onPress={() => setShowProfileSubMenu(false)}>
                 <ProfileMenu
                   goToScreen={goToScreen}
-                  theme={theme}
-                  Colors={Colors}
                   showProfileSubMenu={showProfileSubMenu}
                   setShowProfileSubMenu={setShowProfileSubMenu}
+                  currentScreen={currentScreen}
+                  styles={styles}
                 />
               </Pressable>
             </Modal>
@@ -174,34 +166,73 @@ const HeaderLandscape = ({currentScreen = 'Home'}) => {
   );
 };
 
-const ProfileMenu = ({goToScreen, theme, Colors, setShowProfileSubMenu}) => {
-  const {bigSize, mdSize, smSize, mdText, smText} = useCommonParams();
-  const styles = style(theme, Colors, bigSize, mdSize, smSize, mdText, smText);
+const CenterMenu = ({
+  goToScreen,
+  route,
+  headerTitle,
+  headerTitleStyle,
+  currentScreen,
+  currentScreenStyle,
+}) => {
+  const [hoverOn, setHoverOn] = useState('');
+  return (
+    <Pressable
+      onPress={() => goToScreen(route)}
+      onHoverIn={() => setHoverOn(route)}
+      onHoverOut={() => setHoverOn('')}>
+      <Text
+        style={[
+          headerTitleStyle,
+          [currentScreen, hoverOn].includes(route) && currentScreenStyle,
+        ]}>
+        {headerTitle}
+      </Text>
+    </Pressable>
+  );
+};
+
+const ProfileMenu = ({
+  goToScreen,
+  setShowProfileSubMenu,
+  currentScreen,
+  styles,
+}) => {
+  const [hoverOn, setHoverOn] = useState('');
+  const PROFILE_MENUS_ARRAY = [
+    {route: PROFILE_ROUTE, title: MY_PROFILE_MENU},
+    {route: SETTINGS_ROUTE, title: SETTINGS_MENU},
+    {route: LOGOUT_ROUTE, title: LOG_OUT_MENU},
+  ];
   const onLogoutPress = () => {
     setShowProfileSubMenu(false);
     showCustomAlert(LOG_OUT_TITLE, LOG_OUT_MSG, LOG_OUT);
   };
+
   return (
     <View style={[styles.subMenuView]}>
-      <Pressable
-        style={[styles.subMenuItem]}
-        onPress={() => goToScreen(PROFILE_ROUTE)}>
-        <Text style={[styles.headerTitle, styles.subMenuTitle]}>
-          {MY_PROFILE_MENU}
-        </Text>
-      </Pressable>
-      <Pressable
-        style={[styles.subMenuItem]}
-        onPress={() => goToScreen(SETTINGS_ROUTE)}>
-        <Text style={[styles.headerTitle, styles.subMenuTitle]}>
-          {SETTINGS_MENU}
-        </Text>
-      </Pressable>
-      <Pressable onPress={onLogoutPress}>
-        <Text style={[styles.headerTitle, styles.subMenuTitle]}>
-          {LOG_OUT_MENU}
-        </Text>
-      </Pressable>
+      {PROFILE_MENUS_ARRAY.map(menu => {
+        return (
+          <Pressable
+            style={[styles.subMenuItem]}
+            onPress={() =>
+              menu.route !== LOGOUT_ROUTE
+                ? goToScreen(menu.route)
+                : onLogoutPress()
+            }
+            onHoverIn={() => setHoverOn(menu.route)}
+            onHoverOut={() => setHoverOn('')}>
+            <Text
+              style={[
+                styles.headerTitle,
+                styles.subMenuTitle,
+                [currentScreen, hoverOn].includes(menu.route) &&
+                  styles.currentScreen,
+              ]}>
+              {menu.title}
+            </Text>
+          </Pressable>
+        );
+      })}
     </View>
   );
 };
@@ -263,5 +294,6 @@ const style = (theme, Colors, bigSize, mdSize, smSize, mdText, smText) =>
     },
     currentScreen: {
       textDecorationLine: 'underline',
+      textDecorationStyle: 'dotted',
     },
   });
