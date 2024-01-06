@@ -107,9 +107,10 @@ const HeaderLandscape = ({currentScreen = 'Home'}) => {
       />
       {isLandscapeMode && (
         <View style={[styles.headerMenuView]}>
-          {CENTER_MENUS_ARRAY.map(menu => {
+          {CENTER_MENUS_ARRAY.map((menu, i) => {
             return menu.isLoggedIn === 0 || isLoggedIn ? (
               <CenterMenu
+                key={`${menu.title}${i}`}
                 goToScreen={goToScreen}
                 route={menu.route}
                 headerTitle={menu.title}
@@ -124,8 +125,9 @@ const HeaderLandscape = ({currentScreen = 'Home'}) => {
       <View>
         {!isLoggedIn && (
           <View style={[styles.headerMenuView]}>
-            {AUTH_BUTTONS_ARRAY.map(button => (
+            {AUTH_BUTTONS_ARRAY.map((button, i) => (
               <ButtonA
+                key={`${button.title}${i}`}
                 func={() => goToScreen(button.route)}
                 bg={Colors.btnBgColor[theme]}
                 color={Colors.btnText[theme]}
@@ -210,9 +212,10 @@ const ProfileMenu = ({
 
   return (
     <View style={[styles.subMenuView]}>
-      {PROFILE_MENUS_ARRAY.map(menu => {
+      {PROFILE_MENUS_ARRAY.map((menu, i) => {
         return (
           <Pressable
+            key={`${menu.title}${i}`}
             style={[styles.subMenuItem]}
             onPress={() =>
               menu.route !== LOGOUT_ROUTE
