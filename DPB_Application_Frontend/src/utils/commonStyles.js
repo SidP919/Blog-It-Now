@@ -4,6 +4,7 @@ import {
   isWeb,
   ifMobileDevice,
   isDesktopWeb,
+  ifTabletLandscapeMode,
 } from './utils';
 import {
   FONT_INTER_BOLD,
@@ -234,8 +235,9 @@ export const postAuthScreenStyle = (
       height: isWeb ? screenHeight : null,
     },
     apiLoadingView: {
-      height: screenHeight - (ifMobileDevice() ? 56 : 85),
-      marginTop: ifMobileDevice() ? 56 : 85,
+      height:
+        screenHeight - (ifMobileDevice() || ifTabletLandscapeMode() ? 56 : 85),
+      marginTop: ifMobileDevice() || ifTabletLandscapeMode() ? 56 : 85,
       justifyContent: 'center',
       alignItems: 'center',
     },

@@ -2,7 +2,12 @@ import React, {useState} from 'react';
 import {Modal, Pressable, StyleSheet, Text, View} from 'react-native';
 import ImgButton from '../../components/ImgButton';
 import {BRAND_ICON, MENU_ICON, PROFILE_ICON} from '../../utils/images';
-import {LOG_OUT, ifMobileDevice, isNotDesktopWeb} from '../../utils/utils';
+import {
+  LOG_OUT,
+  ifMobileDevice,
+  ifTabletLandscapeMode,
+  isNotDesktopWeb,
+} from '../../utils/utils';
 import {FONT_INTER_BOLD} from '../../utils/fontUtils';
 import useCommonParams from '../../hooks/useCommonParams';
 import useCustomNavigate from '../../hooks/useCustomNavigate';
@@ -51,7 +56,16 @@ const HeaderLandscape = ({currentScreen = 'Home'}) => {
   const [showProfileSubMenu, setShowProfileSubMenu] = useState(false);
   const {navigate} = useCustomNavigate();
 
-  const styles = style(theme, Colors, bigSize, mdSize, smSize, mdText, smText);
+  const styles = style(
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  );
 
   const goToScreen = screenName => {
     setShowProfileSubMenu(false);
@@ -242,10 +256,22 @@ const ProfileMenu = ({
 
 export default HeaderLandscape;
 
-const style = (theme, Colors, bigSize, mdSize, smSize, mdText, smText) =>
+const style = (
+  theme,
+  isLandscapeMode,
+  Colors,
+  bigSize,
+  mdSize,
+  smSize,
+  mdText,
+  smText,
+) =>
   StyleSheet.create({
     headerContainer: {
-      height: ifMobileDevice() ? 56 : 85,
+      height:
+        !isLandscapeMode || ifMobileDevice() || ifTabletLandscapeMode()
+          ? 56
+          : 85,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',

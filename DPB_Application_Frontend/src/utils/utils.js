@@ -60,7 +60,6 @@ export function ifWebSmallLandscapeMode() {
 
 // returns true if app is running on Tablet in LandscapeMode
 export function ifTabletLandscapeMode() {
-  logger('isTablet', isTablet);
   return ifLandscapeMode() && (isTablet || ifNativeLandscapeMode());
 }
 

@@ -2,7 +2,11 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import ImgButton from '../../components/ImgButton';
 import {FAVICON_ICON, MENU_ICON} from '../../utils/images';
-import {ifMobileDevice, isDesktopWeb} from '../../utils/utils';
+import {
+  ifMobileDevice,
+  ifTabletLandscapeMode,
+  isDesktopWeb,
+} from '../../utils/utils';
 import {FONT_INTER_BOLD} from '../../utils/fontUtils';
 import useCommonParams from '../../hooks/useCommonParams';
 import useCustomNavigate from '../../hooks/useCustomNavigate';
@@ -83,7 +87,10 @@ const style = (
 ) =>
   StyleSheet.create({
     headerContainer: {
-      height: !isLandscapeMode || ifMobileDevice() ? 56 : 85,
+      height:
+        !isLandscapeMode || ifMobileDevice() || ifTabletLandscapeMode()
+          ? 56
+          : 85,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
