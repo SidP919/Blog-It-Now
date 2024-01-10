@@ -85,6 +85,7 @@ import {
   setAndroidDownloadLink,
   setIosDownloadLink,
 } from '../../redux/slices/OtherDataSlice';
+import {nativeAppLinksStyle} from '../../utils/commonStyles';
 
 const DasboardSidePanel = ({
   animatedValue,
@@ -120,6 +121,19 @@ const DasboardSidePanel = ({
     screenWidth,
     screenHeight,
     showView,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  );
+
+  const nativeLinkStyles = nativeAppLinksStyle(
+    theme,
+    screenHeight,
+    screenWidth,
     isLandscapeMode,
     Colors,
     bigSize,
@@ -388,17 +402,21 @@ const DasboardSidePanel = ({
           </Pressable>
         )}
         {isWeb && (
-          <View style={[styles.nativeLinksContainer]}>
+          <View
+            style={[
+              nativeLinkStyles.nativeLinksContainer,
+              styles.nativeLinksContainer,
+            ]}>
             {androidLink ? (
               <Pressable
-                style={[styles.nativeLinkBtn]}
+                style={[nativeLinkStyles.nativeLinkBtn]}
                 onPress={() => openLink(androidLink)}>
                 <Img
                   source={ANDROID_ICON}
                   color={Colors.sideBarHeaderLogo[theme]}
                   size={bigSize * 1.5}
                 />
-                <Text style={[styles.nativeLinkText]}>
+                <Text style={[nativeLinkStyles.nativeLinkText]}>
                   {ANDROID_DOWNLOAD_TEXT}
                 </Text>
               </Pressable>
@@ -407,14 +425,16 @@ const DasboardSidePanel = ({
             )}
             {iosLink ? (
               <Pressable
-                style={[styles.nativeLinkBtn]}
+                style={[nativeLinkStyles.nativeLinkBtn]}
                 onPress={() => openLink(iosLink)}>
                 <Img
                   source={IOS_ICON}
                   color={Colors.sideBarHeaderLogo[theme]}
                   size={bigSize * 1.5}
                 />
-                <Text style={[styles.nativeLinkText]}>{IOS_DOWNLOAD_TEXT}</Text>
+                <Text style={[nativeLinkStyles.nativeLinkText]}>
+                  {IOS_DOWNLOAD_TEXT}
+                </Text>
               </Pressable>
             ) : (
               <></>
@@ -518,31 +538,6 @@ const style = (
     },
     nativeLinksContainer: {
       flex: 1,
-      height: '100%',
-      flexWrap: 'wrap',
-      paddingTop: 32,
-      paddingHorizontal: 16,
-      gap: smSize,
-      justifyContent: 'flex-end',
-      alignItems: 'center',
-    },
-    nativeLinkBtn: {
-      maxWidth: isLandscapeMode && !ifMobileDevice() ? 240 : 180,
-      flexDirection: 'row',
-      borderColor: Colors.border[theme],
-      borderWidth: 2,
-      borderRadius: 32,
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-    nativeLinkText: {
-      fontSize: mdText,
-      fontWeight: '700',
-      fontFamily: FONT_INTER_BOLD,
-      textAlign: 'left',
-      color: Colors.btnText[theme],
-      paddingVertical: 8,
-      paddingRight: 20,
     },
     profileTitle: {flex: 1},
   });

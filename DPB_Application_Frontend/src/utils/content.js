@@ -154,6 +154,14 @@ export const VERIFY_EMAIL_TOAST_FAILURE_MSG =
 
 // HomeScreen content
 export const HOME_TITLE = APP_NAME;
+export const DEVELOPER_NAME = 'Sidharth Pandey';
+export const DEVELOPED_BY = `Developed By ${DEVELOPER_NAME}`;
+export const DEVELOPED_FOR =
+  'Developed For Those Who\nExplore-Learn-Apply-Fail/Succeed\nBut Keep Trying Again or Improving upon it.';
+export const THOSE_TEXT = 'Those';
+export const YOU_TEXT = 'You😊 ';
+export const DEFAULT_CREATOR_QUOTE =
+  'Never Forget This. Yes. That You Are Unstoppable.';
 
 // DashboardScreen content
 export const DASHBOARD_TITLE = 'DASHBOARD';

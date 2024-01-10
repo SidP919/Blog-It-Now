@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Modal, Pressable, StyleSheet, Text, View} from 'react-native';
+import {isWindows, isChrome, isEdge} from 'react-device-detect';
 import ImgButton from '../../components/ImgButton';
 import {BRAND_ICON, MENU_ICON, PROFILE_ICON} from '../../utils/images';
 import {
@@ -43,6 +44,8 @@ import {showCustomAlert} from '../../services/web-service';
 
 const HeaderLandscape = ({currentScreen = 'Home'}) => {
   const {
+    screenHeight,
+    screenWidth,
     theme,
     isLandscapeMode,
     isLoggedIn,
@@ -57,6 +60,8 @@ const HeaderLandscape = ({currentScreen = 'Home'}) => {
   const {navigate} = useCustomNavigate();
 
   const styles = style(
+    screenHeight,
+    screenWidth,
     theme,
     isLandscapeMode,
     Colors,
@@ -257,6 +262,8 @@ const ProfileMenu = ({
 export default HeaderLandscape;
 
 const style = (
+  screenHeight,
+  screenWidth,
   theme,
   isLandscapeMode,
   Colors,
@@ -282,6 +289,7 @@ const style = (
       right: 0,
       top: 0,
       paddingHorizontal: 16,
+      width: screenWidth - (isWindows ? (isChrome ? 21 : isEdge ? 16 : 4) : 0),
     },
     headerTitle: {
       fontSize: mdText,
