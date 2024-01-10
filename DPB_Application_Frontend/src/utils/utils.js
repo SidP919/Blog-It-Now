@@ -58,6 +58,11 @@ export function ifWebSmallLandscapeMode() {
   );
 }
 
+// returns true if app is running on Tablet device
+export function ifTablet() {
+  return isTablet || ifNativeLandscapeMode();
+}
+
 // returns true if app is running on Tablet in LandscapeMode
 export function ifTabletLandscapeMode() {
   return ifLandscapeMode() && (isTablet || ifNativeLandscapeMode());
@@ -115,8 +120,8 @@ export const mdSize = () => {
     !isTablet &&
     !ifNativeLandscapeMode()) ||
     !isLargeDeviceSanityCheck() // isSmallerDevice
-    ? 20
-    : 28;
+    ? 18
+    : 24;
 };
 export const smSize = () => {
   return (!ifWebLargeLandscapeMode() &&
