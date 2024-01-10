@@ -352,8 +352,8 @@ const getBlogById = async (req, res) => {
           "Required information/fields is/are missing! Please provide it & try again.",
       });
     }
-
-    const blog = await Blog.findById(blogId);
+    let blog;
+    blog = await Blog.findById(blogId);
 
     if (!blog) {
       return res.status(404).json({
@@ -362,19 +362,26 @@ const getBlogById = async (req, res) => {
       });
     }
 
-    const blogData = {
-      ...blog._doc,
+    blog = {
+      title: blog.title,
       content: markdown.render(blog.content),
+      author: blog.author,
+      category: blog.category,
       noOfLikes: blog.likes?.length,
       noOfDislikes: blog.dislikes?.length,
-      likes: undefined,
-      dislikes: undefined,
+      noOfComments: blog.comments?.length,
+      blogThumbnail: blog.blogThumbnail,
+      blogVideo: blog.blogVideo,
+      published: blog.published,
+      tags: blog.tags,
+      createdAt: blog.createdAt,
+      updatedAt: blog.updatedAt,
     };
 
     res.status(200).json({
       success: true,
       message: "Blog data has been fetched successfully.",
-      blogData,
+      blog,
     });
   } catch (error) {
     console.error(error);
