@@ -16,7 +16,7 @@ export async function getWelcomeQuote() {
     // logger('welcomeQuote:', welcomeQuote);
     return ['Baba Ranchod Das - ', welcomeQuote.content];
   } else {
-    ['Baba Ranchod Das - ', 'Never Forget. Yes. You are Unstoppable!'];
+    ['Baba Ranchod Das - ', DEFAULT_CREATOR_QUOTE];
   }
 }
 
