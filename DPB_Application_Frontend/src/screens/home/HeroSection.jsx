@@ -32,6 +32,7 @@ import {
   ifWebLargeLandscapeMode,
   ifWebSmallLandscapeMode,
   isWeb,
+  openLink,
 } from '../../utils/utils';
 import {
   getAndroidDownloadLink,
