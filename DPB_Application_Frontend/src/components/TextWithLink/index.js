@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, Pressable, StyleSheet} from 'react-native';
+import {Text, Pressable, StyleSheet, View} from 'react-native';
 import {openLink} from '../../utils/utils';
 import useCommonParams from '../../hooks/useCommonParams';
 
@@ -9,31 +9,36 @@ const TextWithLink = ({
   url = '/',
   onPressDoThis = null,
   customStyle,
+  linkColor,
 }) => {
   const {theme, Colors} = useCommonParams();
-  const styles = style(theme, customStyle, Colors);
+  const styles = style(theme, customStyle, Colors, linkColor);
   const textArr = text.split(' ');
   return (
-    <Text style={[styles.container, styles.customStyle]}>
+    <Text style={[styles.customStyle, styles.container]}>
       {textArr.map((item, index) => {
-        const currWord = item.replace(/[^\w]/, '');
-        if (currWord === word.trim()) {
+        const currWord = item.replace(/[^\w-.]/, '');
+        if (word.trim().includes(currWord)) {
           return (
             <Pressable
               key={index}
-              onPress={() => (onPressDoThis ? onPressDoThis() : openLink(url))}
+              onPress={e => (onPressDoThis ? onPressDoThis(e) : openLink(url))}
               activeOpacity={0.5}
-              style={[styles.linkButton]}>
-              <Text style={[styles.linkText]}>{currWord}</Text>
-              {index !== textArr.length - 1 ? <Text> </Text> : <Text>.</Text>}
+              style={[styles.textContainer]}>
+              <Text style={[styles.linkText, styles.otherText]}>
+                {currWord}
+                {index !== textArr.length - 1 && ' '}
+              </Text>
             </Pressable>
           );
         } else {
           return (
-            <Text key={index}>
-              {item}
-              {index !== textArr.length - 1 && ' '}
-            </Text>
+            <View key={index} style={[styles.textContainer]}>
+              <Text style={[styles.otherText]}>
+                {item}
+                {index !== textArr.length - 1 && ' '}
+              </Text>
+            </View>
           );
         }
       })}
@@ -41,17 +46,24 @@ const TextWithLink = ({
   );
 };
 
-const style = (theme, customStyle, Colors) =>
+const style = (theme, customStyle, Colors, linkColor) =>
   StyleSheet.create({
     container: {
       margin: 4,
     },
-    linkButton: {
-      flexDirection: 'row',
+    textContainer: {
+      display: 'inline',
     },
     linkText: {
       textDecorationLine: 'underline',
-      color: Colors.linkColor[theme],
+      color: linkColor ? linkColor : Colors.linkColor[theme],
+    },
+    otherText: {
+      paddingHorizontal: 0,
+      fontSize: customStyle.fontSize,
+      fontWeight: customStyle.fontWeight,
+      fontFamily: customStyle.fontFamily,
+      color: customStyle.color,
     },
     customStyle: {
       ...customStyle,
