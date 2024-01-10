@@ -104,12 +104,15 @@ const style = (
     },
     headerTitle: {
       width: (screenWidth - 56) * 0.6,
-      fontSize: bigSize,
+      fontSize: mdSize,
       fontWeight: '700',
       fontFamily: FONT_INTER_BOLD,
       textAlign: 'center',
       color: Colors.headerTitle[theme],
       paddingHorizontal: 12,
-      paddingVertical: 16,
+      paddingVertical:
+        !isLandscapeMode || ifMobileDevice() || ifTabletLandscapeMode()
+          ? 8
+          : 16,
     },
   });
