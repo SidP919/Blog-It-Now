@@ -20,8 +20,10 @@ const {
 const {
   getSortedBlogs,
   searchBlogs,
+  getTopBlogs,
 } = require("../controllers/filterBlogsControllers");
 const isBlogVisible = require("../middleware/isBlogVisible");
+const isAdmin = require("../middleware/isAdmin");
 
 const router = express.Router();
 
@@ -75,6 +77,14 @@ router.get("/getComments/:blogId", getCommentsForBlog);
 // filter blogs routes
 router.get("/getBlogs/:sortBy", getSortedBlogs);
 router.get("/searchBlogs", searchBlogs);
+router.get("/getTopBlogs", getTopBlogs);
+router.get(
+  "/getTopBlogsWithCount/:blogCount",
+  authenticate,
+  isVerifiedUser,
+  isAdmin,
+  getTopBlogs
+);
 
 // like/dislike blogs/comments
 router.put("/likeDislike", authenticate, isVerifiedUser, likeDislike);

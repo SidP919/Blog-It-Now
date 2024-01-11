@@ -1,5 +1,8 @@
 const Blog = require("../models/blogSchema");
-const { countMatchingWords } = require("../utils/utils");
+const {
+  countMatchingWords,
+  calculateLikesToDislikeRatio,
+} = require("../utils/utils");
 
 /****************************************************************************************
  * @GET_BLOGS_BY_CATEGORY_OR_DATE
@@ -156,7 +159,96 @@ const searchBlogs = async (req, res) => {
   }
 };
 
+/****************************************************************************************
+ * @GET_TOP_BLOGS
+ * @route http://localhost:4000/api/v1/blogs/getTopBlogs
+ * @requestType GET
+ * @description Get Top Blogs Controller for finding top blogs using our own custom algorithm
+ * @parameters null
+ * @returns JSON object( containing response message, response data)
+ **************************************************************************************/
+const getTopBlogs = async (req, res) => {
+  try {
+    let blogCount = req.params?.blogCount;
+    if (!(blogCount && blogCount <= 0)) {
+      blogCount = 10;
+    }
+    // Fetch all blogs from the database
+    const allBlogs = await Blog.find({ published: true }).sort({
+      createdAt: -1,
+    });
+
+    // Calculate a ranking score for each blog based on the specified conditions
+    const rankedBlogs = allBlogs.map((blog) => {
+      const timeDifference = Math.abs(new Date() - new Date(blog.createdAt));
+      const daysApart = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+      let rankScore;
+
+      if (daysApart <= 10) {
+        // Condition 1
+        rankScore = blog.likes.length;
+      } else {
+        // Condition 2
+        const likesToDislikeRatio = calculateLikesToDislikeRatio(
+          blog.likes.length,
+          blog.dislikes.length
+        );
+        rankScore = likesToDislikeRatio;
+      }
+
+      // Condition 3
+      if (isNaN(rankScore) || rankScore <= 0) {
+        rankScore =
+          blog.likes.length +
+          calculateLikesToDislikeRatio(
+            blog.likes.length,
+            blog.dislikes.length
+          ) *
+            2;
+      }
+
+      // Condition 4
+      if (isNaN(rankScore) || rankScore <= 0) {
+        rankScore = -daysApart; // Negative to sort newer blogs higher
+      }
+
+      return { blog, rankScore };
+    });
+
+    // Sort blogs based on the rankScore in descending order
+    const sortedBlogs = rankedBlogs.sort((a, b) => b.rankScore - a.rankScore);
+
+    // Return the top 10 blogs
+    const topBlogs = sortedBlogs.slice(0, blogCount).map((item) => {
+      const blog = item.blog;
+      return {
+        _id: blog._id,
+        title: blog.title,
+        author: blog.author.fullname,
+        category: blog.category,
+        likesCount: blog.likes?.length,
+        dislikesCount: blog.dislikes?.length,
+        blogThumbnail: blog.blogThumbnail,
+      };
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Top blogs have been fetched successfully.",
+      topBlogs: topBlogs,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(405).json({
+      success: false,
+      message: "Error occurred while fetching top blogs.",
+    });
+  }
+};
+
 module.exports = {
   getSortedBlogs,
   searchBlogs,
+  getTopBlogs,
 };

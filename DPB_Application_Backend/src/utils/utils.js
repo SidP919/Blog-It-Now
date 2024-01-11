@@ -1,4 +1,3 @@
-
 // Helper function to count matching words or characters in a string
 function countMatchingWords(str1, str2) {
   const words1 = str1.split(/\s+/);
@@ -10,6 +9,12 @@ function countMatchingWords(str1, str2) {
   return commonWords.length;
 }
 
+// Helper function to calculate likes-to-dislike ratio
+function calculateLikesToDislikeRatio(likes, dislikes) {
+  return dislikes === 0 ? likes : likes / dislikes;
+}
+
 module.exports = {
   countMatchingWords,
+  calculateLikesToDislikeRatio,
 };
