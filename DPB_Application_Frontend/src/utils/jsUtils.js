@@ -9,14 +9,19 @@ export const getVisibleFullName = fullname => {
 };
 
 export async function getWelcomeQuote() {
-  const welcomeQuote = await fetch(
-    'https://api.quotable.io/random?tags=famous-quotes&maxLength=48',
-  ).then(res => res.json());
-  if (welcomeQuote?.content) {
-    // logger('welcomeQuote:', welcomeQuote);
-    return ['Baba Ranchod Das - ', welcomeQuote.content];
-  } else {
-    ['Baba Ranchod Das - ', DEFAULT_CREATOR_QUOTE];
+  try {
+    const welcomeQuote = await fetch(
+      'https://api.quotable.io/random?tags=famous-quotes&maxLength=48',
+    )
+      .then(res => res.json())
+      .catch(err => logger('Error while fetching Welcome quote', err));
+    if (welcomeQuote?.content) {
+      return ['Baba Ranchod Das - ', welcomeQuote.content];
+    } else {
+      return ['Baba Ranchod Das - ', DEFAULT_CREATOR_QUOTE];
+    }
+  } catch (error) {
+    logger('Error in getWelcomeQuote()', error);
   }
 }
 
@@ -24,13 +29,15 @@ export async function getCreatorQuote() {
   try {
     const creatorQuote = await fetch(
       `${PROD_URL}${API_ID}${GET_OTHER_DATA}?key=CREATOR_QUOTE`,
-    ).then(res => res.json());
+    )
+      .then(res => res.json())
+      .catch(err => logger("Error while fetching Creator's quote", err));
     if (creatorQuote) {
       return creatorQuote.value;
     } else {
       return DEFAULT_CREATOR_QUOTE;
     }
   } catch (error) {
-    console.error(error);
+    logger('Error in getCreatorQuote();', error);
   }
 }

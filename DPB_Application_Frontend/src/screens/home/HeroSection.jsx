@@ -111,14 +111,21 @@ const HeroSection = () => {
         <Img
           source={BRAND_LOGO}
           color={Colors.headerLogo[theme]}
-          size={isLandscapeMode ? screenWidth * 0.35 : screenHeight * 0.23}
+          size={
+            isLandscapeMode
+              ? ifWebSmallLandscapeMode()
+                ? screenHeight * 0.65
+                : screenWidth * 0.35
+              : screenHeight * 0.23
+          }
         />
       </View>
       <ScrollView
         contentContainerStyle={[
           styles.subContainer,
           heroStyles.heroContentSubContainer,
-        ]}>
+        ]}
+        showsVerticalScrollIndicator={true}>
         <Text style={[styles.bigTitle, heroStyles.heroBigTitle]}>
           {APP_NAME}
         </Text>

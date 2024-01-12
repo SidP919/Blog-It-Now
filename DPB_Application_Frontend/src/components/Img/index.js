@@ -10,10 +10,20 @@ const Img = ({
   height = null,
   customStyle = null,
 }) => {
-  const {bigSize, mdSize, smSize, mdText, smText} = useCommonParams();
+  const {
+    screenHeight,
+    isLandscapeMode,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
   const imgWidth = width === null ? size : width;
   const imgHeight = height === null ? size : height;
   const styles = style(
+    screenHeight,
+    isLandscapeMode,
     imgWidth,
     imgHeight,
     customStyle,
@@ -33,6 +43,8 @@ const Img = ({
 export default Img;
 
 const style = (
+  screenHeight,
+  isLandscapeMode,
   imgWidth,
   imgHeight,
   customStyle,
@@ -49,7 +61,13 @@ const style = (
       paddingHorizontal: mdSize / 2,
       paddingVertical: smText / 2,
       justifyContent: 'center',
+      maxHeight: screenHeight - mdSize,
       ...customStyle,
     },
-    imgStyle: {width: imgWidth, height: imgHeight, resizeMode: 'contain'},
+    imgStyle: {
+      width: imgWidth,
+      height: imgHeight,
+      resizeMode: 'contain',
+      maxHeight: screenHeight - mdSize * 2,
+    },
   });

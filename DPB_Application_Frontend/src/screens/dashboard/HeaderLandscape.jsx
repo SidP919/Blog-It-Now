@@ -289,7 +289,8 @@ const style = (
       right: 0,
       top: 0,
       paddingHorizontal: 16,
-      width: screenWidth - (isWindows ? (isChrome ? 21 : isEdge ? 16 : 4) : 0),
+      width: screenWidth - (isWindows ? (isChrome ? 17 : isEdge ? 16 : 4) : 0),
+      minWidth: 304,
     },
     headerTitle: {
       fontSize: mdText,

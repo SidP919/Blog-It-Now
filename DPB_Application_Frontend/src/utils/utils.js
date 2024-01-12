@@ -19,10 +19,7 @@ export const getHeight = () => Dimensions.get('window').height - 1;
 // returns true if app is in Landscape Mode
 export function ifLandscapeMode() {
   const {width, height} = Dimensions.get('window');
-  return (
-    width > height &&
-    (isWeb ? ifWebLargeLandscapeMode() || ifWebSmallLandscapeMode() : true)
-  );
+  return width > height;
 }
 
 // A sanity check or an attempt to ensure
@@ -30,7 +27,7 @@ export function ifLandscapeMode() {
 // doesn't get considered as a large device.
 function isLargeDeviceSanityCheck() {
   return (
-    Math.max(getWidth(), getHeight()) > 640 &&
+    Math.max(getWidth(), getHeight()) > 956 &&
     Math.min(getWidth(), getHeight()) > 320
   );
 }

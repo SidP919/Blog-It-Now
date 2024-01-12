@@ -1,10 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {isWindows, isChrome, isEdge} from 'react-device-detect';
 import ImgButton from '../../components/ImgButton';
 import {FAVICON_ICON, MENU_ICON} from '../../utils/images';
 import {
   ifMobileDevice,
   ifTabletLandscapeMode,
+  ifWebLargeLandscapeMode,
   isDesktopWeb,
 } from '../../utils/utils';
 import {FONT_INTER_BOLD} from '../../utils/fontUtils';
@@ -45,7 +47,7 @@ const Header = ({headerTitle, toggleSidePanel, currentScreen}) => {
     navigate(DEFAULT_ROUTE, {replace: true});
   };
 
-  if (isLandscapeMode && isDesktopWeb) {
+  if (isLandscapeMode && isDesktopWeb && ifWebLargeLandscapeMode()) {
     return <HeaderLandscape currentScreen={currentScreen} />;
   }
   return (
@@ -101,6 +103,8 @@ const style = (
       right: 0,
       top: 0,
       paddingHorizontal: 8,
+      width: screenWidth - (isWindows ? (isChrome ? 17 : isEdge ? 16 : 4) : 0),
+      minWidth: 304,
     },
     headerTitle: {
       width: (screenWidth - 56) * 0.6,

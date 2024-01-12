@@ -11,6 +11,7 @@ import ImgButton from '../../components/ImgButton';
 import Img from '../../components/Img';
 import {
   ifMobileDevice,
+  ifWebLargeLandscapeMode,
   ifWebSmallLandscapeMode,
   isDesktopWeb,
   isWeb,
@@ -191,14 +192,16 @@ const DasboardSidePanel = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (isLandscapeMode && isDesktopWeb) {
+  if (isLandscapeMode && isDesktopWeb && ifWebLargeLandscapeMode()) {
     return null;
   }
   return (
     <Animated.View
       style={[styles.sideContainer]}
       {...panResponder?.panHandlers}>
-      <ScrollView contentContainerStyle={[styles.sideContainerScrollView]}>
+      <ScrollView
+        contentContainerStyle={[styles.sideContainerScrollView]}
+        showsVerticalScrollIndicator={true}>
         <View style={[styles.sideSection, styles.logoSection]}>
           <Img
             source={BRAND_ICON}

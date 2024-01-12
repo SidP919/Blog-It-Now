@@ -5,6 +5,7 @@ import {
   ifMobileDevice,
   isDesktopWeb,
   ifTabletLandscapeMode,
+  ifWebLargeLandscapeMode,
 } from './utils';
 import {
   FONT_INTER_BOLD,
@@ -245,7 +246,8 @@ export const postAuthScreenStyle = (
       justifyContent: 'center',
       alignItems: 'flex-start',
       paddingHorizontal: isLandscapeMode ? 16 : 8,
-      paddingTop: isLandscapeMode && isDesktopWeb ? 85 : 56,
+      paddingTop:
+        isLandscapeMode && isDesktopWeb && ifWebLargeLandscapeMode() ? 85 : 56,
       ...Platform.select({
         native: {
           marginBottom: 56,

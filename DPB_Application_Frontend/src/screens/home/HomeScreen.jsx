@@ -117,11 +117,13 @@ const HomeScreen = () => {
               contentContainerStyle={[
                 styles.screenContent,
                 homeStyles.homeScreenContent,
-              ]}>
-              <Pressable>
-                <View style={[homeStyles.heroSectionContainer]}>
-                  <HeroSection />
-                </View>
+              ]}
+              stickyHeaderIndices={[0]}
+              showsVerticalScrollIndicator={true}>
+              <Pressable style={[homeStyles.heroSectionContainer]}>
+                <HeroSection />
+              </Pressable>
+              <Pressable style={[homeStyles.belowHeroSectionView]}>
                 <View
                   style={[
                     homeStyles.homeSectionContainer,
@@ -188,11 +190,7 @@ const homeStyle = (
       paddingHorizontal: 0,
     },
     heroSectionContainer: {
-      position: isWeb ? 'sticky' : 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      zIndex: -1,
+      width: screenWidth,
       marginBottom: 0,
       borderTopColor: Colors.border[theme],
       borderTopWidth: 2,
@@ -201,14 +199,14 @@ const homeStyle = (
         (ifMobileDevice() || ifTablet() ? 56 : 85) -
         (isLandscapeMode && ifWebSmallLandscapeMode() ? 56 : 85),
     },
+    belowHeroSectionView: {
+      zIndex: 11,
+    },
     belowHeroSectionContainer: {
       height: isLandscapeMode && ifWebSmallLandscapeMode() ? 56 : 85,
       justifyContent: 'center',
       alignItems: 'center',
       paddingTop: 0,
-      marginTop: !isWeb
-        ? screenHeight - (ifMobileDevice() || ifTablet() ? 56 : 85) - 85
-        : null,
       borderTopStartRadius: !isLandscapeMode && ifMobileDevice() ? 80 : 64,
       borderTopEndRadius: !isLandscapeMode && ifMobileDevice() ? 80 : 64,
       borderStyle: 'dashed',
@@ -219,7 +217,8 @@ const homeStyle = (
       textAlign: 'center',
     },
     homeSectionContainer: {
-      width: screenWidth - (isWindows ? (isChrome ? 21 : isEdge ? 16 : 4) : 0),
+      width: screenWidth - (isWindows ? (isChrome ? 17 : isEdge ? 16 : 4) : 0),
+      minWidth: 304,
       height: isWeb
         ? screenHeight - (ifMobileDevice() || ifTablet() ? 56 : 85)
         : screenHeight - (ifMobileDevice() || ifTablet() ? 56 : 85),
