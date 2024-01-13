@@ -30,7 +30,7 @@ const getOtherData = async function (req, res) {
       const welcomeQuotesArr = data.value?.split(" | ");
       const randomIndex =
         welcomeQuotesArr.length > 0
-          ? Math.round(Math.random() * welcomeQuotesArr.length)
+          ? Math.round(Math.random() * welcomeQuotesArr.length - 1)
           : null;
       const welcomeQuote = welcomeQuotesArr[randomIndex];
       return res.status(200).json({
