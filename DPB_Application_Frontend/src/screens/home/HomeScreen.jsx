@@ -8,8 +8,8 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {isWindows, isChrome, isEdge} from 'react-device-detect';
 import DasboardSidePanel from '../dashboard/DasboardSidePanel';
 import useAnimatedSidebar from '../../hooks/useAnimatedSidebar';
@@ -30,11 +30,17 @@ import {
   ifWebSmallLandscapeMode,
   isWeb,
 } from '../../utils/utils';
-import {getWelcomeQuote} from '../../utils/jsUtils';
+import {fetchWelcomeQuote} from '../../utils/jsUtils';
+import {
+  getWelcomeQuote,
+  setWelcomeQuote,
+} from '../../redux/slices/OtherDataSlice';
 
 const HomeScreen = () => {
   const [isApiLoading, setIsApiLoading] = useState(false);
-  const [welcomeQuote, setWelcomeQuote] = useState(DEFAULT_WELCOME_QUOTE);
+  // const [welcomeQuote, setWelcomeQuote] = useState(DEFAULT_WELCOME_QUOTE);
+
+  const welcomeQuote = useSelector(getWelcomeQuote);
   const {
     screenHeight,
     screenWidth,
@@ -81,12 +87,19 @@ const HomeScreen = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    (async () => {
-      const quote = await getWelcomeQuote();
-      setWelcomeQuote(quote);
-    })();
+  const dispatchWelcomeQuote = useCallback(() => {
+    if (!welcomeQuote) {
+      dispatch(setWelcomeQuote(DEFAULT_WELCOME_QUOTE));
+      (async () => {
+        const quote = await fetchWelcomeQuote();
+        dispatch(setWelcomeQuote(quote));
+      })();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    dispatchWelcomeQuote();
+  }, [dispatchWelcomeQuote]);
 
   return (
     <SafeAreaView style={[styles.container]}>

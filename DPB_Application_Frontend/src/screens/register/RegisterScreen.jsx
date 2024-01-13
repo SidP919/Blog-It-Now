@@ -1,12 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
-import {isWeb} from '../../utils/utils';
 import useCommonParams from '../../hooks/useCommonParams';
 import {BRAND_LOGO} from '../../utils/images';
 import Img from '../../components/Img';
 import useCustomNavigate from '../../hooks/useCustomNavigate';
-import Toast from '../../components/Toast';
-import {getWelcomeQuote} from '../../utils/jsUtils';
 import RegisterCard from './RegisterCard';
 import {authScreensStyle} from '../../utils/commonStyles';
 
@@ -39,23 +36,6 @@ const RegisterScreen = () => {
   );
 
   const {navigate} = useCustomNavigate();
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      (async () => {
-        const quote = await getWelcomeQuote();
-        Toast({
-          type: 'success', // or 'error', 'info'
-          position: 'bottom', // or 'top'
-          text1: quote,
-          text2: '',
-          visibilityTime: 6000, // number of milliseconds
-        });
-      })();
-      isWeb && navigate('Dashboard', {replace: true});
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn]);
 
   return (
     <KeyboardAvoidingView

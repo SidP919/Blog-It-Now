@@ -3,6 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 const initialState = {
   androidDownloadLink: null,
   iosDownloadLink: null,
+  welcomeQuote: null,
 };
 
 const OtherDataSlice = createSlice({
@@ -15,14 +16,18 @@ const OtherDataSlice = createSlice({
     setIosDownloadLink: (state, action) => {
       state.iosDownloadLink = action.payload;
     },
+    setWelcomeQuote: (state, action) => {
+      state.welcomeQuote = action.payload;
+    },
   },
 });
 
-export const {setAndroidDownloadLink, setIosDownloadLink} =
+export const {setAndroidDownloadLink, setIosDownloadLink, setWelcomeQuote} =
   OtherDataSlice.actions;
 
 export const getAndroidDownloadLink = state =>
   state.OtherDataState.androidDownloadLink;
 export const getIosDownloadLink = state => state.OtherDataState.iosDownloadLink;
+export const getWelcomeQuote = state => state.OtherDataState.welcomeQuote;
 
 export default OtherDataSlice.reducer;

@@ -9,7 +9,7 @@ export const getVisibleFullName = fullname => {
   }`;
 };
 
-export async function getWelcomeQuote() {
+export async function fetchWelcomeQuote() {
   try {
     const welcomeQuote = await fetch(
       `${BASE_URL}${GET_OTHER_DATA}?key=WELCOME_QUOTES`,

@@ -1,16 +1,23 @@
 import React, {useEffect} from 'react';
 import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 import {isWeb} from '../../utils/utils';
 import useCommonParams from '../../hooks/useCommonParams';
 import {BRAND_LOGO} from '../../utils/images';
 import Img from '../../components/Img';
 import useCustomNavigate from '../../hooks/useCustomNavigate';
 import Toast from '../../components/Toast';
-import {getWelcomeQuote} from '../../utils/jsUtils';
+import {fetchWelcomeQuote} from '../../utils/jsUtils';
 import LoginCard from './LoginCard';
 import {authScreensStyle} from '../../utils/commonStyles';
+import {
+  getWelcomeQuote,
+  setWelcomeQuote,
+} from '../../redux/slices/OtherDataSlice';
 
 const LoginScreen = () => {
+  const welcomeQuote = useSelector(getWelcomeQuote);
+  const dispatch = useDispatch();
   const {
     screenHeight,
     screenWidth,
@@ -42,16 +49,27 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      (async () => {
-        const quote = await getWelcomeQuote();
+      if (!welcomeQuote) {
+        (async () => {
+          const quote = await fetchWelcomeQuote();
+          Toast({
+            type: 'success', // or 'error', 'info'
+            position: 'bottom', // or 'top'
+            text1: quote,
+            text2: '',
+            visibilityTime: 6000, // number of milliseconds
+          });
+          dispatch(setWelcomeQuote(quote));
+        })();
+      } else {
         Toast({
           type: 'success', // or 'error', 'info'
           position: 'bottom', // or 'top'
-          text1: quote,
+          text1: welcomeQuote,
           text2: '',
           visibilityTime: 6000, // number of milliseconds
         });
-      })();
+      }
       isWeb && navigate('Dashboard', {replace: true});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -62,7 +62,7 @@ const ForbiddenScreen = () => {
         <TextWithLink
           text={FORBIDDEN_SUBTEXT}
           word={FORBIDDEN_SUBTEXT_LINK_TEXT}
-          url={`/ContactUs`}
+          url={'/ContactUs'}
           onPressDoThis={() => goToScreen(CONTACT_US_ROUTE)}
           customStyle={styles.subText}
         />

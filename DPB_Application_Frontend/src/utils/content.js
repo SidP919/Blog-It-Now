@@ -160,7 +160,7 @@ export const DEVELOPED_FOR =
   'Developed For Those Who\nExplore-Learn-Apply-Fail/Succeed\nBut Keep Trying Again Or Improving Upon It.';
 export const THOSE_TEXT = 'Those';
 export const YOU_TEXT = 'You😊 ';
-export const DEFAULT_WELCOME_QUOTE = `Never Forget This. Yes. That You Are Unstoppable. - ${DEVELOPER_NAME}`;
+export const DEFAULT_WELCOME_QUOTE = `❝ Never Forget This. Yes. That You Are Unstoppable.❞ – ${DEVELOPER_NAME}`;
 
 // DashboardScreen content
 export const DASHBOARD_TITLE = 'DASHBOARD';
