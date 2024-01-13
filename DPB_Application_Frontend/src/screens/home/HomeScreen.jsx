@@ -17,7 +17,7 @@ import Header from '../dashboard/Header';
 import useCommonParams from '../../hooks/useCommonParams';
 import {HOME_ROUTE} from '../../utils/constants';
 import {
-  DEFAULT_CREATOR_QUOTE,
+  DEFAULT_WELCOME_QUOTE,
   HOME_TITLE,
   PLEASE_WAIT_TEXT,
 } from '../../utils/content';
@@ -30,11 +30,11 @@ import {
   ifWebSmallLandscapeMode,
   isWeb,
 } from '../../utils/utils';
-import {getCreatorQuote} from '../../utils/jsUtils';
+import {getWelcomeQuote} from '../../utils/jsUtils';
 
 const HomeScreen = () => {
   const [isApiLoading, setIsApiLoading] = useState(false);
-  const [creatorQuote, setCreatorQuote] = useState(DEFAULT_CREATOR_QUOTE);
+  const [welcomeQuote, setWelcomeQuote] = useState(DEFAULT_WELCOME_QUOTE);
   const {
     screenHeight,
     screenWidth,
@@ -83,8 +83,8 @@ const HomeScreen = () => {
 
   useEffect(() => {
     (async () => {
-      const quote = await getCreatorQuote();
-      setCreatorQuote(quote);
+      const quote = await getWelcomeQuote();
+      setWelcomeQuote(quote);
     })();
   }, []);
 
@@ -130,7 +130,7 @@ const HomeScreen = () => {
                     homeStyles.belowHeroSectionContainer,
                   ]}>
                   <Text style={[styles.dataTitle, homeStyles.quoteText]}>
-                    {creatorQuote}
+                    {welcomeQuote}
                   </Text>
                 </View>
                 <View style={[homeStyles.homeSectionContainer]}>
@@ -207,14 +207,18 @@ const homeStyle = (
       justifyContent: 'center',
       alignItems: 'center',
       paddingTop: 0,
-      borderTopStartRadius: !isLandscapeMode && ifMobileDevice() ? 80 : 64,
-      borderTopEndRadius: !isLandscapeMode && ifMobileDevice() ? 80 : 64,
+      paddingHorizontal: !isLandscapeMode && ifMobileDevice() ? 28 : null,
+      borderTopStartRadius: !isLandscapeMode && ifMobileDevice() ? 72 : 64,
+      borderTopEndRadius: !isLandscapeMode && ifMobileDevice() ? 72 : 64,
       borderStyle: 'dashed',
     },
     quoteText: {
-      width: '100%',
+      width: screenWidth * 0.8,
+      maxWidth: 710,
       fontStyle: 'italic',
       textAlign: 'center',
+      fontSize: smText * 1.3,
+      fontWeight: 500,
     },
     homeSectionContainer: {
       width: screenWidth - (isWindows ? (isChrome ? 17 : isEdge ? 16 : 4) : 0),

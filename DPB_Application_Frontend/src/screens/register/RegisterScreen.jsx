@@ -47,8 +47,8 @@ const RegisterScreen = () => {
         Toast({
           type: 'success', // or 'error', 'info'
           position: 'bottom', // or 'top'
-          text1: quote[0],
-          text2: quote[1],
+          text1: quote,
+          text2: '',
           visibilityTime: 6000, // number of milliseconds
         });
       })();

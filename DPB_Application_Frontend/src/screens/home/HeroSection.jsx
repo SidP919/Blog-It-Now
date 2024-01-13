@@ -276,7 +276,7 @@ const heroStyle = (
       perspective: 1000,
     },
     heroBigTitle: {
-      transform: [{rotateX: '-45deg'}],
+      transform: isWeb ? 'rotateX(-45deg)' : [{rotateX: '-45deg'}],
       fontSize:
         isLandscapeMode && !ifMobileDevice() && !ifTablet()
           ? bigSize * 2
@@ -290,7 +290,7 @@ const heroStyle = (
       color: Colors.headerTitle[theme],
       fontSize: smSize,
       maxWidth: 500,
-      transform: [{rotateX: '35deg'}],
+      transform: isWeb ? 'rotateX(35deg)' : [{rotateX: '35deg'}],
     },
     nativeLinksContainer: {
       justifyContent: 'flex-start',

@@ -8,7 +8,7 @@ const otherDataSchema = Schema(
     },
     value: {
       type: String,
-      maxLength: [500, "Max Length Exceeded!"],
+      maxLength: [1500, "Max Length Exceeded!"],
       trim: true,
     },
   },

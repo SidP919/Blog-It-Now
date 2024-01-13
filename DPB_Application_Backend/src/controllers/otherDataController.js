@@ -26,6 +26,20 @@ const getOtherData = async function (req, res) {
       });
     }
 
+    if (key === "WELCOME_QUOTES") {
+      const welcomeQuotesArr = data.value?.split(" | ");
+      const randomIndex =
+        welcomeQuotesArr.length > 0
+          ? Math.round(Math.random() * welcomeQuotesArr.length)
+          : null;
+      const welcomeQuote = welcomeQuotesArr[randomIndex];
+      return res.status(200).json({
+        success: true,
+        message: `Fetched data successfully from the database!`,
+        value: `❝ ${welcomeQuote.replace(" – ", `❞ – `)}`,
+      });
+    }
+
     return res.status(200).json({
       success: true,
       message: `Fetched data successfully from the database!`,
