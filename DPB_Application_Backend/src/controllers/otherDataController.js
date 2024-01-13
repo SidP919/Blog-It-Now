@@ -30,19 +30,19 @@ const getOtherData = async function (req, res) {
       const welcomeQuotesArr = data.value?.split(" | ");
       const randomIndex =
         welcomeQuotesArr.length > 0
-          ? Math.round(Math.random() * welcomeQuotesArr.length - 1)
+          ? Math.round(Math.random() * (welcomeQuotesArr.length - 1))
           : null;
       const welcomeQuote = welcomeQuotesArr[randomIndex];
       return res.status(200).json({
         success: true,
-        message: `Fetched data successfully from the database!`,
+        message: `Fetched Welcome-Quote successfully from the database!`,
         value: `❝ ${welcomeQuote.replace(" – ", `❞ – `)}`,
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: `Fetched data successfully from the database!`,
+      message: `Fetched  ${req.query.key} successfully from the database!`,
       value: data.value,
     });
   } catch (error) {
