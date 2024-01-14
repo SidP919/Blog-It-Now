@@ -224,6 +224,7 @@ const homeStyle = (
       borderTopStartRadius: !isLandscapeMode && ifMobileDevice() ? 72 : 64,
       borderTopEndRadius: !isLandscapeMode && ifMobileDevice() ? 72 : 64,
       borderStyle: 'dashed',
+      paddingVertical: 0,
     },
     quoteText: {
       width: screenWidth * 0.8,
@@ -232,6 +233,7 @@ const homeStyle = (
       textAlign: 'center',
       fontSize: smText * 1.3,
       fontWeight: 500,
+      paddingVertical: 4,
     },
     homeSectionContainer: {
       width: screenWidth - (isWindows ? (isChrome ? 17 : isEdge ? 16 : 4) : 0),
