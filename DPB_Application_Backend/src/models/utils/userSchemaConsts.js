@@ -12,6 +12,16 @@ const USER_SCHEMA_CONSTS = Object.freeze({
   PASSWORD_MIN_LENGTH: 8,
   FAV_CONTENT_MAX_LENGTH: 50,
   FAV_CONTENT_MIN_LENGTH: 1,
+  ABOUT_MAX_LENGTH: 500,
+  ABOUT_MIN_LENGTH: 0,
+  SOCIAL_PLATFORMS: Object.freeze({
+    LINKEDIN: 'linkedin',
+    YOUTUBE: 'youtube',
+    FACEBOOK: 'facebook',
+    TWITTER: 'twitter',
+    INSTAGRAM: 'instagram',
+    GMAIL: 'gmail',
+  })
 });
 
 module.exports = USER_SCHEMA_CONSTS;

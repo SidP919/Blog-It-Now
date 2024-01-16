@@ -42,8 +42,9 @@ const getSortedBlogs = async (req, res) => {
     }
 
     blogs = blogs.map((blog) => ({
+      _id: blog._id,
       title: blog.title,
-      author: blog.author.fullname,
+      author: blog.author,
       category: blog.category,
       likesCount: blog.likes?.length,
       dislikesCount: blog.dislikes?.length,
@@ -58,7 +59,7 @@ const getSortedBlogs = async (req, res) => {
       if (!categorizedBlogs[blog.category]) {
         categorizedBlogs[blog.category] = [];
       }
-      categorizedBlogs[blog.category].push();
+      categorizedBlogs[blog.category].push(blog);
     });
 
     // Convert categorizedBlogs into the desired response format
@@ -144,11 +145,24 @@ const searchBlogs = async (req, res) => {
       (a, b) => b.totalMatch - a.totalMatch
     );
 
+    const searchResults = sortedBlogs.map((item) => {
+      const blog = item.blog;
+      return ({
+        _id: blog._id,
+        title: blog.title,
+        author: blog.author,
+        category: blog.category,
+        likesCount: blog.likes?.length,
+        dislikesCount: blog.dislikes?.length,
+        blogThumbnail: blog.blogThumbnail,
+      });
+    });
+
     res.status(200).json({
       success: true,
       message:
         "Search results containing blog data have been fetched successfully.",
-      searchResults: sortedBlogs.map((item) => item.blog),
+      searchResults: searchResults,
     });
   } catch (error) {
     console.error(error);
@@ -222,15 +236,15 @@ const getTopBlogs = async (req, res) => {
     // Return the top 10 blogs
     const topBlogs = sortedBlogs.slice(0, blogCount).map((item) => {
       const blog = item.blog;
-      return {
+      return ({
         _id: blog._id,
         title: blog.title,
-        author: blog.author.fullname,
+        author: blog.author,
         category: blog.category,
         likesCount: blog.likes?.length,
         dislikesCount: blog.dislikes?.length,
         blogThumbnail: blog.blogThumbnail,
-      };
+      });
     });
 
     res.status(200).json({

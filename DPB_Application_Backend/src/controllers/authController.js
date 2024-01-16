@@ -140,12 +140,7 @@ const register = async (req, res) => {
       return res.status(201).json({
         success: true,
         message: "User registered successfully",
-        userData: {
-          username: userResponse.username,
-          fullname: userResponse.fullname,
-          email: userResponse.email,
-          favoriteContent: userResponse.favoriteContent,
-        },
+        userData: userResponse,
       });
     } else {
       console.error(isMailSent);
@@ -235,12 +230,7 @@ const login = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "User logged in successfully",
-      userData: {
-        username: user.username,
-        fullname: user.fullname,
-        email: user.email,
-        favoriteContent: user.favoriteContent,
-      },
+      userData: user,
     });
   } catch (error) {
     logger("Login Error:", error);
@@ -301,12 +291,7 @@ const protectedRoute = async (req, res) => {
       return res.status(200).json({
         success: true,
         message: "User has basic access rights",
-        userData: {
-          fullname: user.fullname,
-          email: user.email,
-          username: user.username,
-          favoriteContent: user.favoriteContent,
-        },
+        userData: user,
       });
     }
   } catch (error) {

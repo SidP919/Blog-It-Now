@@ -44,7 +44,7 @@ router.put(
   editBlog
 );
 router.get("/getBlog/:blogId", isBlogVisible, getBlogById);
-router.put("/publishBlog/:blogId", authenticate, publishBlog);
+router.put("/publishBlog/:blogId", authenticate, isVerifiedUser, publishBlog);
 router.delete(
   "/deleteBlog/:blogId",
   authenticate,

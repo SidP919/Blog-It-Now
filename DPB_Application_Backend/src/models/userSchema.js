@@ -80,6 +80,28 @@ const userSchema = Schema(
       enum: Object.values(AUTH_ROLES),
       default: AUTH_ROLES.USER,
     },
+    about:{
+      type: String,
+      maxLength: [
+        USER_SCHEMA_CONSTS.ABOUT_MAX_LENGTH,
+        `Please describe about yourself within ${USER_SCHEMA_CONSTS.ABOUT_MAX_LENGTH} characters!`,
+      ],
+      minLength: [
+        USER_SCHEMA_CONSTS.ABOUT_MIN_LENGTH,
+        `Please describe about yourself using atleast ${USER_SCHEMA_CONSTS.ABOUT_MIN_LENGTH} characters!`,
+      ],
+      default: `Hi, I am a reader at ${ENV_CONSTANTS.APP_NAME} platform.`,
+      trim: true,
+    },
+    socialLinks: {
+      type: [
+        {
+          type: String,
+          enum: Object.values(USER_SCHEMA_CONSTS.SOCIAL_PLATFORMS),
+        }
+      ],
+      default: [],
+    },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
     verifiedUser: {

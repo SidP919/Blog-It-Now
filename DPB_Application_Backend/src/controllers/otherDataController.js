@@ -42,7 +42,7 @@ const getOtherData = async function (req, res) {
 
     return res.status(200).json({
       success: true,
-      message: `Fetched  ${req.query.key} successfully from the database!`,
+      message: `Fetched data successfully from the database!`,
       value: data.value,
     });
   } catch (error) {

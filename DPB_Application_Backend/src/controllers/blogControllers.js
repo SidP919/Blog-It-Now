@@ -215,7 +215,7 @@ const editBlog = async (req, res) => {
 const publishBlog = async (req, res) => {
   try {
     const blogId = req.params.blogId;
-    const authorId = req.user.userId;
+    const authorId = req.user._id;
 
     // Check if required info was sent in request or not
     if (!(blogId && authorId)) {
