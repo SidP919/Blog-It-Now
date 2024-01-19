@@ -56,21 +56,19 @@ export const authScreensStyle = (
       backgroundColor: Colors.main[theme],
       justifyContent: 'center',
       borderBottomWidth: isLandscapeMode ? null : 2,
-      borderBottomColor: isLandscapeMode ? null : Colors.border[theme],
       borderLeftWidth: isLandscapeMode
         ? ifWebSmallLandscapeMode()
           ? null
           : 2
         : null,
-      borderLeftColor: isLandscapeMode ? Colors.border[theme] : null,
       borderRightWidth: isLandscapeMode
         ? ifWebSmallLandscapeMode()
           ? 2
           : null
         : null,
-      borderRightColor: isLandscapeMode ? Colors.border[theme] : null,
       paddingHorizontal: 32,
       paddingVertical: 32,
+      borderColor: Colors.border[theme],
     },
     mainTitle: {
       fontSize: bigSize,

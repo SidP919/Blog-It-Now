@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Modal, Pressable, StyleSheet, Text, View} from 'react-native';
-import {isWindows, isChrome, isEdge} from 'react-device-detect';
 import ImgButton from '../../components/ImgButton';
 import {BRAND_ICON, MENU_ICON, PROFILE_ICON} from '../../utils/images';
 import {
@@ -289,8 +288,11 @@ const style = (
       right: 0,
       top: 0,
       paddingHorizontal: 16,
-      width: screenWidth - (isWindows ? (isChrome ? 17 : isEdge ? 16 : 4) : 0),
+      width: screenWidth,
       minWidth: 304,
+      borderBottomWidth: 2,
+      borderBottomColor: Colors.headerTitle[theme],
+      borderBottomStyle: 'solid',
     },
     headerTitle: {
       fontSize: mdText,

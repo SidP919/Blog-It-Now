@@ -1,28 +1,17 @@
 import {
-  SafeAreaView,
   Text,
   Pressable,
   View,
   ScrollView,
-  Platform,
-  KeyboardAvoidingView,
   StyleSheet,
+  Platform,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {isWindows, isChrome, isEdge} from 'react-device-detect';
-import DasboardSidePanel from '../dashboard/DasboardSidePanel';
-import useAnimatedSidebar from '../../hooks/useAnimatedSidebar';
-import Header from '../dashboard/Header';
 import useCommonParams from '../../hooks/useCommonParams';
 import {HOME_ROUTE} from '../../utils/constants';
-import {
-  DEFAULT_WELCOME_QUOTE,
-  HOME_TITLE,
-  PLEASE_WAIT_TEXT,
-} from '../../utils/content';
+import {DEFAULT_WELCOME_QUOTE, HOME_TITLE} from '../../utils/content';
 import {postAuthScreenStyle} from '../../utils/commonStyles';
-import ThreeDotsLoader from '../../components/ThreeDotsLoader';
 import HeroSection from './HeroSection';
 import {
   ifMobileDevice,
@@ -35,10 +24,10 @@ import {
   getWelcomeQuote,
   setWelcomeQuote,
 } from '../../redux/slices/OtherDataSlice';
+import HeaderWrapper from '../HeaderWrapper';
 
 const HomeScreen = () => {
   const [isApiLoading, setIsApiLoading] = useState(false);
-  // const [welcomeQuote, setWelcomeQuote] = useState(DEFAULT_WELCOME_QUOTE);
 
   const welcomeQuote = useSelector(getWelcomeQuote);
   const {
@@ -55,9 +44,6 @@ const HomeScreen = () => {
     mdText,
     smText,
   } = useCommonParams();
-
-  const {showView, animatedValue, toggleSidePanel, panResponder} =
-    useAnimatedSidebar();
 
   let styles = postAuthScreenStyle(
     screenHeight,
@@ -102,86 +88,48 @@ const HomeScreen = () => {
   }, [dispatchWelcomeQuote]);
 
   return (
-    <SafeAreaView style={[styles.container]}>
-      <DasboardSidePanel
-        screenHeight={screenHeight}
-        screenWidth={screenWidth}
-        animatedValue={animatedValue}
-        toggleSidePanel={toggleSidePanel}
-        showView={showView}
-        currentScreen={HOME_ROUTE}
-        panResponder={panResponder}
-      />
-      <View style={[styles.mainContainer]} {...panResponder?.panHandlers}>
-        <KeyboardAvoidingView
-          style={[styles.mainContainer]}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <Header
-            headerTitle={HOME_TITLE}
-            toggleSidePanel={toggleSidePanel}
-            currentScreen={HOME_ROUTE}
-          />
-          {isApiLoading ? (
-            <View style={styles.apiLoadingView}>
-              <ThreeDotsLoader theme={theme} loaderMsg={PLEASE_WAIT_TEXT} />
+    <HeaderWrapper
+      title={HOME_TITLE}
+      currentScreen={HOME_ROUTE}
+      isApiLoading={isApiLoading}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.screenContent,
+          homeStyles.homeScreenContent,
+        ]}
+        stickyHeaderIndices={[0]}
+        showsVerticalScrollIndicator={false}>
+        <Pressable style={[homeStyles.heroSectionContainer]}>
+          <HeroSection />
+        </Pressable>
+        <Pressable style={[homeStyles.belowHeroSectionView]}>
+          <View
+            style={[
+              homeStyles.homeSectionContainer,
+              homeStyles.belowHeroSectionContainer,
+            ]}>
+            <Text style={[styles.dataTitle, homeStyles.quoteText]}>
+              {welcomeQuote}
+            </Text>
+          </View>
+          <View style={[homeStyles.homeSectionContainer]}>
+            <Text style={[styles.sectionTitle]}>{'Section 2'}</Text>
+            <View style={[styles.dataContainer]}>
+              <Text style={[styles.dataTitle]}>{'Data Title 2.1'}</Text>
+              <View style={styles.dataContent}>
+                {/* Data Content comes here */}
+              </View>
             </View>
-          ) : (
-            <ScrollView
-              contentContainerStyle={[
-                styles.screenContent,
-                homeStyles.homeScreenContent,
-              ]}
-              stickyHeaderIndices={[0]}
-              showsVerticalScrollIndicator={true}>
-              <Pressable style={[homeStyles.heroSectionContainer]}>
-                <HeroSection />
-              </Pressable>
-              <Pressable style={[homeStyles.belowHeroSectionView]}>
-                <View
-                  style={[
-                    homeStyles.homeSectionContainer,
-                    homeStyles.belowHeroSectionContainer,
-                  ]}>
-                  <Text style={[styles.dataTitle, homeStyles.quoteText]}>
-                    {welcomeQuote}
-                  </Text>
-                </View>
-                <View style={[homeStyles.homeSectionContainer]}>
-                  <Text style={[styles.sectionTitle]}>{'Section 2'}</Text>
-                  <View style={[styles.dataContainer]}>
-                    <Text style={[styles.dataTitle]}>{'Data Title 2.1'}</Text>
-                    <View style={styles.dataContent}>
-                      {/* Data Content comes here */}
-                    </View>
-                  </View>
-                  <View style={[styles.dataContainer]}>
-                    <Text style={[styles.dataTitle]}>{'Data Title 2.2'}</Text>
-                    <View style={styles.dataContent}>
-                      {/* Data Content comes here */}
-                    </View>
-                  </View>
-                </View>
-                <View style={[homeStyles.homeSectionContainer]}>
-                  <Text style={[styles.sectionTitle]}>{'Section 3'}</Text>
-                  <View style={[styles.dataContainer]}>
-                    <Text style={[styles.dataTitle]}>{'Data Title 3.1'}</Text>
-                    <View style={styles.dataContent}>
-                      {/* Data Content comes here */}
-                    </View>
-                  </View>
-                  <View style={[styles.dataContainer]}>
-                    <Text style={[styles.dataTitle]}>{'Data Title 3.2'}</Text>
-                    <View style={styles.dataContent}>
-                      {/* Data Content comes here */}
-                    </View>
-                  </View>
-                </View>
-              </Pressable>
-            </ScrollView>
-          )}
-        </KeyboardAvoidingView>
-      </View>
-    </SafeAreaView>
+            <View style={[styles.dataContainer]}>
+              <Text style={[styles.dataTitle]}>{'Data Title 2.2'}</Text>
+              <View style={styles.dataContent}>
+                {/* Data Content comes here */}
+              </View>
+            </View>
+          </View>
+        </Pressable>
+      </ScrollView>
+    </HeaderWrapper>
   );
 };
 
@@ -201,16 +149,13 @@ const homeStyle = (
     homeScreenContent: {
       backgroundColor: `${Colors.main[theme]}`,
       paddingHorizontal: 0,
+      paddingTop: 0,
     },
     heroSectionContainer: {
       width: screenWidth,
       marginBottom: 0,
-      borderTopColor: Colors.border[theme],
-      borderTopWidth: 2,
       height:
-        screenHeight -
-        (ifMobileDevice() || ifTablet() ? 56 : 85) -
-        (isLandscapeMode && ifWebSmallLandscapeMode() ? 56 : 85),
+        screenHeight - (isLandscapeMode && ifWebSmallLandscapeMode() ? 56 : 85),
     },
     belowHeroSectionView: {
       zIndex: 11,
@@ -223,8 +168,16 @@ const homeStyle = (
       paddingHorizontal: !isLandscapeMode && ifMobileDevice() ? 28 : null,
       borderTopStartRadius: !isLandscapeMode && ifMobileDevice() ? 72 : 64,
       borderTopEndRadius: !isLandscapeMode && ifMobileDevice() ? 72 : 64,
-      borderStyle: 'dashed',
+      borderBottomStyle: 'dashed',
+      borderTopStyle: 'solid',
+      borderTopWidth: 2,
       paddingVertical: 0,
+      ...Platform.select({
+        native: {
+          borderStartWidth: 0.1,
+          borderEndWidth: 0.1,
+        },
+      }),
     },
     quoteText: {
       width: screenWidth * 0.8,
@@ -236,7 +189,7 @@ const homeStyle = (
       paddingVertical: 4,
     },
     homeSectionContainer: {
-      width: screenWidth - (isWindows ? (isChrome ? 17 : isEdge ? 16 : 4) : 0),
+      width: screenWidth,
       minWidth: 304,
       height: isWeb
         ? screenHeight - (ifMobileDevice() || ifTablet() ? 56 : 85)

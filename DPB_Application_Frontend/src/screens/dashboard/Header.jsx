@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {isWindows, isChrome, isEdge} from 'react-device-detect';
 import ImgButton from '../../components/ImgButton';
 import {FAVICON_ICON, MENU_ICON} from '../../utils/images';
 import {
@@ -14,6 +13,7 @@ import useCommonParams from '../../hooks/useCommonParams';
 import useCustomNavigate from '../../hooks/useCustomNavigate';
 import {DEFAULT_ROUTE} from '../../utils/constants';
 import HeaderLandscape from './HeaderLandscape';
+import Toast from '../../components/Toast';
 
 const Header = ({headerTitle, toggleSidePanel, currentScreen}) => {
   const {
@@ -44,6 +44,16 @@ const Header = ({headerTitle, toggleSidePanel, currentScreen}) => {
   );
 
   const onHomePress = () => {
+    if (currentScreen === DEFAULT_ROUTE) {
+      Toast({
+        type: 'info', // or 'error', 'success'
+        position: 'bottom', // or 'top'
+        align: 'center',
+        text1: `You are already on ${DEFAULT_ROUTE} Screen`,
+        text2: '',
+        visibilityTime: 600, // number of milliseconds
+      });
+    }
     navigate(DEFAULT_ROUTE, {replace: true});
   };
 
@@ -103,8 +113,11 @@ const style = (
       right: 0,
       top: 0,
       paddingHorizontal: 8,
-      width: screenWidth - (isWindows ? (isChrome ? 17 : isEdge ? 16 : 4) : 0),
+      width: screenWidth,
       minWidth: 304,
+      borderBottomWidth: 2,
+      borderBottomColor: Colors.headerTitle[theme],
+      borderBottomStyle: 'solid',
     },
     headerTitle: {
       width: (screenWidth - 56) * 0.6,

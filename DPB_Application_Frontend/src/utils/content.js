@@ -157,7 +157,7 @@ export const HOME_TITLE = APP_NAME;
 export const DEVELOPER_NAME = 'Sidharth Pandey';
 export const DEVELOPED_BY = `Developed By ${DEVELOPER_NAME}`;
 export const DEVELOPED_FOR =
-  'Developed For Those Who\nExplore-Learn-Apply-Fail/Succeed\nBut Keep Trying Again Or Improving Upon It.';
+  'Developed For Those Who\nExplore, Learn, Apply,\nFail Or Succeed\nBut Never Give Up\nAnd Beleive In Being\n❝A Learner For Life❞';
 export const THOSE_TEXT = 'Those';
 export const YOU_TEXT = 'You😊 ';
 export const DEFAULT_WELCOME_QUOTE = `❝ Never Forget This. Yes. That You Are Unstoppable.❞ – ${DEVELOPER_NAME}`;

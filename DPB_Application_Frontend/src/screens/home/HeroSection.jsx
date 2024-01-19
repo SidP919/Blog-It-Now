@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {
   Pressable,
   SafeAreaView,
@@ -129,14 +129,14 @@ const HeroSection = () => {
         <Text style={[styles.bigTitle, heroStyles.heroBigTitle]}>
           {APP_NAME}
         </Text>
-        <TextWithLink
+        {/* <TextWithLink
           text={DEVELOPED_BY}
           word={DEVELOPER_NAME}
           url={`/${ABOUT_US_ROUTE}`}
           onPressDoThis={() => goToScreen(ABOUT_US_ROUTE)}
           customStyle={{...styles.mdTitle, ...heroStyles.heroMdTitle}}
           linkColor={Colors.headerTitle[theme]}
-        />
+        /> */}
         {isWeb ? (
           <TextWithLink
             text={DEVELOPED_FOR}
@@ -155,7 +155,7 @@ const HeroSection = () => {
             {DEVELOPED_FOR}
           </Text>
         )}
-        {isWeb ? (
+        {/* {isWeb ? (
           <View
             style={[
               nativeLinkStyles.nativeLinksContainer,
@@ -218,7 +218,7 @@ const HeroSection = () => {
               title={EXPLORE_BLOGS_TITLE}
             />
           </View>
-        )}
+        )} */}
       </ScrollView>
     </SafeAreaView>
   );
@@ -239,10 +239,9 @@ const heroStyle = (
   StyleSheet.create({
     heroMainContainer: {
       height:
-        screenHeight -
-        (ifMobileDevice() || ifTablet() ? 56 : 85) -
-        (isLandscapeMode && ifWebSmallLandscapeMode() ? 56 : 85),
+        screenHeight - (isLandscapeMode && ifWebSmallLandscapeMode() ? 56 : 85),
       backgroundColor: 'transparent',
+      paddingTop: ifMobileDevice() || ifTablet() ? 56 : 85,
     },
     heroHeaderContainer: {
       backgroundColor: 'transparent',
@@ -251,29 +250,29 @@ const heroStyle = (
         ? screenHeight -
           (ifMobileDevice() || ifTablet() ? 56 : 85) -
           (isLandscapeMode && ifWebSmallLandscapeMode() ? 56 : 85)
-        : (screenHeight - 56 - 85) * 0.25,
+        : (screenHeight - 56 - 85) * 0.3,
       maxHeight: isLandscapeMode
         ? screenHeight -
-          (ifMobileDevice() || ifTablet() ? 56 : 85) -
           (isLandscapeMode && ifWebSmallLandscapeMode() ? 56 : 85)
         : (screenHeight - 56 - 85) * 0.25,
+      borderColor: Colors.headerTitle[theme],
     },
     heroContentSubContainer: {
       width: isLandscapeMode ? screenWidth * 0.5 : null,
-      justifyContent: isLandscapeMode ? 'center' : 'center',
+      justifyContent: isLandscapeMode ? 'center' : 'flex-start',
       paddingVertical: isLandscapeMode
         ? ifWebLargeLandscapeMode()
           ? 0
           : ifWebSmallLandscapeMode()
           ? 0
           : 20
-        : 16,
+        : bigSize * 2,
       minHeight: isLandscapeMode
         ? screenHeight -
           (ifMobileDevice() || ifTablet() ? 56 : 85) -
           (isLandscapeMode && ifWebSmallLandscapeMode() ? 56 : 85)
-        : (screenHeight - 56 - 85) * 0.75,
-      perspective: 1000,
+        : (screenHeight - 56 - 85) * 0.7,
+      perspective: 300,
     },
     heroBigTitle: {
       transform: isWeb ? 'rotateX(-45deg)' : [{rotateX: '-45deg'}],
@@ -288,14 +287,23 @@ const heroStyle = (
     },
     heroMdTitle: {
       color: Colors.headerTitle[theme],
-      fontSize: smSize,
+      fontSize: !isLandscapeMode ? mdSize : smSize,
       maxWidth: 500,
       transform: isWeb ? 'rotateX(35deg)' : [{rotateX: '35deg'}],
+      lineHeight: isLandscapeMode
+        ? ifWebSmallLandscapeMode()
+          ? bigSize * 0.9
+          : bigSize * 1.2
+        : bigSize * 1.3,
+      fontWeight: 500,
+      paddingVertical: -28,
+      top: isLandscapeMode ? (ifWebSmallLandscapeMode() ? -10 : -30) : null,
     },
     nativeLinksContainer: {
       justifyContent: 'flex-start',
       paddingTop: 16,
       paddingBottom: 16,
+      top: isLandscapeMode ? (ifWebSmallLandscapeMode() ? -52 : -20) : null,
     },
     nativeLinkBtn: {
       borderColor: Colors.headerLogo[theme],
@@ -304,4 +312,4 @@ const heroStyle = (
       color: Colors.headerLogo[theme],
     },
   });
-export default HeroSection;
+export default memo(HeroSection);

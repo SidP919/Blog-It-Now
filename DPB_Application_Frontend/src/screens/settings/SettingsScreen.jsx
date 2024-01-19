@@ -1,28 +1,10 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  Pressable,
-  View,
-  ScrollView,
-  Platform,
-  KeyboardAvoidingView,
-} from 'react-native';
+import {StyleSheet, Text, Pressable, View, ScrollView} from 'react-native';
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {isWeb, isDesktopWeb} from '../../utils/utils';
 import {colorProfiles} from '../../utils/theme';
-import DasboardSidePanel from '../dashboard/DasboardSidePanel';
-import {
-  FONT_INTER_MEDIUM,
-  FONT_INTER_REGULAR,
-  FONT_INTER_SEMIBOLD,
-} from '../../utils/fontUtils';
 import ToggleSwitch from '../../components/ToggleSwitch';
 import {setAppTheme} from '../../redux/slices/ThemeSlice';
 import {saveLocalData} from '../../utils/preferences';
-import useAnimatedSidebar from '../../hooks/useAnimatedSidebar';
-import Header from '../dashboard/Header';
 import useCommonParams from '../../hooks/useCommonParams';
 import {
   COLOR_NAME_LOCAL,
@@ -47,6 +29,7 @@ import DangerZoneCard from './DangerZoneCard';
 import ImgButton from '../../components/ImgButton';
 import {DEFAULT_ICON} from '../../utils/images';
 import {postAuthScreenStyle} from '../../utils/commonStyles';
+import HeaderWrapper from '../HeaderWrapper';
 
 const SettingsScreen = () => {
   const {
@@ -62,9 +45,6 @@ const SettingsScreen = () => {
     mdText,
     smText,
   } = useCommonParams();
-
-  const {showView, animatedValue, toggleSidePanel, panResponder} =
-    useAnimatedSidebar();
 
   let styles = style(
     screenHeight,
@@ -115,96 +95,73 @@ const SettingsScreen = () => {
   };
 
   return (
-    <SafeAreaView style={[styles.container]}>
-      <DasboardSidePanel
-        screenHeight={screenHeight}
-        screenWidth={screenWidth}
-        animatedValue={animatedValue}
-        toggleSidePanel={toggleSidePanel}
-        showView={showView}
-        currentScreen={SETTINGS_ROUTE}
-        panResponder={panResponder}
-      />
-      <View style={[styles.mainContainer]} {...panResponder?.panHandlers}>
-        <KeyboardAvoidingView
-          style={[styles.mainContainer]}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <Header
-            headerTitle={SETTINGS_TITLE}
-            toggleSidePanel={toggleSidePanel}
-            currentScreen={SETTINGS_ROUTE}
-          />
-          <ScrollView contentContainerStyle={[styles.screenContent]}>
-            <Pressable>
-              <View style={styles.sectionContainer}>
-                <Text style={[styles.sectionTitle]}>
-                  {SETTINGS_APP_HEADING}
-                </Text>
-                <View style={[styles.dataContainer]}>
-                  <Text style={[styles.dataTitle]}>
-                    {SETTINGS_APP_THEME_TITLE}
+    <HeaderWrapper
+      title={SETTINGS_TITLE}
+      currentScreen={SETTINGS_ROUTE}
+      isApiLoading={false}>
+      <ScrollView
+        contentContainerStyle={[styles.screenContent]}
+        showsVerticalScrollIndicator={false}>
+        <Pressable>
+          <View style={styles.sectionContainer}>
+            <Text style={[styles.sectionTitle]}>{SETTINGS_APP_HEADING}</Text>
+            <View style={[styles.dataContainer]}>
+              <Text style={[styles.dataTitle]}>{SETTINGS_APP_THEME_TITLE}</Text>
+              <View style={styles.dataContent}>
+                <Pressable onPress={() => onToggleTheme(LIGHT_THEME)}>
+                  <Text style={[styles.dataText, styles.toggleLeftBtn]}>
+                    {SETTINGS_APP_THEME_LIGHT_TEXT}
                   </Text>
-                  <View style={styles.dataContent}>
-                    <Pressable onPress={() => onToggleTheme(LIGHT_THEME)}>
-                      <Text style={[styles.dataText, styles.toggleLeftBtn]}>
-                        {SETTINGS_APP_THEME_LIGHT_TEXT}
-                      </Text>
-                    </Pressable>
-                    <ToggleSwitch
-                      onToggleSwitch={onToggleTheme}
-                      currentVal={theme === DARK_THEME ? true : false}
-                    />
-                    <Pressable onPress={() => onToggleTheme(DARK_THEME)}>
-                      <Text style={[styles.dataText, styles.toggleRightBtn]}>
-                        {SETTINGS_APP_THEME_DARK_TEXT}
-                      </Text>
-                    </Pressable>
-                  </View>
-                </View>
-                <View style={[styles.dataContainer]}>
-                  <Text style={[styles.dataTitle]}>
-                    {SETTINGS_APP_COLOR_TITLE}
+                </Pressable>
+                <ToggleSwitch
+                  onToggleSwitch={onToggleTheme}
+                  currentVal={theme === DARK_THEME ? true : false}
+                />
+                <Pressable onPress={() => onToggleTheme(DARK_THEME)}>
+                  <Text style={[styles.dataText, styles.toggleRightBtn]}>
+                    {SETTINGS_APP_THEME_DARK_TEXT}
                   </Text>
-                  <View style={styles.dataContent}>
-                    <ImgButton
-                      onPress={() => onToggleColor(THEME_COLOR_PURPLE)}
-                      source={DEFAULT_ICON}
-                      color={colorProfiles[THEME_COLOR_PURPLE].LIGHT_PRIMARY}
-                      size={bigSize * 2}
-                    />
-                    <ToggleSwitch
-                      onToggleSwitch={onToggleColor}
-                      currentVal={
-                        appColor === THEME_COLOR_ORANGE ? true : false
-                      }
-                    />
-                    <ImgButton
-                      onPress={() => onToggleColor(THEME_COLOR_ORANGE)}
-                      source={DEFAULT_ICON}
-                      color={colorProfiles[THEME_COLOR_ORANGE].LIGHT_PRIMARY}
-                      size={bigSize * 2}
-                    />
-                  </View>
-                </View>
+                </Pressable>
               </View>
-              <View style={styles.sectionContainer}>
-                <Text style={[styles.sectionTitle]}>
-                  {SETTINGS_ACCOUNT_HEADING}
-                </Text>
-                <View style={[styles.dataContainer, styles.dataContainer2]}>
-                  <Text style={[styles.dataTitle]}>
-                    {SETTINGS_ACCOUNT_DANGER_ZONE_TITLE}
-                  </Text>
-                  <View style={[styles.cardContainer]}>
-                    <DangerZoneCard />
-                  </View>
-                </View>
+            </View>
+            <View style={[styles.dataContainer]}>
+              <Text style={[styles.dataTitle]}>{SETTINGS_APP_COLOR_TITLE}</Text>
+              <View style={styles.dataContent}>
+                <ImgButton
+                  onPress={() => onToggleColor(THEME_COLOR_PURPLE)}
+                  source={DEFAULT_ICON}
+                  color={colorProfiles[THEME_COLOR_PURPLE].LIGHT_PRIMARY}
+                  size={bigSize * 2}
+                />
+                <ToggleSwitch
+                  onToggleSwitch={onToggleColor}
+                  currentVal={appColor === THEME_COLOR_ORANGE ? true : false}
+                />
+                <ImgButton
+                  onPress={() => onToggleColor(THEME_COLOR_ORANGE)}
+                  source={DEFAULT_ICON}
+                  color={colorProfiles[THEME_COLOR_ORANGE].LIGHT_PRIMARY}
+                  size={bigSize * 2}
+                />
               </View>
-            </Pressable>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </View>
-    </SafeAreaView>
+            </View>
+          </View>
+          <View style={styles.sectionContainer}>
+            <Text style={[styles.sectionTitle]}>
+              {SETTINGS_ACCOUNT_HEADING}
+            </Text>
+            <View style={[styles.dataContainer, styles.dataContainer2]}>
+              <Text style={[styles.dataTitle]}>
+                {SETTINGS_ACCOUNT_DANGER_ZONE_TITLE}
+              </Text>
+              <View style={[styles.cardContainer]}>
+                <DangerZoneCard />
+              </View>
+            </View>
+          </View>
+        </Pressable>
+      </ScrollView>
+    </HeaderWrapper>
   );
 };
 
