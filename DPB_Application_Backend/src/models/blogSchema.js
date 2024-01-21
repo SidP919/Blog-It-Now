@@ -42,6 +42,11 @@ const blogSchema = Schema(
       required: true,
       index: true,
     },
+    authorName: {
+      type: String,
+      required: true,
+      index: true,
+    },
     category: {
       type: String,
       enum: BLOG_CATEGORIES,

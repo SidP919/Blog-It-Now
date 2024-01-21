@@ -239,11 +239,13 @@ const getTopBlogs = async (req, res) => {
       return ({
         _id: blog._id,
         title: blog.title,
-        author: blog.author,
+        authorName: blog.authorName,
         category: blog.category,
         likesCount: blog.likes?.length,
         dislikesCount: blog.dislikes?.length,
         blogThumbnail: blog.blogThumbnail,
+        createdOn: blog.createdAt,
+        lastUpdated: blog.updatedAt,
       });
     });
 

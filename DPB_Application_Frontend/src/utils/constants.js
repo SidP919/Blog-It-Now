@@ -22,6 +22,8 @@ export const PWD_RESET_REQ_API = '/auth/passwordResetRequest';
 export const RESET_PWD_API = '/auth/resetPassword';
 export const DELETE_AC_API = '/auth/deleteAccount';
 export const VERIFY_EMAIL_API = '/auth/verifyEmail';
+// BLOGS APIs:
+export const GET_TOP_BLOGS = '/blogs/getTopBlogs';
 // OTHER DATA APIs & constants:
 export const GET_OTHER_DATA = '/otherData/getData';
 export const ANDROID_DOWNLOAD_LINK = 'ANDROID_DOWNLOAD_LINK';

@@ -25,6 +25,7 @@ import {
   setWelcomeQuote,
 } from '../../redux/slices/OtherDataSlice';
 import HeaderWrapper from '../HeaderWrapper';
+import TopBlogs from './TopBlogs';
 
 const HomeScreen = () => {
   const [isApiLoading, setIsApiLoading] = useState(false);
@@ -113,19 +114,7 @@ const HomeScreen = () => {
             </Text>
           </View>
           <View style={[homeStyles.homeSectionContainer]}>
-            <Text style={[styles.sectionTitle]}>{'Section 2'}</Text>
-            <View style={[styles.dataContainer]}>
-              <Text style={[styles.dataTitle]}>{'Data Title 2.1'}</Text>
-              <View style={styles.dataContent}>
-                {/* Data Content comes here */}
-              </View>
-            </View>
-            <View style={[styles.dataContainer]}>
-              <Text style={[styles.dataTitle]}>{'Data Title 2.2'}</Text>
-              <View style={styles.dataContent}>
-                {/* Data Content comes here */}
-              </View>
-            </View>
+            <TopBlogs />
           </View>
         </Pressable>
       </ScrollView>
@@ -191,10 +180,7 @@ const homeStyle = (
     homeSectionContainer: {
       width: screenWidth,
       minWidth: 304,
-      height: isWeb
-        ? screenHeight - (ifMobileDevice() || ifTablet() ? 56 : 85)
-        : screenHeight - (ifMobileDevice() || ifTablet() ? 56 : 85),
-      paddingTop: 16,
+      height: screenHeight - (ifMobileDevice() || ifTablet() ? 56 : 85),
       position: 'relative',
       backgroundColor: Colors.bgColor[theme],
       borderBottomWidth: 2,

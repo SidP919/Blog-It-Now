@@ -39,6 +39,7 @@ const createBlog = async (req, res) => {
       title,
       content: content || "",
       author,
+      authorName: author.fullname,
       blogThumbnail: blogThumbnail || null,
       blogVideo: blogVideo || null,
       category,

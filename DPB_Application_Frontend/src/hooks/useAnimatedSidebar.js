@@ -8,7 +8,7 @@ const useAnimatedSidebar = () => {
   const [animatedValue] = useState(new Animated.Value(-2000));
   const {isLandscapeMode} = useCommonParams();
 
-  const swipeThreshold = 50; // Adjust the threshold as needed
+  const swipeThreshold = isLandscapeMode ? 300 : 180; // Adjust the threshold as needed
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: (event, gestureState) => {
