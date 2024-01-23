@@ -1,6 +1,9 @@
 import {useRef, useState} from 'react';
 import {Animated, PanResponder} from 'react-native';
-import {ifWebSmallLandscapeMode, isWeb} from '../utils/utils';
+import {
+  ifTablet,
+  ifWebSmallLandscapeMode,
+} from '../utils/utils';
 import useCommonParams from './useCommonParams';
 
 const useAnimatedSidebar = () => {
@@ -8,7 +11,7 @@ const useAnimatedSidebar = () => {
   const [animatedValue] = useState(new Animated.Value(-2000));
   const {isLandscapeMode} = useCommonParams();
 
-  const swipeThreshold = isLandscapeMode ? 300 : 180; // Adjust the threshold as needed
+  const swipeThreshold = isLandscapeMode ? 400 : ifTablet() ? 400 : 300;
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: (event, gestureState) => {

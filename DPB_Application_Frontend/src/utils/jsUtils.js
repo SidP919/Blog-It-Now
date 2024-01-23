@@ -25,3 +25,26 @@ export async function fetchWelcomeQuote() {
     logger('Error in getWelcomeQuote();', error);
   }
 }
+
+export function getPrettyNumber(value) {
+  if (value < 1000) {
+    return value.toString();
+  } else if (value < 1000000) {
+    return (value / 1000).toFixed(2) + ' K';
+  } else if (value < 1000000000) {
+    return (value / 1000000).toFixed(2) + ' M';
+  } else {
+    return (value / 1000000000).toFixed(2) + ' B';
+  }
+}
+
+export function formattedDate(inputDate) {
+  return new Date(inputDate).toLocaleDateString(['en-GB', 'en-US'], {
+    day: 'numeric',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZoneName: 'shortGeneric',
+  });
+}

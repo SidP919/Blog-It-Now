@@ -15,6 +15,8 @@ export const PLEASE_WAIT_TEXT = 'Please wait';
 export const EXIT_TEXT = 'Exit';
 export const CANCEL_BTN_TEXT = 'Cancel';
 export const CONFIRM_BTN_TEXT = 'OK';
+export const NO_DATA_MSG =
+  'No Data Available!\nIf you beleive this is a mistake,\nthen please check your internet connection before refreshing again or try again later after sometime.';
 
 // ============================ALERTS========================================================
 // Content for Alerts in the app:
@@ -161,6 +163,10 @@ export const DEVELOPED_FOR =
 export const THOSE_TEXT = 'Those';
 export const YOU_TEXT = 'You😊 ';
 export const DEFAULT_WELCOME_QUOTE = `❝ Never Forget This. Yes. That You Are Unstoppable.❞ – ${DEVELOPER_NAME}`;
+export const BLOG_AUTHOR_TITLE = 'Author: ';
+export const BLOG_CATEGORY_TITLE = 'Category: ';
+export const BLOG_DATE_TITLE = 'Last Updated: ';
+export const TOP_BLOGS_TITLE = 'Our Top Blogs';
 
 // DashboardScreen content
 export const DASHBOARD_TITLE = 'DASHBOARD';

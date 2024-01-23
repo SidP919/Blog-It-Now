@@ -25,3 +25,6 @@ export const IOS_ICON = require('../assets/ios.png');
 export const HOME_ICON = require('../assets/home.png');
 export const CONTACT_US_ICON = require('../assets/contact_us.png');
 export const ABOUT_US_ICON = require('../assets/about_us.png');
+export const LIKE_ICON = require('../assets/like.png');
+export const DISLIKE_ICON = require('../assets/dislike.png');
+export const BLOG_BG = require('../assets/blog_bg.png');

@@ -1,10 +1,11 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, Pressable, StyleSheet, View} from 'react-native';
 import useCommonParams from '../../hooks/useCommonParams';
 import {
   ifMobileDevice,
   ifTablet,
   ifWebLargeLandscapeMode,
+  ifWebSmallLandscapeMode,
   isMobileNative,
 } from '../../utils/utils';
 
@@ -38,77 +39,91 @@ const CustomCarousel = ({data, RenderItem}) => {
   );
 
   const [index, setIndex] = useState(0);
+  const calcItemWidth = useCallback(() => {
+    return isLandscapeMode
+      ? ifWebSmallLandscapeMode()
+        ? (screenWidth - 64) / 2
+        : ifWebLargeLandscapeMode() || ifTablet()
+        ? (screenWidth - 64) / 3
+        : screenWidth - 24
+      : ifTablet()
+      ? (screenWidth - 48) / 2
+      : isMobileNative
+      ? screenWidth - 64
+      : screenWidth - 48;
+  }, [isLandscapeMode, screenWidth]);
+
+  const [itemWidth, setItemWidth] = useState(calcItemWidth());
   const indexRef = useRef(index);
   const flatListRef = useRef(null);
   indexRef.current = index;
-  const onScroll = useCallback(event => {
-    const slideSize = event.nativeEvent.layoutMeasurement.width;
-    const currentIndex = event.nativeEvent.contentOffset.x / slideSize;
-    const roundIndex = Math.round(currentIndex);
 
-    const distance = Math.abs(roundIndex - currentIndex);
+  const onScroll = useCallback(
+    event => {
+      const multiplyingFactor = isLandscapeMode
+        ? ifWebSmallLandscapeMode()
+          ? 2
+          : ifWebLargeLandscapeMode() || ifTablet()
+          ? 3
+          : 1
+        : ifTablet()
+        ? 2
+        : 1;
+      const slideSize = event.nativeEvent.layoutMeasurement.width;
+      const currentIndex =
+        (multiplyingFactor * event.nativeEvent.contentOffset.x) / slideSize;
+      const roundIndex = Math.round(currentIndex);
 
-    // Prevent one pixel triggering setIndex in the middle
-    // of the transition. With this we have to scroll a bit
-    // more to trigger the index change.
-    const isNoMansLand = distance > 0.4;
+      const indexDiff = Math.abs(roundIndex - currentIndex);
 
-    if (
-      !(ifWebLargeLandscapeMode() || ifTablet()) &&
-      roundIndex !== indexRef.current &&
-      !isNoMansLand
-    ) {
-      // console.log('onScroll: roundIndex', roundIndex);
-      setIndex(roundIndex);
-    }
-  }, []);
+      // Restrict a minute scroll from triggering the setIndex in the middle
+      // of the transition, i.e., user needs to scroll a bit
+      // more to trigger the index-change/slide-change:
+      const isInvalidRegion = indexDiff > 0.4;
+
+      if (roundIndex !== indexRef.current && !isInvalidRegion) {
+        setIndex(roundIndex);
+      }
+    },
+    [isLandscapeMode],
+  );
 
   const flatListOptimizationProps = {
     initialNumToRender: 10,
     maxToRenderPerBatch: 1,
     removeClippedSubviews: true,
-    scrollEventThrottle: 16,
+    scrollEventThrottle: 8,
     windowSize: 2,
     keyExtractor: useCallback(e => e._id, []),
     getItemLayout: useCallback(
       (_, ind) => ({
         index: ind,
-        length: 296 * 2,
-        offset: ind * 296,
+        length: itemWidth,
+        offset: ind * itemWidth,
       }),
-      [],
+      [itemWidth],
     ),
   };
 
   const goToSlide = useCallback(
-    i => {
+    (e, i) => {
+      e.preventDefault();
       if (
         flatListRef &&
         flatListRef.current &&
         flatListRef.current.scrollToOffset
       ) {
-        setIndex(i);
-        const offset = ifMobileDevice()
-          ? i * (screenWidth - 32)
-          : i * (296 - 32);
-        // isLandscapeMode
-        //   ? ifWebSmallLandscapeMode()
-        //     ? i * (screenWidth - 32)
-        //     : i > 2
-        //     ? (i * screenWidth) / 3
-        //     : 0
-        //   : i * (screenWidth - 32);
+        const offset = i * (itemWidth + 32);
         flatListRef.current?.scrollToOffset({offset, animated: true});
+        setIndex(i);
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [screenWidth],
+    [itemWidth],
   );
 
-  // Use the index
-  // useEffect(() => {
-  //   console.log(index);
-  // }, [index]);
+  useEffect(() => {
+    setItemWidth(calcItemWidth());
+  }, [calcItemWidth]);
 
   return (
     <View style={[styles.carouselView]}>
@@ -116,9 +131,11 @@ const CustomCarousel = ({data, RenderItem}) => {
         data={data}
         style={styles.cardListView}
         renderItem={({item}) => {
-          return <RenderItem item={item} />;
+          return <RenderItem item={item} itemWidth={itemWidth} />;
         }}
-        ItemSeparatorComponent={<View style={[styles.itemSeparatorView]} />}
+        ItemSeparatorComponent={
+          !ifMobileDevice() && <View style={[styles.itemSeparatorView]} />
+        }
         pagingEnabled
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -130,7 +147,7 @@ const CustomCarousel = ({data, RenderItem}) => {
       <View style={styles.pagination}>
         {data.map((_, i) => {
           return (
-            <Pressable key={'item_no_' + i} onPress={() => goToSlide(i)}>
+            <Pressable key={'item_no_' + i} onPress={e => goToSlide(e, i)}>
               <View
                 style={[
                   styles.paginationDot,
@@ -163,27 +180,26 @@ const style = (
   StyleSheet.create({
     carouselView: {
       width: isMobileNative ? screenWidth : screenWidth - 32,
-      // height:
-      //   screenHeight -
-      //   ((isLandscapeMode && !ifMobileDevice()) || ifTablet() ? 100 : 60) -
-      //   (ifMobileDevice() || ifTablet() ? 56 : 85) -
-      //   32,
-      maxHeight: 500,
+      height:
+        isLandscapeMode && ifWebSmallLandscapeMode()
+          ? screenHeight - 48 - 56
+          : null,
+      // backgroundColor: 'darkgrey',
+      maxHeight: 556,
       justifyContent: 'center',
       alignItems: isLandscapeMode ? 'center' : 'flex-start',
     },
     cardListView: {
-      // height:
-      //   screenHeight -
-      //   ((isLandscapeMode && !ifMobileDevice()) || ifTablet() ? 100 : 60) -
-      //   (ifMobileDevice() || ifTablet() ? 56 : 85) -
-      //   32,
+      height:
+        isLandscapeMode && ifWebSmallLandscapeMode()
+          ? screenHeight - 48 - 56
+          : null,
       marginBottom: 40,
       maxHeight: 500,
       width: screenWidth - 32,
     },
     flatListContainerStyle: {
-      paddingHorizontal: 32,
+      paddingLeft: 32,
       justifyContent: 'center',
     },
     itemSeparatorView: {
@@ -191,7 +207,7 @@ const style = (
     },
     pagination: {
       position: 'absolute',
-      bottom: 8,
+      bottom: isLandscapeMode && ifWebSmallLandscapeMode() ? 16 : 0,
       width: '100%',
       justifyContent: 'center',
       flexDirection: 'row',

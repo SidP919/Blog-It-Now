@@ -8,10 +8,12 @@ import {
   ifMobileDevice,
   ifTablet,
   ifWebSmallLandscapeMode,
+  isMobileNative,
   logger,
 } from '../../utils/utils';
 import webService from '../../services/web-service';
 import {GET_TOP_BLOGS} from '../../utils/constants';
+import {NO_DATA_MSG, TOP_BLOGS_TITLE} from '../../utils/content';
 
 const TopBlogs = () => {
   const [topBlogData, setTopBlogData] = useState([]);
@@ -73,14 +75,18 @@ const TopBlogs = () => {
     <>
       <View style={[styles.sectionTitleView]}>
         <Text style={[commonStyles.sectionTitle, styles.sectionTitle]}>
-          Our Top Blogs
+          {TOP_BLOGS_TITLE}
         </Text>
       </View>
       <View style={[styles.carouselView]} accessible={false}>
         {topBlogData?.length > 0 ? (
           <CustomCarousel data={topBlogData} RenderItem={BlogCard} />
         ) : (
-          <Text style={[commonStyles.dataTitle]}>No Data Available</Text>
+          <View style={[styles.noDataView]}>
+            <Text style={[commonStyles.dataTitle, styles.noDataText]}>
+              {NO_DATA_MSG}
+            </Text>
+          </View>
         )}
       </View>
     </>
@@ -103,7 +109,14 @@ const style = (
 ) =>
   StyleSheet.create({
     sectionTitleView: {
-      height: (isLandscapeMode && !ifMobileDevice()) || ifTablet() ? 100 : 60,
+      height:
+        (isLandscapeMode && !ifMobileDevice()) || ifTablet()
+          ? 100
+          : isMobileNative
+          ? 80
+          : !isLandscapeMode
+          ? 60
+          : 48,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -114,11 +127,25 @@ const style = (
     carouselView: {
       height:
         screenHeight -
-        ((isLandscapeMode && !ifMobileDevice()) || ifTablet() ? 100 : 60) -
+        ((isLandscapeMode && !ifMobileDevice()) || ifTablet()
+          ? 100
+          : isMobileNative
+          ? 80
+          : !isLandscapeMode
+          ? 60
+          : 48) -
         (ifMobileDevice() || ifTablet() ? 56 : 85),
       maxHeight: 556,
       justifyContent: 'flex-start',
-      paddingTop: isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 16,
+      paddingTop: isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 0,
       alignItems: 'center',
+    },
+    noDataView: {
+      height: '80%',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    noDataText: {
+      textAlign: 'center',
     },
   });
