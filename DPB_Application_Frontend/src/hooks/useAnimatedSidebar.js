@@ -1,9 +1,6 @@
 import {useRef, useState} from 'react';
 import {Animated, PanResponder} from 'react-native';
-import {
-  ifTablet,
-  ifWebSmallLandscapeMode,
-} from '../utils/utils';
+import {ifTablet, ifWebSmallLandscapeMode} from '../utils/utils';
 import useCommonParams from './useCommonParams';
 
 const useAnimatedSidebar = () => {
