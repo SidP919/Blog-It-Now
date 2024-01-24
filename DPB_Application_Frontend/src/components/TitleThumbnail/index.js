@@ -127,17 +127,16 @@ const style = (
       paddingHorizontal: 12,
       paddingVertical: 32,
       borderRadius: 8,
-      justifyContent: 'flex-start',
-      alignItems:
-        isLandscapeMode && ifWebSmallLandscapeMode() ? 'center' : 'flex-start',
-      //   transform: isWeb ? 'rotate3d(1, 1, 1, -16deg)' : [{rotate: '-16deg'}],
+      justifyContent:
+        isLandscapeMode && ifWebSmallLandscapeMode() ? 'flex-start' : 'center',
+      alignItems: 'center',
       gap: isLandscapeMode && ifWebSmallLandscapeMode() ? 4 : 6,
       maxHeight: '100%',
     },
     thumbnailTextContainer: {
       flexDirection: 'row',
       color: Colors.headerTitle[theme],
-      fontSize: isLandscapeMode && ifWebSmallLandscapeMode() ? mdText : mdText,
+      fontSize: isLandscapeMode && ifWebSmallLandscapeMode() ? smText : mdText,
       fontWeight: '700',
       verticalAlign: 'center',
     },
