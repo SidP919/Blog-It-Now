@@ -113,7 +113,7 @@ const style = (
       right: 0,
       top: 0,
       paddingHorizontal: 8,
-      width: screenWidth,
+      // width: screenWidth,
       minWidth: 304,
       borderBottomWidth: 2,
       borderBottomColor: Colors.headerTitle[theme],

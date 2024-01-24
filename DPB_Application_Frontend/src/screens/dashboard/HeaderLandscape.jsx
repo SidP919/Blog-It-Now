@@ -5,7 +5,7 @@ import {BRAND_ICON, MENU_ICON, PROFILE_ICON} from '../../utils/images';
 import {
   LOG_OUT,
   ifMobileDevice,
-  ifTabletLandscapeMode,
+  ifTablet,
   isNotDesktopWeb,
 } from '../../utils/utils';
 import {FONT_INTER_BOLD} from '../../utils/fontUtils';
@@ -274,10 +274,7 @@ const style = (
 ) =>
   StyleSheet.create({
     headerContainer: {
-      height:
-        !isLandscapeMode || ifMobileDevice() || ifTabletLandscapeMode()
-          ? 56
-          : 85,
+      height: !isLandscapeMode || ifMobileDevice() || ifTablet() ? 56 : 85,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
@@ -288,7 +285,7 @@ const style = (
       right: 0,
       top: 0,
       paddingHorizontal: 16,
-      width: screenWidth,
+      // width: screenWidth,
       minWidth: 304,
       borderBottomWidth: 2,
       borderBottomColor: Colors.headerTitle[theme],

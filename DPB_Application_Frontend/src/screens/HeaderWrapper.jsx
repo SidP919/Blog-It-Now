@@ -77,4 +77,4 @@ const HeaderWrapper = ({
   );
 };
 
-export default memo(HeaderWrapper);
+export default HeaderWrapper;
