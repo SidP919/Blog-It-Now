@@ -140,7 +140,7 @@ const style = (
 ) =>
   StyleSheet.create({
     container: {
-      width: isMobileNative ? itemWidth : itemWidth,
+      width: itemWidth,
       flexDirection:
         isLandscapeMode && ifWebSmallLandscapeMode() ? 'row' : 'column',
       height:

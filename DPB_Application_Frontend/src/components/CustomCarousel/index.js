@@ -184,7 +184,6 @@ const style = (
         isLandscapeMode && ifWebSmallLandscapeMode()
           ? screenHeight - 48 - 56
           : null,
-      // backgroundColor: 'darkgrey',
       maxHeight: 556,
       justifyContent: 'center',
       alignItems: isLandscapeMode ? 'center' : 'flex-start',

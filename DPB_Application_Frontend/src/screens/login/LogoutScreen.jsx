@@ -10,6 +10,7 @@ import useCommonParams from '../../hooks/useCommonParams';
 import useAnimatedSidebar from '../../hooks/useAnimatedSidebar';
 import Header from '../dashboard/Header';
 import {LOGOUT_ROUTE} from '../../utils/constants';
+import HeaderWrapper from '../HeaderWrapper';
 
 const LogoutScreen = () => {
   const {
@@ -38,33 +39,22 @@ const LogoutScreen = () => {
   );
 
   return (
-    <SafeAreaView style={[styles.container]}>
-      <DasboardSidePanel
-        screenHeight={screenHeight}
-        screenWidth={screenWidth}
-        animatedValue={animatedValue}
-        toggleSidePanel={toggleSidePanel}
-        showView={showView}
-        currentScreen={LOGOUT_ROUTE}
-      />
-      <View style={[styles.mainContainer]}>
-        <Header
-          headerTitle={'Want to Log Out?'}
-          toggleSidePanel={toggleSidePanel}
+    <HeaderWrapper
+      title={'Want to Log Out?'}
+      currentScreen={LOGOUT_ROUTE}
+      isApiLoading={false}>
+      <View style={[styles.screenContent]}>
+        <Text style={[styles.bigTitle]}>
+          Please click below button to confirm logout:
+        </Text>
+        <ImgButton
+          source={LOGOUT_ICON}
+          size={bigSize}
+          color={Colors.btnText[theme]}
+          onPress={logoutHandler}
         />
-        <View style={[styles.screenContent]}>
-          <Text style={[styles.bigTitle]}>
-            Please click below button to confirm logout:
-          </Text>
-          <ImgButton
-            source={LOGOUT_ICON}
-            size={bigSize}
-            color={Colors.btnText[theme]}
-            onPress={logoutHandler}
-          />
-        </View>
       </View>
-    </SafeAreaView>
+    </HeaderWrapper>
   );
 };
 
