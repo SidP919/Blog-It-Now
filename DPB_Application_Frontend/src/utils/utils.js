@@ -35,7 +35,7 @@ function isLargeDeviceSanityCheck() {
 // returns true if app is running on Mobile Device
 export function ifMobileDevice() {
   if (isWeb) {
-    return !ifWebLargeLandscapeMode() && !isTablet;
+    return !ifWebLargeLandscapeMode() && !ifTablet();
   } else {
     return !ifNativeLandscapeMode();
   }
@@ -51,24 +51,42 @@ export function ifWebLargeLandscapeMode() {
 export function ifWebSmallLandscapeMode() {
   const {width, height} = Dimensions.get('window');
   return (
-    isWeb && isMobileOnly && Math.max(width, height) > 450 && width > height
+    isWeb &&
+    (isMobileOnly || Math.min(width, height) <= 450) &&
+    Math.max(width, height) > 450 &&
+    width > height
   );
 }
 
 // returns true if app is running on Tablet device
 export function ifTablet() {
-  return isTablet || ifNativeLandscapeMode();
+  return ifLandscapeMode()
+    ? ifTabletLandscapeMode()
+    : ifWebTabletPortraitMode();
 }
 
 // returns true if app is running on Tablet in LandscapeMode
 export function ifTabletLandscapeMode() {
-  return ifLandscapeMode() && (isTablet || ifNativeLandscapeMode());
+  const width = getWidth();
+  const height = getHeight();
+  return (
+    isTablet ||
+    ifNativeLandscapeMode() ||
+    (isDesktopWeb &&
+      Math.max(width, height) <= 956 &&
+      Math.min(width, height) > 450)
+  );
 }
 
 // returns true if app is running in a web-browser on a Tablet device in Portrait Mode
 export function ifWebTabletPortraitMode() {
   const {width, height} = Dimensions.get('window');
-  return isWeb && isTablet && width < height;
+  return (
+    (isWeb && isTablet && width < height) ||
+    (isDesktopWeb &&
+      Math.max(width, height) <= 956 &&
+      Math.min(width, height) > 450)
+  );
 }
 
 // returns true if app is running in a native-environment(not a web-browser)
