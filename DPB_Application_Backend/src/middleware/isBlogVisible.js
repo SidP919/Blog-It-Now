@@ -44,14 +44,20 @@ const isBlogVisible = async (req, res, next) => {
       }
     }
   } catch (error) {
-    console.error(error);
+    // if invalid auth_token:
     if (error.name === "JsonWebTokenError") {
       return res.status(403).json({
         success: false,
-        message: "Auth Token is Invalid! Please login and try again.",
+        message: "Provided Auth Token is Invalid! Please login and try again.",
+      });
+    } else if (error.name === "TokenExpiredError") {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Provided Auth Token has been expired! Please login and try again.",
       });
     }
-    // if invalid auth_token:
+    console.error(error);
     return res.status(405).json({
       success: false,
       message:
