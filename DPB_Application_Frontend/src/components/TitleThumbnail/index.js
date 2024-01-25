@@ -115,7 +115,7 @@ const style = (
       paddingVertical: 4,
       opacity: 0.8,
       borderColor: Colors.border[theme],
-      borderBottomWidth: 2,
+      borderBottomWidth: isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 3,
     },
     thumbnail: {
       flexDirection: 'row',

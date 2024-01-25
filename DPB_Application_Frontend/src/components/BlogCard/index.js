@@ -178,7 +178,7 @@ const style = (
       justifyContent: 'flex-start',
       left: 0,
       borderColor: Colors.border[theme],
-      borderBottomWidth: 3,
+      borderBottomWidth: isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 3,
     },
     infoView: {
       width: isLandscapeMode && ifWebSmallLandscapeMode() ? '60%' : '100%',
