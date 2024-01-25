@@ -9,10 +9,7 @@ import {
   isMobileNative,
 } from '../../utils/utils';
 import Img from '../Img';
-import {
-  DISLIKE_SOLID_ICON,
-  LIKE_SOLID_ICON,
-} from '../../utils/images';
+import {DISLIKE_SOLID_ICON, LIKE_SOLID_ICON} from '../../utils/images';
 import {formattedDate, getPrettyNumber} from '../../utils/jsUtils';
 import TitleView from '../TitleThumbnail';
 import {
