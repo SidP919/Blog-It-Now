@@ -106,8 +106,7 @@ const CustomCarousel = ({data, RenderItem}) => {
   };
 
   const goToSlide = useCallback(
-    (e, i) => {
-      e.preventDefault();
+    i => {
       if (
         flatListRef &&
         flatListRef.current &&
@@ -124,6 +123,15 @@ const CustomCarousel = ({data, RenderItem}) => {
   useEffect(() => {
     setItemWidth(calcItemWidth());
   }, [calcItemWidth]);
+
+  useEffect(() => {
+    const autoplayInterval = setInterval(() => {
+      goToSlide(index < data.length - 1 ? index + 1 : 0);
+    }, 3000);
+    return () => {
+      clearInterval(autoplayInterval);
+    };
+  }, [data.length, index, goToSlide]);
 
   return (
     <View style={[styles.carouselView]}>
@@ -147,7 +155,7 @@ const CustomCarousel = ({data, RenderItem}) => {
       <View style={styles.pagination}>
         {data.map((_, i) => {
           return (
-            <Pressable key={'item_no_' + i} onPress={e => goToSlide(e, i)}>
+            <Pressable key={'item_no_' + i} onPress={() => goToSlide(i)}>
               <View
                 style={[
                   styles.paginationDot,
@@ -216,8 +224,10 @@ const style = (
       height: 16,
       borderRadius: 8,
       marginHorizontal: 4,
+      borderColor: Colors.border[theme],
+      borderWidth: 2,
     },
-    paginationDotActive: {backgroundColor: Colors.iconOnBgColor[theme]},
-    paginationDotInactive: {backgroundColor: Colors.trackColor[theme]},
+    paginationDotActive: {backgroundColor: Colors.dotOneColor[theme]},
+    paginationDotInactive: {backgroundColor: Colors.bgColor[theme]},
   });
 export default CustomCarousel;
