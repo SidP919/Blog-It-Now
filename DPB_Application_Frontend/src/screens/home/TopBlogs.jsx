@@ -1,5 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import useCommonParams from '../../hooks/useCommonParams';
 import {postAuthScreenStyle} from '../../utils/commonStyles';
 import CustomCarousel from '../../components/CustomCarousel';
@@ -14,10 +15,14 @@ import {
 import webService from '../../services/web-service';
 import {GET_TOP_BLOGS} from '../../utils/constants';
 import {NO_DATA_MSG, TOP_BLOGS_TITLE} from '../../utils/content';
+import {
+  getTopBlogsData,
+  setTopBlogsData,
+} from '../../redux/slices/BlogsDataSlice';
 
 const TopBlogs = () => {
-  const [topBlogData, setTopBlogData] = useState([]);
-
+  const topBlogs = useSelector(getTopBlogsData);
+  const dispatch = useDispatch();
   const {
     screenHeight,
     screenWidth,
@@ -47,16 +52,19 @@ const TopBlogs = () => {
 
   useEffect(() => {
     (async () => {
-      const topBlogArr = await webService
-        .getData(GET_TOP_BLOGS)
-        .then(res => {
-          logger('topBlogData:', res);
-          return res.data.topBlogs;
-        })
-        .catch(error => logger(error));
-      setTopBlogData(topBlogArr);
+      if (Array.isArray(topBlogs) && topBlogs.length < 1) {
+        const topBlogRes = await webService
+          .getData(GET_TOP_BLOGS)
+          .then(res => {
+            return res.data.topBlogs;
+          })
+          .catch(error => logger(error));
+        if (Array.isArray(topBlogRes)) {
+          dispatch(setTopBlogsData(topBlogRes));
+        }
+      }
     })();
-  }, []);
+  }, [dispatch, topBlogs]);
 
   const styles = style(
     screenHeight,
@@ -79,8 +87,8 @@ const TopBlogs = () => {
         </Text>
       </View>
       <View style={[styles.carouselView]} accessible={false}>
-        {topBlogData?.length > 0 ? (
-          <CustomCarousel data={topBlogData} RenderItem={BlogCard} />
+        {topBlogs?.length > 0 ? (
+          <CustomCarousel data={topBlogs} RenderItem={BlogCard} />
         ) : (
           <View style={[styles.noDataView]}>
             <Text style={[commonStyles.dataTitle, styles.noDataText]}>

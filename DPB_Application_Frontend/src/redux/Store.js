@@ -5,6 +5,7 @@ import ThemeSlice from './slices/ThemeSlice';
 import AlertSlice from './slices/AlertSlice';
 import ApiLoadingSlice from './slices/ApiLoadingSlice';
 import OtherDataSlice from './slices/OtherDataSlice';
+import BlogsDataSlice from './slices/BlogsDataSlice';
 
 export const Store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const Store = configureStore({
     AlertState: AlertSlice,
     ApiLoadingState: ApiLoadingSlice,
     OtherDataState: OtherDataSlice,
+    blogsData: BlogsDataSlice,
   },
 });
