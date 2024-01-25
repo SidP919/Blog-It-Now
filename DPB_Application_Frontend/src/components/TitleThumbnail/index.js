@@ -141,14 +141,14 @@ const style = (
       verticalAlign: 'center',
     },
     thumbnailText: {
-      color: Colors.headerTitle[theme],
+      color: Colors.mdTitle[theme],
       fontSize:
         isLandscapeMode && ifWebSmallLandscapeMode() ? mdText : smSize * 1.5,
       fontWeight: '700',
       textAlign: 'center',
       paddingBottom: isLandscapeMode && ifWebSmallLandscapeMode() ? 4 : 0,
       paddingHorizontal: 4,
-      backgroundColor: Colors.bgColor[theme],
+      backgroundColor: Colors.btnBgColor[theme],
       borderTopLeftRadius: isLandscapeMode && ifWebSmallLandscapeMode() ? 4 : 8,
       borderTopRightRadius:
         isLandscapeMode && ifWebSmallLandscapeMode() ? 4 : 8,
@@ -158,10 +158,10 @@ const style = (
     titleText: {
       flex: 1,
       fontSize: isLandscapeMode && ifWebSmallLandscapeMode() ? smText : mdText,
-      color: Colors.title[theme],
+      color: Colors.mdTitle[theme],
       fontWeight: '500',
       textAlign: 'left',
-      backgroundColor: Colors.bgColor[theme],
+      backgroundColor: Colors.btnBgColor[theme],
       borderTopRightRadius:
         isLandscapeMode && ifWebSmallLandscapeMode() ? 4 : 8,
       borderBottomRightRadius:

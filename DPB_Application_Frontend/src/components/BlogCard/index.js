@@ -9,7 +9,10 @@ import {
   isMobileNative,
 } from '../../utils/utils';
 import Img from '../Img';
-import {DISLIKE_ICON, LIKE_ICON} from '../../utils/images';
+import {
+  DISLIKE_SOLID_ICON,
+  LIKE_SOLID_ICON,
+} from '../../utils/images';
 import {formattedDate, getPrettyNumber} from '../../utils/jsUtils';
 import TitleView from '../TitleThumbnail';
 import {
@@ -98,20 +101,20 @@ const BlogCard = ({item, itemWidth}) => {
 
         <View style={[styles.likeDislikeView]}>
           <Img
-            source={LIKE_ICON}
+            source={LIKE_SOLID_ICON}
             width={16}
             height={16}
-            color={Colors.iconOnBgColor[theme]}
+            color={Colors.sideBarHeaderLogo[theme]}
           />
           <Text style={[styles.likeDislikeText]}>
             {getPrettyNumber(item.likesCount)}
           </Text>
           <View style={[styles.itemSeparatorView]} />
           <Img
-            source={DISLIKE_ICON}
+            source={DISLIKE_SOLID_ICON}
             width={16}
             height={16}
-            color={Colors.iconOnBgColor[theme]}
+            color={Colors.sideBarHeaderLogo[theme]}
           />
           <Text style={[styles.likeDislikeText]}>
             {getPrettyNumber(item.dislikesCount)}
@@ -153,9 +156,9 @@ const style = (
       justifyContent:
         isLandscapeMode && ifWebSmallLandscapeMode() ? 'flex-start' : 'center',
       alignItems: 'center',
-      borderColor: Colors.headerTitle[theme],
-      borderWidth: 2,
-      borderRadius: 24,
+      borderColor: Colors.border[theme],
+      borderWidth: 3,
+      borderRadius: 25.5,
       marginHorizontal: ifMobileDevice() && !isMobileNative ? 8 : 0,
       marginRight: isMobileNative ? 32 : null,
     },
@@ -178,7 +181,7 @@ const style = (
       justifyContent: 'flex-start',
       left: 0,
       borderColor: Colors.border[theme],
-      borderBottomWidth: 2,
+      borderBottomWidth: 3,
     },
     infoView: {
       width: isLandscapeMode && ifWebSmallLandscapeMode() ? '60%' : '100%',
@@ -189,8 +192,10 @@ const style = (
     },
     dataView: {
       minHeight: 53,
-      marginVertical: 12,
+      marginTop: 12,
+      marginBottom: 4,
       overflowY: 'hidden',
+      justifyContent: 'center',
     },
     dataContentView: {
       minHeight: 24,
@@ -208,7 +213,7 @@ const style = (
       fontWeight: '500',
       fontFamily: FONT_INTER_REGULAR,
       textAlign: 'left',
-      color: Colors.text[theme],
+      color: Colors.mdTitle[theme],
       paddingVertical: 3,
       alignItems: 'center',
     },

@@ -27,4 +27,6 @@ export const CONTACT_US_ICON = require('../assets/contact_us.png');
 export const ABOUT_US_ICON = require('../assets/about_us.png');
 export const LIKE_ICON = require('../assets/like.png');
 export const DISLIKE_ICON = require('../assets/dislike.png');
+export const LIKE_SOLID_ICON = require('../assets/solid_like.png');
+export const DISLIKE_SOLID_ICON = require('../assets/solid_dislike.png');
 export const BLOG_BG = require('../assets/blog_bg.png');
