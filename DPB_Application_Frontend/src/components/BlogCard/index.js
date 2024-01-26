@@ -55,7 +55,8 @@ const BlogCard = ({item, itemWidth, setContinueAutoScroll}) => {
       onHoverIn={() => setContinueAutoScroll && setContinueAutoScroll(false)}
       onHoverOut={() => setContinueAutoScroll && setContinueAutoScroll(true)}
       onPressIn={() => setContinueAutoScroll && setContinueAutoScroll(false)}
-      onPressOut={() => setContinueAutoScroll && setContinueAutoScroll(true)}>
+      onPressOut={() => setContinueAutoScroll && setContinueAutoScroll(true)}
+      onLongPress={() => setContinueAutoScroll && setContinueAutoScroll(false)}>
       <View style={[styles.imgView]}>
         {item.blogThumbnail ? (
           <Image source={{uri: item.blogThumbnail}} style={[styles.img]} />
@@ -175,9 +176,9 @@ const style = (
       width: '100%',
       resizeMode: 'cover',
       borderTopLeftRadius:
-        isLandscapeMode && ifWebSmallLandscapeMode() ? 22 : 24,
+        isLandscapeMode && ifWebSmallLandscapeMode() ? 22 : 22,
       borderTopRightRadius:
-        isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 24,
+        isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 22,
       borderBottomLeftRadius:
         isLandscapeMode && ifWebSmallLandscapeMode() ? 22 : 0,
       borderBottomRightRadius:
