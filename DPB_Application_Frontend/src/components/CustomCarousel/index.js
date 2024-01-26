@@ -8,6 +8,8 @@ import {
   ifWebSmallLandscapeMode,
   isMobileNative,
 } from '../../utils/utils';
+import ImgButton from '../ImgButton';
+import {LEFT_PLAY_ICON, RIGHT_PLAY_ICON} from '../../utils/images';
 
 const CustomCarousel = ({data, RenderItem}) => {
   const {
@@ -152,21 +154,38 @@ const CustomCarousel = ({data, RenderItem}) => {
         {...flatListOptimizationProps}
         ref={flatListRef}
       />
-      <View style={styles.pagination}>
-        {data.map((_, i) => {
-          return (
-            <Pressable key={'item_no_' + i} onPress={() => goToSlide(i)}>
-              <View
-                style={[
-                  styles.paginationDot,
-                  index === i
-                    ? styles.paginationDotActive
-                    : styles.paginationDotInactive,
-                ]}
-              />
-            </Pressable>
-          );
-        })}
+      <View style={styles.bottomView}>
+        <ImgButton
+          source={LEFT_PLAY_ICON}
+          onPress={() => goToSlide(index > 0 ? index - 1 : 0)}
+          size={smSize}
+          color={Colors.dotOneColor[theme]}
+        />
+        <View style={styles.pagination}>
+          {data.map((_, i) => {
+            return (
+              <Pressable key={'item_no_' + i} onPress={() => goToSlide(i)}>
+                <View
+                  style={[
+                    styles.paginationDot,
+                    index === i
+                      ? styles.paginationDotActive
+                      : styles.paginationDotInactive,
+                  ]}
+                />
+              </Pressable>
+            );
+          })}
+        </View>
+
+        <ImgButton
+          source={RIGHT_PLAY_ICON}
+          onPress={() =>
+            goToSlide(index === data.length - 1 ? index : index + 1)
+          }
+          size={smSize}
+          color={Colors.dotOneColor[theme]}
+        />
       </View>
     </View>
   );
@@ -212,22 +231,30 @@ const style = (
     itemSeparatorView: {
       width: isMobileNative ? 32 : 16,
     },
-    pagination: {
-      position: 'absolute',
-      bottom: isLandscapeMode && ifWebSmallLandscapeMode() ? 16 : 0,
+    bottomView: {
       width: '100%',
-      justifyContent: 'center',
+      paddingHorizontal: isMobileNative ? 24 : 12,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      position: 'absolute',
+      bottom: isLandscapeMode && ifWebSmallLandscapeMode() ? 12 : -12,
+    },
+    pagination: {
       flexDirection: 'row',
     },
     paginationDot: {
       width: 16,
-      height: 16,
+      height: isLandscapeMode && ifWebSmallLandscapeMode() ? bigSize : smSize,
       borderRadius: 8,
       marginHorizontal: 4,
       borderColor: Colors.border[theme],
       borderWidth: 2,
     },
-    paginationDotActive: {backgroundColor: Colors.dotOneColor[theme]},
-    paginationDotInactive: {backgroundColor: Colors.bgColor[theme]},
+    paginationDotActive: {
+      height: 16,
+      backgroundColor: Colors.dotOneColor[theme],
+    },
+    paginationDotInactive: {height: 16, backgroundColor: Colors.bgColor[theme]},
   });
 export default CustomCarousel;

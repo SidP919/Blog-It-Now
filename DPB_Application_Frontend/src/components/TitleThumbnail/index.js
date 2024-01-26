@@ -123,7 +123,8 @@ const style = (
     titleScrollView: {
       flex: 1,
       flexDirection: 'column',
-      justifyContent: 'center',
+      justifyContent:
+        isLandscapeMode && ifWebSmallLandscapeMode() ? 'flex-start' : 'center',
     },
     thumbnail: {
       flexDirection: 'row',

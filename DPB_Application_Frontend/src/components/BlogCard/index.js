@@ -105,7 +105,6 @@ const BlogCard = ({item, itemWidth}) => {
           <Text style={[styles.likeDislikeText]}>
             {getPrettyNumber(item.likesCount)}
           </Text>
-          <View style={[styles.itemSeparatorView]} />
           <Img
             source={DISLIKE_SOLID_ICON}
             width={16}
@@ -159,8 +158,10 @@ const style = (
       marginRight: isMobileNative ? 32 : null,
     },
     imgView: {
+      flex: isLandscapeMode && ifWebSmallLandscapeMode() ? null : 1,
+      height: isLandscapeMode && ifWebSmallLandscapeMode() ? '100%' : null,
       width: isLandscapeMode && ifWebSmallLandscapeMode() ? '40%' : '100%',
-      height: isLandscapeMode && ifWebSmallLandscapeMode() ? '100%' : '55%',
+      maxHeight: isLandscapeMode && ifWebSmallLandscapeMode() ? '100%' : '55%',
       borderColor: Colors.border[theme],
       borderBottomWidth: isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 3,
       borderRightWidth: isLandscapeMode && ifWebSmallLandscapeMode() ? 3 : 0,
@@ -170,11 +171,11 @@ const style = (
       width: '100%',
       resizeMode: 'cover',
       borderTopLeftRadius:
-        isLandscapeMode && ifWebSmallLandscapeMode() ? 24 : 24,
+        isLandscapeMode && ifWebSmallLandscapeMode() ? 22 : 24,
       borderTopRightRadius:
         isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 24,
       borderBottomLeftRadius:
-        isLandscapeMode && ifWebSmallLandscapeMode() ? 24 : 0,
+        isLandscapeMode && ifWebSmallLandscapeMode() ? 22 : 0,
       borderBottomRightRadius:
         isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 0,
       justifyContent: 'flex-start',
@@ -182,20 +183,20 @@ const style = (
     },
     infoView: {
       width: isLandscapeMode && ifWebSmallLandscapeMode() ? '60%' : '100%',
-      height: isLandscapeMode && ifWebSmallLandscapeMode() ? '100%' : '45%',
+      minHeight: isLandscapeMode && ifWebSmallLandscapeMode() ? '100%' : '45%',
       justifyContent: 'flex-start',
       paddingHorizontal: 12,
       paddingBottom: 8,
     },
     dataView: {
-      minHeight: 53,
-      marginTop: 12,
-      marginBottom: 4,
+      minHeight: isLandscapeMode && ifWebSmallLandscapeMode() ? 36 : 53,
+      marginTop: isLandscapeMode && ifWebSmallLandscapeMode() ? 4 : 12,
+      marginBottom: isLandscapeMode && ifWebSmallLandscapeMode() ? 2 : 4,
       overflowY: 'hidden',
       justifyContent: 'center',
     },
     dataContentView: {
-      minHeight: 24,
+      minHeight: isLandscapeMode && ifWebSmallLandscapeMode() ? 14 : 24,
       overflowY: 'hidden',
     },
     dataTitle: {
@@ -218,7 +219,7 @@ const style = (
       flexDirection: 'row',
       flexWrap:
         isLandscapeMode && ifWebSmallLandscapeMode() ? 'wrap' : 'nowrap',
-      width: 104,
+      maxWidth: 82,
       justifyContent: 'flex-start',
       alignItems: 'center',
       paddingVertical: 6,
@@ -226,23 +227,19 @@ const style = (
         isLandscapeMode && ifWebSmallLandscapeMode() ? 'absolute' : null,
       bottom: isLandscapeMode && ifWebSmallLandscapeMode() ? '10%' : null,
       left: isLandscapeMode && ifWebSmallLandscapeMode() ? '-64%' : null,
+      backgroundColor:
+        isLandscapeMode && ifWebSmallLandscapeMode()
+          ? Colors.bgColor[theme]
+          : null,
+      opacity: isLandscapeMode && ifWebSmallLandscapeMode() ? 0.5 : 1,
+      borderRadius: 8,
     },
     likeDislikeText: {
       fontSize: mdSize,
       fontWeight: '700',
       fontFamily: FONT_INTER_MEDIUM,
-      textAlign: 'center',
-      color: Colors.mdTitle[theme],
-      minWidth: 50,
-    },
-    itemSeparatorView: {
-      width: isMobileNative
-        ? 2
-        : isLandscapeMode && ifWebSmallLandscapeMode()
-        ? 0
-        : 2,
-      height: '90%',
-      marginHorizontal: mdSize / 2,
-      backgroundColor: Colors.mdTitle[theme],
+      textAlign: 'left',
+      color: Colors.title[theme],
+      minWidth: 41,
     },
   });

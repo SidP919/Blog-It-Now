@@ -118,9 +118,7 @@ const style = (
   StyleSheet.create({
     sectionTitleView: {
       height:
-        (isLandscapeMode && !ifMobileDevice()) || ifTablet()
-          ? 100
-          : isMobileNative
+        (isLandscapeMode && !ifMobileDevice()) || ifTablet() || isMobileNative
           ? 80
           : !isLandscapeMode
           ? 60
@@ -135,9 +133,7 @@ const style = (
     carouselView: {
       height:
         screenHeight -
-        ((isLandscapeMode && !ifMobileDevice()) || ifTablet()
-          ? 100
-          : isMobileNative
+        ((isLandscapeMode && !ifMobileDevice()) || ifTablet() || isMobileNative
           ? 80
           : !isLandscapeMode
           ? 60
@@ -145,7 +141,7 @@ const style = (
         (ifMobileDevice() || ifTablet() ? 56 : 85),
       maxHeight: 556,
       justifyContent: 'flex-start',
-      paddingTop: isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 0,
+      paddingTop: 0,
       alignItems: 'center',
     },
     noDataView: {
