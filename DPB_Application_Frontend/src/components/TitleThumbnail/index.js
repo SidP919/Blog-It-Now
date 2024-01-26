@@ -47,29 +47,35 @@ const TitleView = ({title}) => {
     <View style={styles.container}>
       <ImageBackground style={styles.imgBgView} source={BLOG_BG}>
         <ScrollView
-          contentContainerStyle={styles.thumbnail}
+          contentContainerStyle={[styles.titleScrollView]}
           showsVerticalScrollIndicator={ifMobileDevice() ? true : false}>
-          {title?.split(' ').map((w, i) => {
-            return (
-              <Text
-                numberOfLines={1}
-                key={'tt_' + i}
-                style={[styles.thumbnailTextContainer]}>
-                <Text
-                  style={[
-                    styles.thumbnailText,
-                    w.length === 1 && styles.customBorderRadius,
-                  ]}>
-                  {w.toUpperCase().charAt(0)}
-                </Text>
-                {w.length > 1 && (
-                  <Text numberOfLines={1} style={styles.titleText}>
-                    {w.slice(1).toUpperCase()}
-                  </Text>
-                )}
-              </Text>
-            );
-          })}
+          <View style={[styles.thumbnail]}>
+            {title?.split(' ').map((w, i) => {
+              return (
+                <View
+                  numberOfLines={1}
+                  key={'tt_' + i}
+                  style={[styles.thumbnailTextContainer]}>
+                  <View
+                    style={[
+                      styles.thumbnailMainCharView,
+                      w.length === 1 && styles.customBorderRadius,
+                    ]}>
+                    <Text style={[styles.thumbnailMainChar]}>
+                      {w.toUpperCase().charAt(0)}
+                    </Text>
+                  </View>
+                  {w.length > 1 && (
+                    <View style={[styles.thumbnailTextView]}>
+                      <Text numberOfLines={1} style={styles.titleText}>
+                        {w.slice(1).toUpperCase()}
+                      </Text>
+                    </View>
+                  )}
+                </View>
+              );
+            })}
+          </View>
         </ScrollView>
       </ImageBackground>
     </View>
@@ -112,20 +118,20 @@ const style = (
       width: '100%',
       height: '100%',
       resizeMode: 'cover',
-      paddingVertical: 4,
       opacity: 0.8,
-      borderColor: Colors.border[theme],
-      borderBottomWidth: isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 3,
+    },
+    titleScrollView: {
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'center',
     },
     thumbnail: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      paddingTop: isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 16,
+      // paddingTop: isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 16,
       paddingLeft: 16,
-      width: '100%',
-      height: '100%',
       paddingHorizontal: 12,
-      paddingVertical: 32,
+      paddingVertical: isLandscapeMode && ifWebSmallLandscapeMode() ? 16 : 32,
       borderRadius: 8,
       justifyContent:
         isLandscapeMode && ifWebSmallLandscapeMode() ? 'flex-start' : 'center',
@@ -135,19 +141,16 @@ const style = (
     },
     thumbnailTextContainer: {
       flexDirection: 'row',
-      color: Colors.headerTitle[theme],
-      fontSize: isLandscapeMode && ifWebSmallLandscapeMode() ? smText : mdText,
-      fontWeight: '700',
-      verticalAlign: 'center',
+      justifyContent: 'center',
+      alignItems: 'flex-end',
     },
-    thumbnailText: {
-      color: Colors.mdTitle[theme],
-      fontSize:
-        isLandscapeMode && ifWebSmallLandscapeMode() ? mdText : smSize * 1.5,
-      fontWeight: '700',
-      textAlign: 'center',
-      paddingBottom: isLandscapeMode && ifWebSmallLandscapeMode() ? 4 : 0,
-      paddingHorizontal: 4,
+    thumbnailMainCharView: {
+      height:
+        isLandscapeMode && ifWebSmallLandscapeMode() ? bigSize : bigSize * 1.3,
+      justifyContent: 'flex-end',
+      paddingBottom: isLandscapeMode && ifWebSmallLandscapeMode() ? 1 : 0,
+      paddingLeft: 4,
+      paddingRight: 4,
       backgroundColor: Colors.btnBgColor[theme],
       borderTopLeftRadius: isLandscapeMode && ifWebSmallLandscapeMode() ? 4 : 8,
       borderTopRightRadius:
@@ -155,27 +158,36 @@ const style = (
       borderBottomLeftRadius:
         isLandscapeMode && ifWebSmallLandscapeMode() ? 4 : 8,
     },
-    titleText: {
-      flex: 1,
-      fontSize: isLandscapeMode && ifWebSmallLandscapeMode() ? smText : mdText,
+    thumbnailMainChar: {
       color: Colors.mdTitle[theme],
-      fontWeight: '500',
-      textAlign: 'left',
+      fontSize:
+        isLandscapeMode && ifWebSmallLandscapeMode() ? mdText : smSize * 1.5,
+      fontWeight: '700',
+      textAlign: 'center',
+    },
+    thumbnailTextView: {
+      height:
+        isLandscapeMode && ifWebSmallLandscapeMode()
+          ? bigSize * 0.75
+          : bigSize * 0.9,
+      justifyContent: 'flex-end',
       backgroundColor: Colors.btnBgColor[theme],
       borderTopRightRadius:
         isLandscapeMode && ifWebSmallLandscapeMode() ? 4 : 8,
       borderBottomRightRadius:
         isLandscapeMode && ifWebSmallLandscapeMode() ? 4 : 8,
       paddingEnd: 8,
-      paddingBottom: isLandscapeMode && ifWebSmallLandscapeMode() ? 2 : 4,
-      ...Platform.select({
-        web: {
-          textOverflow: 'ellipsis',
-        },
-      }),
+      paddingBottom: isLandscapeMode && ifWebSmallLandscapeMode() ? 2 : 3,
+    },
+    titleText: {
+      fontSize: isLandscapeMode && ifWebSmallLandscapeMode() ? smText : mdText,
+      color: Colors.mdTitle[theme],
+      fontWeight: '500',
+      textAlign: 'left',
     },
     customBorderRadius: {
-      borderBottomRightRadius: 8,
+      borderBottomRightRadius:
+        isLandscapeMode && ifWebSmallLandscapeMode() ? 4 : 8,
     },
   });
 

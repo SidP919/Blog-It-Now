@@ -95,7 +95,6 @@ const BlogCard = ({item, itemWidth}) => {
             {formattedDate(item.lastUpdated)}
           </Text>
         </View>
-
         <View style={[styles.likeDislikeView]}>
           <Img
             source={LIKE_SOLID_ICON}
@@ -162,6 +161,9 @@ const style = (
     imgView: {
       width: isLandscapeMode && ifWebSmallLandscapeMode() ? '40%' : '100%',
       height: isLandscapeMode && ifWebSmallLandscapeMode() ? '100%' : '55%',
+      borderColor: Colors.border[theme],
+      borderBottomWidth: isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 3,
+      borderRightWidth: isLandscapeMode && ifWebSmallLandscapeMode() ? 3 : 0,
     },
     img: {
       height: '100%',
@@ -177,8 +179,6 @@ const style = (
         isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 0,
       justifyContent: 'flex-start',
       left: 0,
-      borderColor: Colors.border[theme],
-      borderBottomWidth: isLandscapeMode && ifWebSmallLandscapeMode() ? 0 : 3,
     },
     infoView: {
       width: isLandscapeMode && ifWebSmallLandscapeMode() ? '60%' : '100%',
