@@ -1,5 +1,5 @@
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {memo} from 'react';
 import useCommonParams from '../../hooks/useCommonParams';
 import {FONT_INTER_MEDIUM, FONT_INTER_REGULAR} from '../../utils/fontUtils';
 import {
@@ -18,7 +18,7 @@ import {
   BLOG_DATE_TITLE,
 } from '../../utils/content';
 
-const BlogCard = ({item, itemWidth}) => {
+const BlogCard = ({item, itemWidth, setContinueAutoScroll}) => {
   const {
     screenHeight,
     screenWidth,
@@ -51,7 +51,11 @@ const BlogCard = ({item, itemWidth}) => {
   return (
     <Pressable
       style={[styles.container]}
-      onPress={() => console.log(`${item.title} is being loaded...`)}>
+      onPress={() => console.log(`${item.title} is being loaded...`)}
+      onHoverIn={() => setContinueAutoScroll && setContinueAutoScroll(false)}
+      onHoverOut={() => setContinueAutoScroll && setContinueAutoScroll(true)}
+      onPressIn={() => setContinueAutoScroll && setContinueAutoScroll(false)}
+      onPressOut={() => setContinueAutoScroll && setContinueAutoScroll(true)}>
       <View style={[styles.imgView]}>
         {item.blogThumbnail ? (
           <Image source={{uri: item.blogThumbnail}} style={[styles.img]} />
@@ -120,7 +124,7 @@ const BlogCard = ({item, itemWidth}) => {
   );
 };
 
-export default BlogCard;
+export default memo(BlogCard);
 
 const style = (
   screenHeight,

@@ -41,6 +41,7 @@ const CustomCarousel = ({data, RenderItem}) => {
   );
 
   const [index, setIndex] = useState(0);
+  const [continueAutoScroll, setContinueAutoScroll] = useState(true);
   const calcItemWidth = useCallback(() => {
     return isLandscapeMode
       ? ifWebSmallLandscapeMode()
@@ -127,13 +128,15 @@ const CustomCarousel = ({data, RenderItem}) => {
   }, [calcItemWidth]);
 
   useEffect(() => {
-    const autoplayInterval = setInterval(() => {
-      goToSlide(index < data.length - 1 ? index + 1 : 0);
-    }, 3000);
+    const autoplayInterval =
+      continueAutoScroll &&
+      setInterval(() => {
+        goToSlide(index < data.length - 1 ? index + 1 : 0);
+      }, 3000);
     return () => {
-      clearInterval(autoplayInterval);
+      continueAutoScroll && clearInterval(autoplayInterval);
     };
-  }, [data.length, index, goToSlide]);
+  }, [data.length, index, goToSlide, continueAutoScroll]);
 
   return (
     <View style={[styles.carouselView]}>
@@ -141,7 +144,13 @@ const CustomCarousel = ({data, RenderItem}) => {
         data={data}
         style={styles.cardListView}
         renderItem={({item}) => {
-          return <RenderItem item={item} itemWidth={itemWidth} />;
+          return (
+            <RenderItem
+              item={item}
+              itemWidth={itemWidth}
+              setContinueAutoScroll={setContinueAutoScroll}
+            />
+          );
         }}
         ItemSeparatorComponent={
           !ifMobileDevice() && <View style={[styles.itemSeparatorView]} />
