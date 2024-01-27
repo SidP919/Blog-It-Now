@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {memo, useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, Pressable, StyleSheet, View} from 'react-native';
 import useCommonParams from '../../hooks/useCommonParams';
 import {
@@ -11,7 +11,7 @@ import {
 import ImgButton from '../ImgButton';
 import {LEFT_PLAY_ICON, RIGHT_PLAY_ICON} from '../../utils/images';
 
-const CustomCarousel = ({data, RenderItem}) => {
+const CustomCarousel = ({data, RenderItem, autoScroll = true}) => {
   const {
     screenHeight,
     screenWidth,
@@ -41,7 +41,7 @@ const CustomCarousel = ({data, RenderItem}) => {
   );
 
   const [index, setIndex] = useState(0);
-  const [continueAutoScroll, setContinueAutoScroll] = useState(true);
+  const [continueAutoScroll, setContinueAutoScroll] = useState(autoScroll);
   const calcItemWidth = useCallback(() => {
     return isLandscapeMode
       ? ifWebSmallLandscapeMode()
@@ -129,6 +129,7 @@ const CustomCarousel = ({data, RenderItem}) => {
 
   useEffect(() => {
     const autoplayInterval =
+      autoScroll &&
       continueAutoScroll &&
       setInterval(() => {
         goToSlide(index < data.length - 1 ? index + 1 : 0);
@@ -136,7 +137,7 @@ const CustomCarousel = ({data, RenderItem}) => {
     return () => {
       continueAutoScroll && clearInterval(autoplayInterval);
     };
-  }, [data.length, index, goToSlide, continueAutoScroll]);
+  }, [data.length, index, goToSlide, continueAutoScroll, autoScroll]);
 
   return (
     <View style={[styles.carouselView]}>
@@ -266,4 +267,4 @@ const style = (
     },
     paginationDotInactive: {height: 16, backgroundColor: Colors.bgColor[theme]},
   });
-export default CustomCarousel;
+export default memo(CustomCarousel);
