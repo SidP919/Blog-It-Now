@@ -38,17 +38,22 @@ const getSortedBlogs = async (req, res) => {
     } else {
       return res
         .status(400)
-        .json({ error: 'Invalid sortBy parameter. Use "category" or "date".' });
+        .json({
+          success: false,
+          message: 'Invalid sortBy parameter. Use "category" or "date".',
+        });
     }
 
     blogs = blogs.map((blog) => ({
       _id: blog._id,
       title: blog.title,
-      author: blog.author,
+      authorName: blog.authorName,
       category: blog.category,
       likesCount: blog.likes?.length,
       dislikesCount: blog.dislikes?.length,
       blogThumbnail: blog.blogThumbnail,
+      createdOn: blog.createdAt,
+      lastUpdated: blog.updatedAt,
     }));
 
     const categoryWiseBlogsList = [];
@@ -68,9 +73,11 @@ const getSortedBlogs = async (req, res) => {
     }
 
     if (sortBy === "category") {
-      res.status(200).json({ categoryWiseBlogsList });
+      res.status(200).json({ success: true,
+        message: "Sorted Blog Data has been fetched successfully.", categoryWiseBlogsList });
     } else if (sortBy === "date") {
-      res.status(200).json({ dateWiseBlogsList: blogs });
+      res.status(200).json({ success: true,
+        message: "Sorted Blog Data has been fetched successfully.", dateWiseBlogsList: blogs });
     }
   } catch (error) {
     console.error(error);
@@ -150,11 +157,13 @@ const searchBlogs = async (req, res) => {
       return ({
         _id: blog._id,
         title: blog.title,
-        author: blog.author,
+        authorName: blog.authorName,
         category: blog.category,
         likesCount: blog.likes?.length,
         dislikesCount: blog.dislikes?.length,
         blogThumbnail: blog.blogThumbnail,
+        createdOn: blog.createdAt,
+        lastUpdated: blog.updatedAt,
       });
     });
 
@@ -263,8 +272,53 @@ const getTopBlogs = async (req, res) => {
   }
 };
 
+/****************************************************************************************
+ * @GET_BLOGS_BY_AUTHOR
+ * @route http://localhost:4000/api/v1/blogs/getBlogsByAuthor
+ * @requestType GET
+ * @description GetBlogsByAuthor Controller for getting blogs' data based by an author
+ * @parameters none
+ * @returns JSON object( containing response message, response data)
+ **************************************************************************************/
+const getBlogsByAuthor = async (req, res) => {
+  try {
+    const authorId = req.user._id;
+
+    // Check if required info was sent in request or not
+    if (!authorId) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Required information/fields is/are missing! Please provide it & try again.",
+      });
+    }
+
+    let blogs = await Blog.find({ author: authorId }).sort({ createdAt: -1 });
+    blogs = blogs.map((blog) => ({
+      _id: blog._id,
+      title: blog.title,
+      authorName: blog.authorName,
+      category: blog.category,
+      likesCount: blog.likes?.length,
+      dislikesCount: blog.dislikes?.length,
+      blogThumbnail: blog.blogThumbnail,
+      createdOn: blog.createdAt,
+      lastUpdated: blog.updatedAt,
+    }));
+
+    res.status(200).json({ success: true, message: "Author's blogs have been fetched successfully.", blogs });
+  } catch (error) {
+    console.error(error);
+    res.status(405).json({
+      success: false,
+      message: "Error occurred while fetching author's blogs data!",
+    });
+  }
+};
+
 module.exports = {
   getSortedBlogs,
   searchBlogs,
   getTopBlogs,
+  getBlogsByAuthor,
 };

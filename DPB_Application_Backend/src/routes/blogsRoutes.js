@@ -21,6 +21,7 @@ const {
   getSortedBlogs,
   searchBlogs,
   getTopBlogs,
+  getBlogsByAuthor,
 } = require("../controllers/filterBlogsControllers");
 const isBlogVisible = require("../middleware/isBlogVisible");
 const isAdmin = require("../middleware/isAdmin");
@@ -84,6 +85,13 @@ router.get(
   isVerifiedUser,
   isAdmin,
   getTopBlogs
+);
+router.get(
+  "/getBlogsByAuthor",
+  authenticate,
+  isVerifiedUser,
+  isAuthor,
+  getBlogsByAuthor
 );
 
 // like/dislike blogs/comments
