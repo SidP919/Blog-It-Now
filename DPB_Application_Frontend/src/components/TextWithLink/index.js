@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, Pressable, StyleSheet, View} from 'react-native';
 import {openLink} from '../../utils/utils';
 import useCommonParams from '../../hooks/useCommonParams';
+import {FONT_INTER_REGULAR} from '../../utils/fontUtils';
 
 const TextWithLink = ({
   text,
@@ -11,8 +12,36 @@ const TextWithLink = ({
   customStyle,
   linkColor,
 }) => {
-  const {theme, Colors} = useCommonParams();
-  const styles = style(theme, customStyle, Colors, linkColor);
+  const {
+    screenHeight,
+    screenWidth,
+    theme,
+    appColor,
+    isLandscapeMode,
+    isLoggedIn,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  } = useCommonParams();
+  const styles = style(
+    screenHeight,
+    screenWidth,
+    theme,
+    appColor,
+    isLandscapeMode,
+    isLoggedIn,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+    customStyle,
+    linkColor,
+  );
   const textArr = text.split(' ');
   return (
     <Text style={[styles.customStyle, styles.container]}>
@@ -46,7 +75,22 @@ const TextWithLink = ({
   );
 };
 
-const style = (theme, customStyle, Colors, linkColor) =>
+const style = (
+  screenHeight,
+  screenWidth,
+  theme,
+  appColor,
+  isLandscapeMode,
+  isLoggedIn,
+  Colors,
+  bigSize,
+  mdSize,
+  smSize,
+  mdText,
+  smText,
+  customStyle,
+  linkColor,
+) =>
   StyleSheet.create({
     container: {
       margin: 4,
@@ -60,10 +104,10 @@ const style = (theme, customStyle, Colors, linkColor) =>
     },
     otherText: {
       paddingHorizontal: 0,
-      fontSize: customStyle.fontSize,
-      fontWeight: customStyle.fontWeight,
-      fontFamily: customStyle.fontFamily,
-      color: customStyle.color,
+      fontSize: customStyle ? customStyle.fontSize : mdText,
+      fontWeight: customStyle ? customStyle.fontWeight : '700',
+      fontFamily: customStyle ? customStyle.fontFamily : FONT_INTER_REGULAR,
+      color: customStyle ? customStyle.color : Colors.title[theme],
     },
     customStyle: {
       ...customStyle,
