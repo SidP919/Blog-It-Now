@@ -243,7 +243,7 @@ export const postAuthScreenStyle = (
     screenContent: {
       justifyContent: 'center',
       alignItems: 'flex-start',
-      paddingHorizontal: isLandscapeMode ? 16 : 8,
+      paddingHorizontal: 0,
       paddingTop:
         isLandscapeMode && isDesktopWeb && ifWebLargeLandscapeMode() ? 85 : 56,
       ...Platform.select({

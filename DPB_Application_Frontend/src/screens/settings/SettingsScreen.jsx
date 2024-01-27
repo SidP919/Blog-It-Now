@@ -46,7 +46,19 @@ const SettingsScreen = () => {
     smText,
   } = useCommonParams();
 
-  let styles = style(
+  const styles = style(
+    screenHeight,
+    screenWidth,
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  );
+  const commonStyles = postAuthScreenStyle(
     screenHeight,
     screenWidth,
     theme,
@@ -105,7 +117,7 @@ const SettingsScreen = () => {
         <Pressable>
           <View style={styles.sectionContainer}>
             <Text style={[styles.sectionTitle]}>{SETTINGS_APP_HEADING}</Text>
-            <View style={[styles.dataContainer]}>
+            <View style={[commonStyles.dataContainer]}>
               <Text style={[styles.dataTitle]}>{SETTINGS_APP_THEME_TITLE}</Text>
               <View style={styles.dataContent}>
                 <Pressable onPress={() => onToggleTheme(LIGHT_THEME)}>
@@ -124,7 +136,7 @@ const SettingsScreen = () => {
                 </Pressable>
               </View>
             </View>
-            <View style={[styles.dataContainer]}>
+            <View style={[commonStyles.dataContainer]}>
               <Text style={[styles.dataTitle]}>{SETTINGS_APP_COLOR_TITLE}</Text>
               <View style={styles.dataContent}>
                 <ImgButton
@@ -150,7 +162,7 @@ const SettingsScreen = () => {
             <Text style={[styles.sectionTitle]}>
               {SETTINGS_ACCOUNT_HEADING}
             </Text>
-            <View style={[styles.dataContainer, styles.dataContainer2]}>
+            <View style={[commonStyles.dataContainer, styles.dataContainer2]}>
               <Text style={[styles.dataTitle]}>
                 {SETTINGS_ACCOUNT_DANGER_ZONE_TITLE}
               </Text>
@@ -208,6 +220,7 @@ const style = (
       flex: isLandscapeMode ? 1 : null,
       width: isLandscapeMode ? null : '100%',
       paddingVertical: 16,
+      marginRight: 16,
       alignItems: isLandscapeMode ? 'flex-start' : 'center',
     },
     dataContainer2: {
