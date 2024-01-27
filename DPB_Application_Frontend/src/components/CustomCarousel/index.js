@@ -1,5 +1,5 @@
 import React, {memo, useCallback, useEffect, useRef, useState} from 'react';
-import {FlatList, Pressable, StyleSheet, View} from 'react-native';
+import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import useCommonParams from '../../hooks/useCommonParams';
 import {
   ifMobileDevice,
@@ -10,6 +10,8 @@ import {
 } from '../../utils/utils';
 import ImgButton from '../ImgButton';
 import {LEFT_PLAY_ICON, RIGHT_PLAY_ICON} from '../../utils/images';
+import NoDataView from '../NoDataView';
+import {FONT_INTER_REGULAR} from '../../utils/fontUtils';
 
 const CustomCarousel = ({
   data,
@@ -145,64 +147,80 @@ const CustomCarousel = ({
   }, [data.length, index, goToSlide, continueAutoScroll, autoScroll]);
 
   return (
-    <View style={[styles.carouselView]}>
-      <FlatList
-        data={data}
-        style={styles.cardListView}
-        renderItem={({item}) => {
-          return (
-            <RenderItem
-              item={item}
-              itemWidth={itemWidth}
-              setContinueAutoScroll={setContinueAutoScroll}
-            />
-          );
-        }}
-        ItemSeparatorComponent={
-          !ifMobileDevice() && <View style={[styles.itemSeparatorView]} />
-        }
-        pagingEnabled
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        onScroll={onScroll}
-        contentContainerStyle={styles.flatListContainerStyle}
-        {...flatListOptimizationProps}
-        ref={flatListRef}
-      />
-      <View style={styles.bottomView}>
-        <ImgButton
-          source={LEFT_PLAY_ICON}
-          onPress={() => goToSlide(index > 0 ? index - 1 : 0)}
-          size={smSize}
-          color={Colors.dotOneColor[theme]}
-        />
-        {showPaginationDots && (
-          <View style={styles.pagination}>
-            {data.map((_, i) => {
+    <View style={[styles.carouselContainer]}>
+      {data?.length > 0 ? (
+        <View style={[styles.carouselView]}>
+          <FlatList
+            data={data}
+            style={styles.cardListView}
+            renderItem={({item}) => {
               return (
-                <Pressable key={'item_no_' + i} onPress={() => goToSlide(i)}>
-                  <View
-                    style={[
-                      styles.paginationDot,
-                      index === i
-                        ? styles.paginationDotActive
-                        : styles.paginationDotInactive,
-                    ]}
-                  />
-                </Pressable>
+                <RenderItem
+                  item={item}
+                  itemWidth={itemWidth}
+                  setContinueAutoScroll={setContinueAutoScroll}
+                />
               );
-            })}
+            }}
+            ItemSeparatorComponent={
+              !ifMobileDevice() && <View style={[styles.itemSeparatorView]} />
+            }
+            pagingEnabled
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            onScroll={onScroll}
+            contentContainerStyle={styles.flatListContainerStyle}
+            {...flatListOptimizationProps}
+            ref={flatListRef}
+          />
+          <View style={styles.bottomView}>
+            <ImgButton
+              source={LEFT_PLAY_ICON}
+              onPress={() => goToSlide(index > 0 ? index - 1 : 0)}
+              size={smSize}
+              color={Colors.dotOneColor[theme]}
+            />
+            {showPaginationDots ? (
+              <View style={styles.pagination}>
+                {data.map((_, i) => {
+                  return (
+                    <Pressable
+                      key={'item_no_' + i}
+                      onPress={() => goToSlide(i)}>
+                      <View
+                        style={[
+                          styles.paginationDot,
+                          index === i
+                            ? styles.paginationDotActive
+                            : styles.paginationDotInactive,
+                        ]}
+                      />
+                    </Pressable>
+                  );
+                })}
+              </View>
+            ) : (
+              <View style={styles.pagination}>
+                <Text style={styles.paginationNum}>
+                  {index + 1}
+                  {'/'}
+                  {data.length}
+                </Text>
+              </View>
+            )}
+            <ImgButton
+              source={RIGHT_PLAY_ICON}
+              onPress={() =>
+                goToSlide(index === data.length - 1 ? index : index + 1)
+              }
+              size={smSize}
+              color={Colors.dotOneColor[theme]}
+            />
           </View>
-        )}
-        <ImgButton
-          source={RIGHT_PLAY_ICON}
-          onPress={() =>
-            goToSlide(index === data.length - 1 ? index : index + 1)
-          }
-          size={smSize}
-          color={Colors.dotOneColor[theme]}
-        />
-      </View>
+        </View>
+      ) : (
+        <NoDataView />
+      )}
     </View>
   );
 };
@@ -221,6 +239,20 @@ const style = (
   smText,
 ) =>
   StyleSheet.create({
+    carouselContainer: {
+      height:
+        screenHeight -
+        ((isLandscapeMode && !ifMobileDevice()) || ifTablet() || isMobileNative
+          ? 80
+          : !isLandscapeMode
+          ? 60
+          : 48) -
+        (ifMobileDevice() || ifTablet() ? 56 : 85),
+      maxHeight: 556,
+      justifyContent: 'flex-start',
+      paddingTop: 0,
+      alignItems: 'center',
+    },
     carouselView: {
       width: isMobileNative ? screenWidth : screenWidth - 32,
       height:
@@ -241,6 +273,7 @@ const style = (
       width: screenWidth - 32,
     },
     flatListContainerStyle: {
+      minWidth: screenWidth - 32,
       paddingLeft: 32,
       justifyContent: 'center',
     },
@@ -272,5 +305,14 @@ const style = (
       backgroundColor: Colors.dotOneColor[theme],
     },
     paginationDotInactive: {height: 16, backgroundColor: Colors.bgColor[theme]},
+    paginationNum: {
+      fontSize: mdText,
+      fontWeight: '700',
+      fontFamily: FONT_INTER_REGULAR,
+      textAlign: 'center',
+      color: Colors.title[theme],
+      alignSelf: 'center',
+      alignItems: 'center',
+    },
   });
 export default memo(CustomCarousel);
