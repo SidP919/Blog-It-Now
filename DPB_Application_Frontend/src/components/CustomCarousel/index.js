@@ -11,7 +11,12 @@ import {
 import ImgButton from '../ImgButton';
 import {LEFT_PLAY_ICON, RIGHT_PLAY_ICON} from '../../utils/images';
 
-const CustomCarousel = ({data, RenderItem, autoScroll = true}) => {
+const CustomCarousel = ({
+  data,
+  RenderItem,
+  autoScroll = true,
+  showPaginationDots = true,
+}) => {
   const {
     screenHeight,
     screenWidth,
@@ -171,23 +176,24 @@ const CustomCarousel = ({data, RenderItem, autoScroll = true}) => {
           size={smSize}
           color={Colors.dotOneColor[theme]}
         />
-        <View style={styles.pagination}>
-          {data.map((_, i) => {
-            return (
-              <Pressable key={'item_no_' + i} onPress={() => goToSlide(i)}>
-                <View
-                  style={[
-                    styles.paginationDot,
-                    index === i
-                      ? styles.paginationDotActive
-                      : styles.paginationDotInactive,
-                  ]}
-                />
-              </Pressable>
-            );
-          })}
-        </View>
-
+        {showPaginationDots && (
+          <View style={styles.pagination}>
+            {data.map((_, i) => {
+              return (
+                <Pressable key={'item_no_' + i} onPress={() => goToSlide(i)}>
+                  <View
+                    style={[
+                      styles.paginationDot,
+                      index === i
+                        ? styles.paginationDotActive
+                        : styles.paginationDotInactive,
+                    ]}
+                  />
+                </Pressable>
+              );
+            })}
+          </View>
+        )}
         <ImgButton
           source={RIGHT_PLAY_ICON}
           onPress={() =>
