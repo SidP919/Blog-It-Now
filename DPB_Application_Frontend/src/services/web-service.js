@@ -192,9 +192,7 @@ axiosInstance.interceptors.response.use(
 const webService = {
   authenticate: async (API, credentials) => {
     try {
-      dispatch && dispatch(setIsApiLoading(true));
       const response = await axiosInstance.post(API, credentials).then(res => {
-        dispatch && dispatch(setIsApiLoading(false));
         return res;
       });
       return response;
@@ -206,9 +204,7 @@ const webService = {
 
   getData: async API => {
     try {
-      dispatch && dispatch(setIsApiLoading(true));
       const response = await axiosInstance.get(API).then(res => {
-        dispatch && dispatch(setIsApiLoading(false));
         return res;
       });
       return response;
@@ -220,9 +216,7 @@ const webService = {
 
   postData: async (API, data) => {
     try {
-      dispatch && dispatch(setIsApiLoading(true));
       const response = await axiosInstance.post(API, data).then(res => {
-        dispatch && dispatch(setIsApiLoading(false));
         return res;
       });
       return response;
@@ -234,11 +228,9 @@ const webService = {
 
   updateData: async (API, id, data) => {
     try {
-      dispatch && dispatch(setIsApiLoading(true));
       const response = await axiosInstance
         .put(`${API}${id}`, data)
         .then(res => {
-          dispatch && dispatch(setIsApiLoading(false));
           return res;
         });
       return response;
@@ -250,9 +242,7 @@ const webService = {
 
   deleteData: async (API, id) => {
     try {
-      dispatch && dispatch(setIsApiLoading(true));
       const response = await axiosInstance.delete(`${API}${id}`).then(res => {
-        dispatch && dispatch(setIsApiLoading(false));
         return res;
       });
       return response;
