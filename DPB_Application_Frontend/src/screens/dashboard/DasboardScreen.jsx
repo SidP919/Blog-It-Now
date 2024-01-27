@@ -1,13 +1,17 @@
-import {Pressable, ScrollView, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import {Pressable, ScrollView, View} from 'react-native';
+import React from 'react';
+import {useSelector} from 'react-redux';
 import useCommonParams from '../../hooks/useCommonParams';
 import {DASHBOARD_ROUTE} from '../../utils/constants';
-import {DASHBOARD_TITLE} from '../../utils/content';
+import {DASHBOARD_TITLE, NOT_AUTHOR_MSG} from '../../utils/content';
 import {postAuthScreenStyle} from '../../utils/commonStyles';
 import HeaderWrapper from '../HeaderWrapper';
+import MyBlogs from './MyBlogs';
+import {getAuthData} from '../../redux/slices/AuthSlice';
+import NoDataView from '../../components/NoDataView';
 
 const DasboardScreen = () => {
-  const [isApiLoading, setIsApiLoading] = useState(true);
+  const {role} = useSelector(getAuthData);
   const {
     screenHeight,
     screenWidth,
@@ -35,44 +39,18 @@ const DasboardScreen = () => {
   );
 
   return (
-    <HeaderWrapper
-      title={DASHBOARD_TITLE}
-      currentScreen={DASHBOARD_ROUTE}
-      isApiLoading={isApiLoading}>
+    <HeaderWrapper title={DASHBOARD_TITLE} currentScreen={DASHBOARD_ROUTE}>
       <ScrollView
         contentContainerStyle={[styles.screenContent]}
         showsVerticalScrollIndicator={false}>
         <Pressable>
-          <View style={styles.sectionContainer}>
-            <Text style={[styles.sectionTitle]}>{'Section 1'}</Text>
-            <View style={[styles.dataContainer]}>
-              <Text style={[styles.dataTitle]}>{'Data Title 1'}</Text>
-              <View style={styles.dataContent}>
-                {/* Data Content comes here */}
-              </View>
+          {role && ['AUTHOR', 'ADMIN'].includes(role) ? (
+            <MyBlogs />
+          ) : (
+            <View style={[styles.apiLoadingView]}>
+              <NoDataView msg={NOT_AUTHOR_MSG} />
             </View>
-            <View style={[styles.dataContainer]}>
-              <Text style={[styles.dataTitle]}>{'Data Title 2'}</Text>
-              <View style={styles.dataContent}>
-                {/* Data Content comes here */}
-              </View>
-            </View>
-          </View>
-          <View style={styles.sectionContainer}>
-            <Text style={[styles.sectionTitle]}>{'Section 2'}</Text>
-            <View style={[styles.dataContainer]}>
-              <Text style={[styles.dataTitle]}>{'Data Title 2.1'}</Text>
-              <View style={styles.dataContent}>
-                {/* Data Content comes here */}
-              </View>
-            </View>
-            <View style={[styles.dataContainer]}>
-              <Text style={[styles.dataTitle]}>{'Data Title 2.2'}</Text>
-              <View style={styles.dataContent}>
-                {/* Data Content comes here */}
-              </View>
-            </View>
-          </View>
+          )}
         </Pressable>
       </ScrollView>
     </HeaderWrapper>

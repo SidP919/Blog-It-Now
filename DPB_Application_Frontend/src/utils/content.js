@@ -1,5 +1,7 @@
 // Search for keywords: APP, COMPONENTS, TEXTS, ALERTS, SCREENS to jump to content of specific section
 
+import {APP_EMAIL} from './constants';
+
 // ============================APP===========================================================
 export const APP_NAME = 'Blog It Now';
 export const APP_TAGLINE = 'Blog It Before You Forget It';
@@ -170,6 +172,9 @@ export const TOP_BLOGS_TITLE = 'Our Top Blogs';
 
 // DashboardScreen content
 export const DASHBOARD_TITLE = 'DASHBOARD';
+export const MY_BLOGS_HEADING = 'My Blogs';
+export const CREATE_BLOG_BTN_TEXT = 'Create New Blog';
+export const NOT_AUTHOR_MSG = `Only Authors can access Dashboard features, please reach us at ${APP_EMAIL} to become an Author at Blog-It-Now.`;
 
 // DashboardSidePanel content
 export const SIDE_PANEL_LOGIN_OPTION = 'Log In';

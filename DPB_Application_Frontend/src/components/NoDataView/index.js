@@ -4,13 +4,13 @@ import {FONT_INTER_MEDIUM} from '../../utils/fontUtils';
 import useCommonParams from '../../hooks/useCommonParams';
 import {NO_DATA_MSG} from '../../utils/content';
 
-const NoDataView = () => {
+const NoDataView = ({msg = NO_DATA_MSG}) => {
   const {screenWidth, theme, isLandscapeMode, Colors, mdText} =
     useCommonParams();
   const styles = style(screenWidth, theme, isLandscapeMode, Colors, mdText);
   return (
     <View style={[styles.noDataView]}>
-      <Text style={[styles.noDataText]}>{NO_DATA_MSG}</Text>
+      <Text style={[styles.noDataText]}>{msg}</Text>
     </View>
   );
 };

@@ -234,9 +234,10 @@ export const postAuthScreenStyle = (
       height: isWeb ? screenHeight : null,
     },
     apiLoadingView: {
+      width: screenWidth,
       height:
         screenHeight - (ifMobileDevice() || ifTabletLandscapeMode() ? 56 : 85),
-      marginTop: ifMobileDevice() || ifTabletLandscapeMode() ? 56 : 85,
+      // marginTop: ifMobileDevice() || ifTabletLandscapeMode() ? 56 : 85,
       justifyContent: 'center',
       alignItems: 'center',
     },

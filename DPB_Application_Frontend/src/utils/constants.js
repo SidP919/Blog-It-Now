@@ -25,6 +25,7 @@ export const DELETE_AC_API = '/auth/deleteAccount';
 export const VERIFY_EMAIL_API = '/auth/verifyEmail';
 // BLOGS APIs:
 export const GET_TOP_BLOGS = '/blogs/getTopBlogs';
+export const GET_MY_BLOGS = '/blogs/getBlogsByAuthor';
 // OTHER DATA APIs & constants:
 export const GET_OTHER_DATA = '/otherData/getData';
 export const ANDROID_DOWNLOAD_LINK = 'ANDROID_DOWNLOAD_LINK';
