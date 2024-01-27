@@ -7,6 +7,7 @@ export const PROD_URL = 'https://blog-it-now.vercel.app';
 export const DEV_URL = 'http://localhost:4000';
 export const APP_EMAIL = 'blog.it.now.app@gmail.com';
 export const APP_ID = 'BIN95';
+export const DATA_REFRESH_DELAY = 60000;
 
 // ======================================= Auth constants =======================================
 export const AUTH_TOKEN_LOCAL = `${APP_ID}_AUTH_TOKEN`;

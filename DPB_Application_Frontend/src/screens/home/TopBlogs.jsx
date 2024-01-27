@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import useCommonParams from '../../hooks/useCommonParams';
 import {postAuthScreenStyle} from '../../utils/commonStyles';
@@ -13,7 +13,7 @@ import {
   logger,
 } from '../../utils/utils';
 import webService from '../../services/web-service';
-import {GET_TOP_BLOGS} from '../../utils/constants';
+import {DATA_REFRESH_DELAY, GET_TOP_BLOGS} from '../../utils/constants';
 import {NO_DATA_MSG, TOP_BLOGS_TITLE} from '../../utils/content';
 import {
   getTopBlogsData,
@@ -50,21 +50,29 @@ const TopBlogs = () => {
     smText,
   );
 
+  const fetchTopBlogs = useCallback(async () => {
+    const topBlogRes = await webService
+      .getData(GET_TOP_BLOGS)
+      .then(res => {
+        return res.data.topBlogs;
+      })
+      .catch(error => logger(error));
+    if (Array.isArray(topBlogRes)) {
+      dispatch(setTopBlogsData(topBlogRes));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
-    (async () => {
-      if (Array.isArray(topBlogs) && topBlogs.length < 1) {
-        const topBlogRes = await webService
-          .getData(GET_TOP_BLOGS)
-          .then(res => {
-            return res.data.topBlogs;
-          })
-          .catch(error => logger(error));
-        if (Array.isArray(topBlogRes)) {
-          dispatch(setTopBlogsData(topBlogRes));
-        }
-      }
-    })();
-  }, [dispatch, topBlogs]);
+    if (Array.isArray(topBlogs) && topBlogs.length < 1) {
+      fetchTopBlogs();
+    }
+    const topBlogsInterval = setInterval(fetchTopBlogs, DATA_REFRESH_DELAY);
+    return () => {
+      clearInterval(topBlogsInterval);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const styles = style(
     screenHeight,
