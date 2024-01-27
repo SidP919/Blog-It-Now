@@ -11,7 +11,7 @@ import {
 import Img from '../Img';
 import {DISLIKE_SOLID_ICON, LIKE_SOLID_ICON} from '../../utils/images';
 import {formattedDate, getPrettyNumber} from '../../utils/jsUtils';
-import TitleView from '../TitleThumbnail';
+import TitleThumbnail from '../TitleThumbnail';
 import {
   BLOG_AUTHOR_TITLE,
   BLOG_CATEGORY_TITLE,
@@ -61,7 +61,7 @@ const BlogCard = ({item, itemWidth, setContinueAutoScroll}) => {
         {item.blogThumbnail ? (
           <Image source={{uri: item.blogThumbnail}} style={[styles.img]} />
         ) : (
-          <TitleView title={item.title} />
+          <TitleThumbnail title={item.title} />
         )}
       </View>
       <View style={[styles.infoView]}>

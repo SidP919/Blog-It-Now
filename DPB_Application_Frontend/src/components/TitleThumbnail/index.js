@@ -15,7 +15,7 @@ import {
 } from '../../utils/utils';
 import {BLOG_BG} from '../../utils/images';
 
-const TitleView = ({title}) => {
+const TitleThumbnail = ({title}) => {
   const {
     screenHeight,
     screenWidth,
@@ -192,4 +192,4 @@ const style = (
     },
   });
 
-export default TitleView;
+export default TitleThumbnail;
