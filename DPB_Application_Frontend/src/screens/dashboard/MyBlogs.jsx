@@ -58,13 +58,23 @@ const MyBlogs = () => {
 
   const dispatch = useDispatch();
   const myBlogs = useSelector(getMyBlogsData);
-  const {data, isApiLoading} = useFetch(GET_MY_BLOGS, 10 * 60 * 1000);
+  const {fetchData, isApiLoading} = useFetch();
 
   useEffect(() => {
-    if (data && data.blogs && Array.isArray(data.blogs)) {
-      dispatch(setMyBlogsData(data.blogs));
+    const fetchMyBlogs = async () => {
+      await fetchData(GET_MY_BLOGS).then(apiRes => {
+        dispatch(setMyBlogsData(apiRes.blogs));
+      });
+    };
+    if (Array.isArray(myBlogs) && myBlogs.length < 1) {
+      fetchMyBlogs();
     }
-  }, [data, dispatch]);
+    const myBlogsInterval = setInterval(fetchMyBlogs, 10 * 60 * 1000);
+    return () => {
+      clearInterval(myBlogsInterval);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (isApiLoading) {
     return (

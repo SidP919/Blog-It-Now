@@ -1,36 +1,24 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useState} from 'react';
 import {logger} from '../utils/utils';
 import webService from '../services/web-service';
-import {DATA_REFRESH_DELAY} from '../utils/constants';
 
-const useFetch = (API, delay) => {
-  const [data, setData] = useState(null);
+const useFetch = () => {
   const [isApiLoading, setIsApiLoading] = useState(false);
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(async API => {
     setIsApiLoading(true);
-    await webService
+    const apiRes = await webService
       .getData(API)
       .then(res => {
-        setData(res.data);
         setIsApiLoading(false);
+        return res.data;
       })
       .catch(error => {
         setIsApiLoading(false);
         logger(error);
       });
-  }, [API]);
-
-  useEffect(() => {
-    fetchData();
-    const fetchDataInterval = setInterval(
-      fetchData,
-      delay ? delay : DATA_REFRESH_DELAY,
-    );
-    return () => {
-      clearInterval(fetchDataInterval);
-    };
-  }, [delay, fetchData]);
-  return {data, isApiLoading};
+    return apiRes;
+  }, []);
+  return {fetchData, isApiLoading};
 };
 
 export default useFetch;

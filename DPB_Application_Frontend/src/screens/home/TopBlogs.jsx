@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import CustomCarousel from '../../components/CustomCarousel';
 import BlogCard from '../../components/BlogCard';
-import {GET_TOP_BLOGS} from '../../utils/constants';
+import {DATA_REFRESH_DELAY, GET_TOP_BLOGS} from '../../utils/constants';
 import {TOP_BLOGS_TITLE} from '../../utils/content';
 import {
   getTopBlogsData,
@@ -14,13 +14,23 @@ import useFetch from '../../hooks/useFetch';
 const TopBlogs = () => {
   const topBlogs = useSelector(getTopBlogsData);
   const dispatch = useDispatch();
-  const {data} = useFetch(GET_TOP_BLOGS);
+  const {fetchData} = useFetch();
 
   useEffect(() => {
-    if (data && data.topBlogs && Array.isArray(data.topBlogs)) {
-      dispatch(setTopBlogsData(data.topBlogs));
+    const fetchTopBlogs = async () => {
+      await fetchData(GET_TOP_BLOGS).then(apiRes => {
+        dispatch(setTopBlogsData(apiRes.topBlogs));
+      });
+    };
+    if (Array.isArray(topBlogs) && topBlogs.length < 1) {
+      fetchTopBlogs();
     }
-  }, [data, dispatch]);
+    const topBlogsInterval = setInterval(fetchTopBlogs, DATA_REFRESH_DELAY);
+    return () => {
+      clearInterval(topBlogsInterval);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
