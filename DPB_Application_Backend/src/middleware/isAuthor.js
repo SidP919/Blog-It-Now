@@ -9,7 +9,7 @@ const isAuthor = (req, res, next) => {
       return next();
     } else {
       return res
-        .status(403)
+        .status(423)
         .json({
           success: false,
           message: `Unauthorized! Only users who are Authors can create blogs. Reach us at ${APP_EMAIL} to become an author.`,

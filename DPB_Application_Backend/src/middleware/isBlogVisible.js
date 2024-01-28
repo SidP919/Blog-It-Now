@@ -30,7 +30,7 @@ const isBlogVisible = async (req, res, next) => {
         if (blog.author._id.toString() === req.user.userId.toString()) {
           return next();
         } else {
-          return res.status(403).json({
+          return res.status(423).json({
             success: false,
             message:
               "Unauthorized! Only the author of this blog can access it.",
