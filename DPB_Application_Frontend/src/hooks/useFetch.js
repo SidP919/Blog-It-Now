@@ -4,7 +4,7 @@ import webService from '../services/web-service';
 import {DATA_REFRESH_DELAY} from '../utils/constants';
 
 const useFetch = (API, delay) => {
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
   const [isApiLoading, setIsApiLoading] = useState(false);
   const fetchData = useCallback(async () => {
     setIsApiLoading(true);
@@ -14,7 +14,10 @@ const useFetch = (API, delay) => {
         setData(res.data);
         setIsApiLoading(false);
       })
-      .catch(error => logger(error));
+      .catch(error => {
+        setIsApiLoading(false);
+        logger(error);
+      });
   }, [API]);
 
   useEffect(() => {

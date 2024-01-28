@@ -13,7 +13,7 @@ import {useSelector} from 'react-redux';
 import {getAppColor, getAppTheme} from '../redux/slices/ThemeSlice';
 import {getIsLandscapeMode} from '../redux/slices/DeviceOrientationSlice';
 import {Dimensions} from 'react-native';
-import {getIsLoggedIn} from '../redux/slices/AuthSlice';
+import {getAuthData, getIsLoggedIn} from '../redux/slices/AuthSlice';
 import {THEME_COLOR_PURPLE} from '../utils/constants';
 import {getColors} from '../utils/theme';
 
@@ -29,6 +29,8 @@ const useCommonParams = () => {
   const appColor = useSelector(getAppColor);
   const isLandscapeMode = useSelector(getIsLandscapeMode);
   const isLoggedIn = useSelector(getIsLoggedIn);
+  const {role} = useSelector(getAuthData);
+  const [isAuthor, setIsAuthor] = useState(false);
 
   const [Colors, setColors] = useState(getColors(THEME_COLOR_PURPLE));
 
@@ -50,6 +52,10 @@ const useCommonParams = () => {
     setColors(getColors(appColor));
   }, [appColor]);
 
+  useEffect(() => {
+    isLoggedIn && role && setIsAuthor(['AUTHOR', 'ADMIN'].includes(role));
+  }, [isLoggedIn, role]);
+
   return {
     screenHeight,
     screenWidth,
@@ -63,6 +69,7 @@ const useCommonParams = () => {
     smSize,
     mdText,
     smText,
+    isAuthor,
   };
 };
 

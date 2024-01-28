@@ -69,7 +69,7 @@ const AppNavigator = () => {
   const theme = useSelector(getAppTheme);
   const isLoggedIn = useSelector(getIsLoggedIn);
   const isApiLoading = useSelector(getIsApiLoading);
-  const {screenWidth, screenHeight} = useCommonParams();
+  const {screenWidth, screenHeight, isAuthor} = useCommonParams();
   usePageTitleWeb();
   useEffect(() => {
     const dimensionsChangeListener = Dimensions.addEventListener(
@@ -158,7 +158,7 @@ const AppNavigator = () => {
           end
           element={<ContactUsScreen />}
         />
-        {isLoggedIn ? (
+        {isAuthor ? (
           <Route path={`/${DASHBOARD_ROUTE}`} element={<DasboardScreen />} />
         ) : (
           <Route path={`/${DASHBOARD_ROUTE}`} element={<ForbiddenScreen />} />

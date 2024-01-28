@@ -109,6 +109,7 @@ const DasboardSidePanel = ({
     smSize,
     mdText,
     smText,
+    isAuthor,
   } = useCommonParams();
   const [androidLink, setAndroidLink] = useState('');
   const [iosLink, setIosLink] = useState('');
@@ -255,8 +256,7 @@ const DasboardSidePanel = ({
             {SIDE_PANEL_HOME_OPTION}
           </Text>
         </Pressable>
-
-        {isLoggedIn && (
+        {isAuthor && (
           <Pressable
             onPress={() => goToScreen(DASHBOARD_ROUTE)}
             style={[

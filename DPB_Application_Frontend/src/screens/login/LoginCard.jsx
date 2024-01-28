@@ -19,6 +19,7 @@ import webService, {showCustomAlert} from '../../services/web-service';
 import {
   AUTH_TOKEN_LOCAL,
   DASHBOARD_ROUTE,
+  DEFAULT_ROUTE,
   FORGOT_PWD_ROUTE,
   LOGIN_API,
   REGISTER_ROUTE,
@@ -97,7 +98,15 @@ const LoginCard = () => {
             setEmailOrUsername('');
             setPassword('');
             setShowPassword(false);
-            isWeb && navigate(DASHBOARD_ROUTE, {replace: true});
+            isWeb &&
+              navigate(
+                ['AUTHOR', 'ADMIN'].includes(response.data.userData.role)
+                  ? DASHBOARD_ROUTE
+                  : DEFAULT_ROUTE,
+                {
+                  replace: true,
+                },
+              );
           } else {
             logger('Response is empty');
           }

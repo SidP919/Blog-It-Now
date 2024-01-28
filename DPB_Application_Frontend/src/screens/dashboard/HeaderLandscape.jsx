@@ -54,6 +54,7 @@ const HeaderLandscape = ({currentScreen = 'Home'}) => {
     smSize,
     mdText,
     smText,
+    isAuthor,
   } = useCommonParams();
   const [showProfileSubMenu, setShowProfileSubMenu] = useState(false);
   const {navigate} = useCustomNavigate();
@@ -89,7 +90,7 @@ const HeaderLandscape = ({currentScreen = 'Home'}) => {
     {
       route: DASHBOARD_ROUTE,
       title: DASHBOARD_MENU,
-      isLoggedIn: 1, // 1 signifies isLoggedIn needs to be true
+      isLoggedIn: 2, // 1 signifies isLoggedIn needs to be true but 2 signifies user also needs to be an Author
     },
     {
       route: EXPLORE_BLOGS_ROUTE,
@@ -126,7 +127,8 @@ const HeaderLandscape = ({currentScreen = 'Home'}) => {
       {isLandscapeMode && (
         <View style={[styles.headerMenuView]}>
           {CENTER_MENUS_ARRAY.map((menu, i) => {
-            return menu.isLoggedIn === 0 || isLoggedIn ? (
+            return menu.isLoggedIn === 0 ||
+              (menu.isLoggedIn === 2 ? isAuthor : isLoggedIn) ? (
               <CenterMenu
                 key={`${menu.title}${i}`}
                 goToScreen={goToScreen}

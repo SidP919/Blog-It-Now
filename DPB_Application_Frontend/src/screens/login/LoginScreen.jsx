@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {isWeb} from '../../utils/utils';
+import {isWeb, logger} from '../../utils/utils';
 import useCommonParams from '../../hooks/useCommonParams';
 import {BRAND_LOGO} from '../../utils/images';
 import Img from '../../components/Img';
@@ -14,10 +14,13 @@ import {
   getWelcomeQuote,
   setWelcomeQuote,
 } from '../../redux/slices/OtherDataSlice';
+import {DASHBOARD_ROUTE, DEFAULT_ROUTE} from '../../utils/constants';
+import {getAuthData} from '../../redux/slices/AuthSlice';
 
 const LoginScreen = () => {
   const welcomeQuote = useSelector(getWelcomeQuote);
   const dispatch = useDispatch();
+  const {role} = useSelector(getAuthData);
   const {
     screenHeight,
     screenWidth,
@@ -70,10 +73,21 @@ const LoginScreen = () => {
           visibilityTime: 6000, // number of milliseconds
         });
       }
-      isWeb && navigate('Dashboard', {replace: true});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (isWeb && isLoggedIn) {
+      const isAuthor = role ? ['AUTHOR', 'ADMIN'].includes(role) : false;
+      logger('Role:', {isAuthor});
+      if (isAuthor) {
+        navigate(DASHBOARD_ROUTE, {replace: true});
+      } else {
+        navigate(DEFAULT_ROUTE, {replace: true});
+      }
+    }
+  }, [role, navigate, isLoggedIn]);
 
   return (
     <KeyboardAvoidingView

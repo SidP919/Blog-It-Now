@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import DasboardScreen from '../screens/dashboard/DasboardScreen';
 import {Dimensions} from 'react-native';
@@ -37,6 +37,7 @@ import {
   LOGOUT_ROUTE,
   PROFILE_ROUTE,
   SETTINGS_ROUTE,
+  DEFAULT_ROUTE,
 } from '../utils/constants';
 import {getIsApiLoading} from '../redux/slices/ApiLoadingSlice';
 import ThreeDotsLoader from '../components/ThreeDotsLoader';
@@ -44,6 +45,7 @@ import HomeScreen from '../screens/home/HomeScreen';
 import ExploreBlogsScreen from '../screens/explore_blogs/ExploreBlogsScreen';
 import AboutUsScreen from '../screens/about_us/AboutUsScreen';
 import ContactUsScreen from '../screens/contact_us/ContactUsScreen';
+import useCommonParams from '../hooks/useCommonParams';
 
 const Stack = createStackNavigator();
 
@@ -53,6 +55,8 @@ const AppNavigator = () => {
   const alertData = useSelector(getAlertData);
   const theme = useSelector(getAppTheme);
   const isApiLoading = useSelector(getIsApiLoading);
+  const {isAuthor} = useCommonParams();
+  const [initialRoute, setInitialRoute] = useState(DEFAULT_ROUTE);
   useEffect(() => {
     const dimensionsChangeListener = Dimensions.addEventListener(
       'change',
@@ -98,9 +102,13 @@ const AppNavigator = () => {
     }
   }, [isNativeLandscapeMode]);
 
+  useEffect(() => {
+    isAuthor && setInitialRoute(DASHBOARD_ROUTE);
+  }, [isAuthor]);
+
   return (
     <>
-      <Stack.Navigator initialRouteName={HOME_ROUTE}>
+      <Stack.Navigator initialRouteName={initialRoute}>
         <Stack.Screen
           name={HOME_ROUTE}
           component={HomeScreen}
@@ -121,20 +129,22 @@ const AppNavigator = () => {
           component={ContactUsScreen}
           options={{headerShown: false}}
         />
-        <Stack.Screen
-          name={DASHBOARD_ROUTE}
-          component={DasboardScreen}
-          options={{
-            headerShown: false,
-            gestureEnabled: false,
-            // headerShown: true,
-            // title: 'Dashboard',
-            // headerTintColor: '#fff',
-            // headerStyle: {
-            //   backgroundColor: '#f00',
-            // },
-          }}
-        />
+        {isAuthor && (
+          <Stack.Screen
+            name={DASHBOARD_ROUTE}
+            component={DasboardScreen}
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+              // headerShown: true,
+              // title: 'Dashboard',
+              // headerTintColor: '#fff',
+              // headerStyle: {
+              //   backgroundColor: '#f00',
+              // },
+            }}
+          />
+        )}
         <Stack.Screen
           name={PROFILE_ROUTE}
           component={ProfileScreen}
