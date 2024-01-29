@@ -60,3 +60,9 @@ export const THEME_COLOR_ORANGE = 'ORANGE';
 // ======================================= Screen constants ===============================
 // ProfileScreen:
 export const MAX_LEN_OF_NAME = 26;
+// HomeScreen:
+export const DATA_REFRESH_MSG_ARR = [
+  'Fetching latest content',
+  "It's taking longer than expected",
+  'Please make sure you have a stable internet connection',
+];

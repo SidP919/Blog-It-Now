@@ -110,7 +110,7 @@ export const BASE_URL = isProduction ? PROD_URL + API_ID : DEV_URL + API_ID; // 
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
-  timeout: 8000, // Adjust timeout as needed
+  timeout: 17500, // Adjust timeout as needed
 });
 
 export async function getAuthToken() {
