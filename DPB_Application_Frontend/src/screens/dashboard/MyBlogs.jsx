@@ -6,7 +6,7 @@ import {
   setMyBlogsData,
 } from '../../redux/slices/BlogsDataSlice';
 import useCommonParams from '../../hooks/useCommonParams';
-import {GET_MY_BLOGS} from '../../utils/constants';
+import {DATA_REFRESH_MSG_ARR, GET_MY_BLOGS} from '../../utils/constants';
 import CustomCarousel from '../../components/CustomCarousel';
 import BlogCard from '../../components/BlogCard';
 import NoDataView from '../../components/NoDataView';
@@ -25,6 +25,7 @@ import useCustomNavigate from '../../hooks/useCustomNavigate';
 import TextWithLink from '../../components/TextWithLink';
 import useFetch from '../../hooks/useFetch';
 import ThreeDotsLoader from '../../components/ThreeDotsLoader';
+import DataRefreshLoader from '../../components/DataRefreshLoader';
 
 const MyBlogs = () => {
   const {
@@ -56,32 +57,17 @@ const MyBlogs = () => {
     smText,
   );
 
-  const dispatch = useDispatch();
   const myBlogs = useSelector(getMyBlogsData);
-  const {fetchData, isApiLoading} = useFetch();
-
-  useEffect(() => {
-    const fetchMyBlogs = async () => {
-      await fetchData(GET_MY_BLOGS).then(apiRes => {
-        dispatch(setMyBlogsData(apiRes.blogs));
-      });
-    };
-    if (Array.isArray(myBlogs) && myBlogs.length < 1) {
-      fetchMyBlogs();
-    }
-    const myBlogsInterval = setInterval(fetchMyBlogs, 10 * 60 * 1000);
-    return () => {
-      clearInterval(myBlogsInterval);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const {isApiLoading} = useFetch(
+    GET_MY_BLOGS,
+    setMyBlogsData,
+    'blogs',
+    myBlogs,
+    10 * 60 * 1000,
+  );
 
   if (isApiLoading) {
-    return (
-      <View style={[styles.isApiLoadingView]}>
-        <ThreeDotsLoader theme={theme} loaderMsg={PLEASE_WAIT_TEXT} />
-      </View>
-    );
+    return <DataRefreshLoader msgArr={DATA_REFRESH_MSG_ARR} />;
   }
 
   return (
@@ -127,11 +113,6 @@ const style = (
   smText,
 ) =>
   StyleSheet.create({
-    isApiLoadingView: {
-      width: screenWidth,
-      height:
-        screenHeight - (ifMobileDevice() || ifTabletLandscapeMode() ? 56 : 85),
-    },
     myBlogsSectionContainer: {
       width: screenWidth,
       minWidth: 304,

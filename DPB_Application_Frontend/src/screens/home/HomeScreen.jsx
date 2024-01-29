@@ -28,8 +28,6 @@ import HeaderWrapper from '../HeaderWrapper';
 import TopBlogs from './TopBlogs';
 
 const HomeScreen = () => {
-  const [isApiLoading, setIsApiLoading] = useState(false);
-
   const welcomeQuote = useSelector(getWelcomeQuote);
   const {
     screenHeight,
@@ -89,10 +87,7 @@ const HomeScreen = () => {
   }, [dispatchWelcomeQuote]);
 
   return (
-    <HeaderWrapper
-      title={HOME_TITLE}
-      currentScreen={HOME_ROUTE}
-      isApiLoading={isApiLoading}>
+    <HeaderWrapper title={HOME_TITLE} currentScreen={HOME_ROUTE}>
       <ScrollView
         contentContainerStyle={[
           styles.screenContent,
