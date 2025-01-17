@@ -155,7 +155,7 @@ const HeroSection = () => {
             {DEVELOPED_FOR}
           </Text>
         )}
-        {/* {isWeb ? (
+        {isWeb ? (
           <View
             style={[
               nativeLinkStyles.nativeLinksContainer,
@@ -209,16 +209,17 @@ const HeroSection = () => {
             )}
           </View>
         ) : (
-          <View style={[styles.btnView]}>
-            <ButtonA
-              func={() => goToScreen(EXPLORE_BLOGS_ROUTE)}
-              bg={Colors.btnBgColor[theme]}
-              color={Colors.btnText[theme]}
-              border={Colors.border[theme]}
-              title={EXPLORE_BLOGS_TITLE}
-            />
-          </View>
-        )} */}
+          // <View style={[styles.btnView]}>
+          //   <ButtonA
+          //     func={() => goToScreen(EXPLORE_BLOGS_ROUTE)}
+          //     bg={Colors.btnBgColor[theme]}
+          //     color={Colors.btnText[theme]}
+          //     border={Colors.border[theme]}
+          //     title={EXPLORE_BLOGS_TITLE}
+          //   />
+          // </View>
+          <></>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
