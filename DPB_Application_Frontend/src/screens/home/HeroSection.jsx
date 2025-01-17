@@ -155,7 +155,7 @@ const HeroSection = () => {
             {DEVELOPED_FOR}
           </Text>
         )}
-        {isWeb ? (
+        {isWeb && !ifWebSmallLandscapeMode() ? (
           <View
             style={[
               nativeLinkStyles.nativeLinksContainer,

@@ -160,7 +160,7 @@ const style = (
       borderWidth: 3,
       borderRadius: 25.5,
       marginHorizontal: ifMobileDevice() && !isMobileNative ? 8 : 0,
-      marginRight: isMobileNative ? 32 : null,
+      marginRight: isMobileNative && ifMobileDevice() ? 32 : null,
     },
     imgView: {
       flex: isLandscapeMode && ifWebSmallLandscapeMode() ? null : 1,

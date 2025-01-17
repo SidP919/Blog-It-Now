@@ -254,7 +254,8 @@ const style = (
       alignItems: 'center',
     },
     carouselView: {
-      width: isMobileNative ? screenWidth : screenWidth - 32,
+      width:
+        isMobileNative && ifMobileDevice() ? screenWidth : screenWidth - 32,
       height:
         isLandscapeMode && ifWebSmallLandscapeMode()
           ? screenHeight - 48 - 56
@@ -274,15 +275,15 @@ const style = (
     },
     flatListContainerStyle: {
       minWidth: screenWidth - 32,
-      paddingLeft: 32,
+      paddingLeft: 0,
       justifyContent: 'center',
     },
     itemSeparatorView: {
-      width: isMobileNative ? 32 : 16,
+      width: isMobileNative && ifMobileDevice() ? 32 : 16,
     },
     bottomView: {
       width: '100%',
-      paddingHorizontal: isMobileNative ? 24 : 12,
+      paddingHorizontal: isMobileNative && ifMobileDevice() ? 24 : 12,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
