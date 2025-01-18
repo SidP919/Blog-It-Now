@@ -364,9 +364,11 @@ const getBlogById = async (req, res) => {
     }
 
     blog = {
+      id: blog._id,
       title: blog.title,
       content: markdown.render(blog.content),
-      author: blog.author,
+      authorId: blog.author,
+      author: blog.authorName,
       category: blog.category,
       noOfLikes: blog.likes?.length,
       noOfDislikes: blog.dislikes?.length,
