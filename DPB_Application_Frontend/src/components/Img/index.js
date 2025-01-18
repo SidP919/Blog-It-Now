@@ -35,7 +35,12 @@ const Img = ({
   );
   return (
     <View style={[styles.mainContainer]}>
-      <Image source={source} style={[styles.imgStyle]} tintColor={color} />
+      <Image
+        source={source}
+        style={[styles.imgStyle]}
+        tintColor={color}
+        resizeMode="contain"
+      />
     </View>
   );
 };
@@ -67,7 +72,6 @@ const style = (
     imgStyle: {
       width: imgWidth,
       height: imgHeight,
-      resizeMode: 'contain',
       maxHeight: screenHeight - mdSize * 2,
     },
   });
