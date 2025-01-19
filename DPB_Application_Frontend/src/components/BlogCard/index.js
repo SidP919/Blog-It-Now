@@ -7,7 +7,6 @@ import {
   ifTablet,
   ifWebSmallLandscapeMode,
   isMobileNative,
-  logger,
 } from '../../utils/utils';
 import Img from '../Img';
 import {DISLIKE_SOLID_ICON, LIKE_SOLID_ICON} from '../../utils/images';
@@ -98,7 +97,7 @@ const BlogCard = ({
             numberOfLines={1}
             ellipsizeMode="tail">
             {BLOG_CATEGORY_TITLE}
-            {item.category}
+            {item?.category?.toUpperCase()}
           </Text>
         </View>
         <View style={[styles.dataContentView]}>

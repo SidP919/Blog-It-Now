@@ -78,7 +78,7 @@ const BlogContent = ({blogData}) => {
         {[
           `${BLOG_AUTHOR_TITLE}${blogData?.author}`,
           `${BLOG_DATE_TITLE} ${formattedDate(blogData?.updatedAt)}`,
-          `${BLOG_CATEGORY_TITLE}${blogData?.category}`,
+          `${BLOG_CATEGORY_TITLE}${blogData?.category?.toUpperCase()}`,
           'Happy read!',
         ].map((text, i) => (
           <Text
