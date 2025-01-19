@@ -30,6 +30,7 @@ import {
   HOME_ROUTE,
   LOGIN_ROUTE,
   PWD_RESET_ROUTE,
+  READ_BLOG_ROUTE,
   REGISTER_ROUTE,
 } from '../utils/constants';
 import RegisterScreen from '../screens/register/RegisterScreen';
@@ -45,6 +46,7 @@ import HomeScreen from '../screens/home/HomeScreen';
 import ExploreBlogsScreen from '../screens/explore_blogs/ExploreBlogsScreen';
 import AboutUsScreen from '../screens/about_us/AboutUsScreen';
 import ContactUsScreen from '../screens/contact_us/ContactUsScreen';
+import ReadBlogScreen from '../screens/read_blog/ReadBlogScreen';
 
 const Stack = createStackNavigator();
 
@@ -140,6 +142,11 @@ const AuthNavigator = () => {
         <Stack.Screen
           name={CONTACT_US_ROUTE}
           component={ContactUsScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={READ_BLOG_ROUTE}
+          component={ReadBlogScreen}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

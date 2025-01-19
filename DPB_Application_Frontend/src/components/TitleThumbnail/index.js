@@ -3,19 +3,15 @@ import {
   View,
   Text,
   StyleSheet,
-  Platform,
   ImageBackground,
   ScrollView,
 } from 'react-native';
 import useCommonParams from '../../hooks/useCommonParams';
-import {
-  ifMobileDevice,
-  ifWebSmallLandscapeMode,
-  isWeb,
-} from '../../utils/utils';
+import {ifMobileDevice, ifWebSmallLandscapeMode} from '../../utils/utils';
 import {BLOG_BG} from '../../utils/images';
+import {DEFAULT_BLOG_TITLE} from '../../utils/content';
 
-const TitleThumbnail = ({title}) => {
+const TitleThumbnail = ({title = DEFAULT_BLOG_TITLE}) => {
   const {
     screenHeight,
     screenWidth,
@@ -123,8 +119,7 @@ const style = (
     titleScrollView: {
       flex: 1,
       flexDirection: 'column',
-      justifyContent:
-        isLandscapeMode && ifWebSmallLandscapeMode() ? 'flex-start' : 'center',
+      justifyContent: 'center',
     },
     thumbnail: {
       flexDirection: 'row',

@@ -10,6 +10,7 @@ export const APP_NAME_WITH_TAGLINE = APP_NAME + ' - ' + APP_TAGLINE;
 // ============================COMPONENTS====================================================
 // Components:
 export const DEFAULT_BTN_TEXT = 'Click Me';
+export const DEFAULT_BLOG_TITLE = 'Blog for your read';
 
 // ============================TEXTS=========================================================
 // Common texts
@@ -238,6 +239,10 @@ export const ABOUT_US_TITLE = 'ABOUT US';
 
 // ContactUsScreen content
 export const CONTACT_US_TITLE = 'CONTACT US';
+
+// ReadBlogScreen content
+export const READ_BLOG_TITLE = 'READ IT NOW';
+export const MORE_BLOGS_TITLE = 'More Blogs for you';
 
 // LogoutScreen content
 export const LOGOUT_TITLE = 'LOG OUT';

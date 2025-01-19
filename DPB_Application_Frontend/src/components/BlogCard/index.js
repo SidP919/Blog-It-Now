@@ -7,6 +7,7 @@ import {
   ifTablet,
   ifWebSmallLandscapeMode,
   isMobileNative,
+  logger,
 } from '../../utils/utils';
 import Img from '../Img';
 import {DISLIKE_SOLID_ICON, LIKE_SOLID_ICON} from '../../utils/images';
@@ -18,7 +19,12 @@ import {
   BLOG_DATE_TITLE,
 } from '../../utils/content';
 
-const BlogCard = ({item, itemWidth, setContinueAutoScroll}) => {
+const BlogCard = ({
+  item,
+  itemWidth,
+  setContinueAutoScroll,
+  handleOnBlogPress,
+}) => {
   const {
     screenHeight,
     screenWidth,
@@ -51,15 +57,19 @@ const BlogCard = ({item, itemWidth, setContinueAutoScroll}) => {
   return (
     <Pressable
       style={[styles.container]}
-      onPress={() => console.log(`${item.title} is being loaded...`)}
+      onPress={() => handleOnBlogPress(item)}
       onHoverIn={() => setContinueAutoScroll && setContinueAutoScroll(false)}
       onHoverOut={() => setContinueAutoScroll && setContinueAutoScroll(true)}
       onPressIn={() => setContinueAutoScroll && setContinueAutoScroll(false)}
       onPressOut={() => setContinueAutoScroll && setContinueAutoScroll(true)}
       onLongPress={() => setContinueAutoScroll && setContinueAutoScroll(false)}>
       <View style={[styles.imgView]}>
-        {item.blogThumbnail ? (
-          <Image source={{uri: item.blogThumbnail}} style={[styles.img]} />
+        {item?.blogThumbnail ? (
+          <Image
+            source={{uri: item.blogThumbnail}}
+            style={[styles.img]}
+            resizeMode={'cover'}
+          />
         ) : (
           <TitleThumbnail title={item.title} />
         )}
@@ -124,8 +134,13 @@ const BlogCard = ({item, itemWidth, setContinueAutoScroll}) => {
     </Pressable>
   );
 };
-
-export default memo(BlogCard);
+//rerender BlogCard only when _id or itemWidth changes
+export default memo(BlogCard, (prevProps, nextProps) => {
+  return (
+    prevProps.item._id === nextProps.item._id &&
+    prevProps.itemWidth === nextProps.itemWidth
+  );
+});
 
 const style = (
   screenHeight,
@@ -159,8 +174,8 @@ const style = (
       borderColor: Colors.border[theme],
       borderWidth: 3,
       borderRadius: 25.5,
-      marginHorizontal: ifMobileDevice() && !isMobileNative ? 8 : 0,
-      marginRight: isMobileNative && ifMobileDevice() ? 32 : null,
+      marginHorizontal:
+        ifMobileDevice() && !isMobileNative ? 8 : isMobileNative ? 16 : 0,
     },
     imgView: {
       flex: isLandscapeMode && ifWebSmallLandscapeMode() ? null : 1,
@@ -174,7 +189,6 @@ const style = (
     img: {
       height: '100%',
       width: '100%',
-      resizeMode: 'cover',
       borderTopLeftRadius:
         isLandscapeMode && ifWebSmallLandscapeMode() ? 22 : 22,
       borderTopRightRadius:

@@ -46,6 +46,7 @@ import {
   REGISTER_ROUTE,
   SETTINGS_ROUTE,
   VERIFY_EMAIL_ROUTE,
+  READ_BLOG_ROUTE,
 } from '../utils/constants';
 import webService from '../services/web-service';
 import RegisterScreen from '../screens/register/RegisterScreen';
@@ -62,6 +63,7 @@ import ExploreBlogsScreen from '../screens/explore_blogs/ExploreBlogsScreen';
 import AboutUsScreen from '../screens/about_us/AboutUsScreen';
 import ContactUsScreen from '../screens/contact_us/ContactUsScreen';
 import useCommonParams from '../hooks/useCommonParams';
+import ReadBlogScreen from '../screens/read_blog/ReadBlogScreen';
 
 const AppNavigator = () => {
   const dispatch = useDispatch();
@@ -158,6 +160,7 @@ const AppNavigator = () => {
           end
           element={<ContactUsScreen />}
         />
+        <Route path={`/${READ_BLOG_ROUTE}`} end element={<ReadBlogScreen />} />
         {isAuthor ? (
           <Route path={`/${DASHBOARD_ROUTE}`} element={<DasboardScreen />} />
         ) : (

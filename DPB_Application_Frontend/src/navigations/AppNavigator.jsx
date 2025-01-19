@@ -38,6 +38,7 @@ import {
   PROFILE_ROUTE,
   SETTINGS_ROUTE,
   DEFAULT_ROUTE,
+  READ_BLOG_ROUTE,
 } from '../utils/constants';
 import {getIsApiLoading} from '../redux/slices/ApiLoadingSlice';
 import ThreeDotsLoader from '../components/ThreeDotsLoader';
@@ -46,6 +47,7 @@ import ExploreBlogsScreen from '../screens/explore_blogs/ExploreBlogsScreen';
 import AboutUsScreen from '../screens/about_us/AboutUsScreen';
 import ContactUsScreen from '../screens/contact_us/ContactUsScreen';
 import useCommonParams from '../hooks/useCommonParams';
+import ReadBlogScreen from '../screens/read_blog/ReadBlogScreen';
 
 const Stack = createStackNavigator();
 
@@ -145,6 +147,11 @@ const AppNavigator = () => {
             }}
           />
         )}
+        <Stack.Screen
+          name={READ_BLOG_ROUTE}
+          component={ReadBlogScreen}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name={PROFILE_ROUTE}
           component={ProfileScreen}

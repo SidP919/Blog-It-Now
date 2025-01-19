@@ -6,10 +6,10 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import useCommonParams from '../../hooks/useCommonParams';
-import {HOME_ROUTE} from '../../utils/constants';
+import {HOME_ROUTE, READ_BLOG_ROUTE} from '../../utils/constants';
 import {DEFAULT_WELCOME_QUOTE, HOME_TITLE} from '../../utils/content';
 import {postAuthScreenStyle} from '../../utils/commonStyles';
 import HeroSection from './HeroSection';
@@ -17,7 +17,7 @@ import {
   ifMobileDevice,
   ifTablet,
   ifWebSmallLandscapeMode,
-  isWeb,
+  logger,
 } from '../../utils/utils';
 import {fetchWelcomeQuote} from '../../utils/jsUtils';
 import {
@@ -26,6 +26,7 @@ import {
 } from '../../redux/slices/OtherDataSlice';
 import HeaderWrapper from '../HeaderWrapper';
 import TopBlogs from './TopBlogs';
+import useCustomNavigate from '../../hooks/useCustomNavigate';
 
 const HomeScreen = () => {
   const welcomeQuote = useSelector(getWelcomeQuote);
@@ -82,6 +83,12 @@ const HomeScreen = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const {navigate} = useCustomNavigate();
+  const handleOnBlogPress = item => {
+    logger(`${item.title} is being loaded...`);
+    navigate(READ_BLOG_ROUTE, {state: {item}});
+  };
   useEffect(() => {
     dispatchWelcomeQuote();
   }, [dispatchWelcomeQuote]);
@@ -109,7 +116,7 @@ const HomeScreen = () => {
             </Text>
           </View>
           <View style={[homeStyles.homeSectionContainer]}>
-            <TopBlogs />
+            <TopBlogs handleOnBlogPress={handleOnBlogPress} />
           </View>
         </Pressable>
       </ScrollView>

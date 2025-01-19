@@ -6,7 +6,11 @@ import {
   setMyBlogsData,
 } from '../../redux/slices/BlogsDataSlice';
 import useCommonParams from '../../hooks/useCommonParams';
-import {DATA_REFRESH_MSG_ARR, GET_MY_BLOGS} from '../../utils/constants';
+import {
+  DATA_REFRESH_MSG_ARR,
+  GET_MY_BLOGS,
+  READ_BLOG_ROUTE,
+} from '../../utils/constants';
 import CustomCarousel from '../../components/CustomCarousel';
 import BlogCard from '../../components/BlogCard';
 import NoDataView from '../../components/NoDataView';
@@ -14,6 +18,7 @@ import {
   ifMobileDevice,
   ifTablet,
   ifTabletLandscapeMode,
+  logger,
 } from '../../utils/utils';
 import TitleView from '../../components/TitleView';
 import {
@@ -66,6 +71,11 @@ const MyBlogs = () => {
     10 * 60 * 1000,
   );
 
+  const handleOnBlogPress = item => {
+    logger(`${item.title} is being loaded...`);
+    navigate(READ_BLOG_ROUTE, {state: {item}});
+  };
+
   if (isApiLoading) {
     return <DataRefreshLoader msgArr={DATA_REFRESH_MSG_ARR} />;
   }
@@ -90,6 +100,7 @@ const MyBlogs = () => {
           RenderItem={BlogCard}
           autoScroll={true}
           showPaginationDots={false}
+          handleOnBlogPress={handleOnBlogPress}
         />
       ) : (
         <NoDataView />

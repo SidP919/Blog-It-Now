@@ -18,6 +18,7 @@ const CustomCarousel = ({
   RenderItem,
   autoScroll = true,
   showPaginationDots = true,
+  handleOnBlogPress,
 }) => {
   const {
     screenHeight,
@@ -58,8 +59,8 @@ const CustomCarousel = ({
         : screenWidth - 24
       : ifTablet()
       ? (screenWidth - 48) / 2
-      : isMobileNative
-      ? screenWidth - 64
+      : isMobileNative && ifMobileDevice()
+      ? screenWidth - 32
       : screenWidth - 48;
   }, [isLandscapeMode, screenWidth]);
 
@@ -136,6 +137,7 @@ const CustomCarousel = ({
 
   useEffect(() => {
     const autoplayInterval =
+      !isMobileNative && // switched off autoscroll for better performance on native devices
       autoScroll &&
       continueAutoScroll &&
       setInterval(() => {
@@ -159,6 +161,7 @@ const CustomCarousel = ({
                   item={item}
                   itemWidth={itemWidth}
                   setContinueAutoScroll={setContinueAutoScroll}
+                  handleOnBlogPress={() => handleOnBlogPress(item)}
                 />
               );
             }}
@@ -271,7 +274,8 @@ const style = (
           : null,
       marginBottom: 40,
       maxHeight: 500,
-      width: screenWidth - 32,
+      width:
+        isMobileNative && ifMobileDevice() ? screenWidth : screenWidth - 32,
     },
     flatListContainerStyle: {
       minWidth: screenWidth - 32,
@@ -279,7 +283,7 @@ const style = (
       justifyContent: 'center',
     },
     itemSeparatorView: {
-      width: isMobileNative && ifMobileDevice() ? 32 : 16,
+      width: isMobileNative && ifMobileDevice() ? 0 : 16,
     },
     bottomView: {
       width: '100%',

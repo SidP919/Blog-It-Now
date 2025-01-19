@@ -3,20 +3,17 @@ import {useSelector} from 'react-redux';
 import CustomCarousel from '../../components/CustomCarousel';
 import BlogCard from '../../components/BlogCard';
 import {DATA_REFRESH_MSG_ARR, GET_TOP_BLOGS} from '../../utils/constants';
-import {PLEASE_WAIT_TEXT, TOP_BLOGS_TITLE} from '../../utils/content';
+import {TOP_BLOGS_TITLE} from '../../utils/content';
 import {
   getTopBlogsData,
   setTopBlogsData,
 } from '../../redux/slices/BlogsDataSlice';
 import TitleView from '../../components/TitleView';
 import useFetch from '../../hooks/useFetch';
-import ThreeDotsLoader from '../../components/ThreeDotsLoader';
-import {StyleSheet, View} from 'react-native';
-import useCommonParams from '../../hooks/useCommonParams';
-import {ifMobileDevice, ifTabletLandscapeMode} from '../../utils/utils';
 import DataRefreshLoader from '../../components/DataRefreshLoader';
+import NoDataView from '../../components/NoDataView';
 
-const TopBlogs = () => {
+const TopBlogs = ({handleOnBlogPress}) => {
   const topBlogs = useSelector(getTopBlogsData);
   const {isApiLoading} = useFetch(
     GET_TOP_BLOGS,
@@ -33,7 +30,15 @@ const TopBlogs = () => {
   return (
     <>
       <TitleView title={TOP_BLOGS_TITLE} />
-      <CustomCarousel data={topBlogs} RenderItem={BlogCard} />
+      {topBlogs?.length > 0 ? (
+        <CustomCarousel
+          data={topBlogs}
+          RenderItem={BlogCard}
+          handleOnBlogPress={handleOnBlogPress}
+        />
+      ) : (
+        <NoDataView />
+      )}
     </>
   );
 };

@@ -48,6 +48,7 @@ export const VERIFY_EMAIL_ROUTE = 'verifyEmail';
 export const EXPLORE_BLOGS_ROUTE = 'ExploreBlogs';
 export const ABOUT_US_ROUTE = 'AboutUs';
 export const CONTACT_US_ROUTE = 'ContactUs';
+export const READ_BLOG_ROUTE = 'ReadBlog';
 
 // ======================================= Theme constants ================================
 export const THEME_NAME_LOCAL = `${APP_ID}_APPv1_THEME`;

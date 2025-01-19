@@ -106,7 +106,10 @@ export const isProduction = isWeb
     : false
   : false; // set this true for production on native devices.
 
-export const BASE_URL = isProduction ? PROD_URL + API_ID : DEV_URL + API_ID; // localhost should be replaced with your machine
+export const BASE_URL = isProduction ? PROD_URL + API_ID : DEV_URL + API_ID;
+//NOTE: if you are testing on android emulator,
+// localhost in DEV_URL should be replaced with your system's IPv4 address
+// to utilize backend APIs running on dev server, .
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
