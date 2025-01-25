@@ -23,6 +23,7 @@ import {
   REGISTER_ROUTE,
   SETTINGS_ROUTE,
   LOGOUT_ROUTE,
+  MAIN_ROUTES_ARR,
 } from '../../utils/constants';
 import {
   ABOUT_US_MENU,
@@ -77,7 +78,9 @@ const HeaderLandscape = ({currentScreen = 'Home'}) => {
     if (currentScreen === DEFAULT_ROUTE && screenName !== DEFAULT_ROUTE) {
       navigate(screenName);
     } else {
-      navigate(screenName, {replace: true});
+      navigate(screenName, {
+        replace: MAIN_ROUTES_ARR.includes(currentScreen) ? true : false,
+      });
     }
   };
 

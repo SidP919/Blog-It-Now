@@ -49,6 +49,18 @@ export const EXPLORE_BLOGS_ROUTE = 'ExploreBlogs';
 export const ABOUT_US_ROUTE = 'AboutUs';
 export const CONTACT_US_ROUTE = 'ContactUs';
 export const READ_BLOG_ROUTE = 'ReadBlog';
+export const MAIN_ROUTES_ARR = [
+  'Home',
+  'Profile',
+  'Login',
+  'Register',
+  'Dashboard',
+  'ExploreBlogs',
+  'AboutUs',
+  'ContactUs',
+  'Settings',
+  'Logout',
+];
 
 // ======================================= Theme constants ================================
 export const THEME_NAME_LOCAL = `${APP_ID}_APPv1_THEME`;
