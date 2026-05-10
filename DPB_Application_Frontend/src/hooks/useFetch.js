@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {logger} from '../utils/utils';
 import webService from '../services/web-service';
@@ -13,35 +13,39 @@ const useFetch = (
 ) => {
   const [isApiLoading, setIsApiLoading] = useState(false);
   const dispatch = useDispatch();
+  const inFlightRef = useRef(false);
+
   const fetchData = useCallback(async () => {
-    setIsApiLoading(true);
-    const apiRes = await webService
-      .getData(API)
-      .then(res => {
-        dispatch(dispatchMethod(res.data[keyName]));
-        setIsApiLoading(false);
-        return res.data;
-      })
-      .catch(error => {
-        setIsApiLoading(false);
-        logger(error);
-      });
-    return apiRes;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (inFlightRef.current) {
+      return;
+    }
+
+    try {
+      inFlightRef.current = true;
+      setIsApiLoading(true);
+
+      const apiRes = await webService.getData(API);
+      dispatch(dispatchMethod(apiRes.data?.[keyName]));
+
+      return apiRes.data;
+    } catch (error) {
+      logger(error);
+    } finally {
+      inFlightRef.current = false;
+      setIsApiLoading(false);
+    }
+  }, [API, dispatch, dispatchMethod, keyName]);
 
   useEffect(() => {
-    if (Array.isArray(currentVal) && currentVal.length < 1) {
+    if (Array.isArray(currentVal) && currentVal.length === 0) {
       fetchData();
     }
-    const dataFetchInterval = setInterval(fetchData, delay);
-    return () => {
-      clearInterval(dataFetchInterval);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  return {isApiLoading};
+    const dataFetchInterval = setInterval(fetchData, delay);
+    return () => clearInterval(dataFetchInterval);
+  }, [currentVal, delay, fetchData]);
+
+  return {isApiLoading, fetchData};
 };
 
 export default useFetch;
