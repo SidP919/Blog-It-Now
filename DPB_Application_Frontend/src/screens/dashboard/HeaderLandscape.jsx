@@ -85,31 +85,31 @@ const HeaderLandscape = ({currentScreen = 'Home'}) => {
   };
 
   const CENTER_MENUS_ARRAY = [
-    {
-      route: HOME_ROUTE,
-      title: HOME_MENU,
-      isLoggedIn: 0, // 0 signifies isLoggedIn not required
-    },
-    {
-      route: DASHBOARD_ROUTE,
-      title: DASHBOARD_MENU,
-      isLoggedIn: 2, // 1 signifies isLoggedIn needs to be true but 2 signifies user also needs to be an Author
-    },
-    {
-      route: EXPLORE_BLOGS_ROUTE,
-      title: EXPLORE_BLOGS_MENU,
-      isLoggedIn: 0,
-    },
-    {
-      route: ABOUT_US_ROUTE,
-      title: ABOUT_US_MENU,
-      isLoggedIn: 0,
-    },
-    {
-      route: CONTACT_US_ROUTE,
-      title: CONTACT_US_MENU,
-      isLoggedIn: 0,
-    },
+    // {
+    //   route: HOME_ROUTE,
+    //   title: HOME_MENU,
+    //   isLoggedIn: 0, // 0 signifies isLoggedIn not required
+    // },
+    // {
+    //   route: DASHBOARD_ROUTE,
+    //   title: DASHBOARD_MENU,
+    //   isLoggedIn: 2, // 1 signifies isLoggedIn needs to be true but 2 signifies user also needs to be an Author
+    // },
+    // {
+    //   route: EXPLORE_BLOGS_ROUTE,
+    //   title: EXPLORE_BLOGS_MENU,
+    //   isLoggedIn: 0,
+    // },
+    // {
+    //   route: ABOUT_US_ROUTE,
+    //   title: ABOUT_US_MENU,
+    //   isLoggedIn: 0,
+    // },
+    // {
+    //   route: CONTACT_US_ROUTE,
+    //   title: CONTACT_US_MENU,
+    //   isLoggedIn: 0,
+    // },
   ];
 
   const AUTH_BUTTONS_ARRAY = [

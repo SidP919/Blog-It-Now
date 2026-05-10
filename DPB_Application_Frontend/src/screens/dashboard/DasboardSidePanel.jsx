@@ -273,7 +273,7 @@ const DasboardSidePanel = ({
             </Text>
           </Pressable>
         )}
-        <Pressable
+        {/* <Pressable
           onPress={() => goToScreen(EXPLORE_BLOGS_ROUTE)}
           style={[
             styles.sectionItem,
@@ -287,7 +287,7 @@ const DasboardSidePanel = ({
           <Text numberOfLines={1} style={[styles.sideItemTitle]}>
             {SIDE_PANEL_EXPLORE_BLOGS_OPTION}
           </Text>
-        </Pressable>
+        </Pressable> */}
         {isLoggedIn && (
           <Pressable
             onPress={() => goToScreen(SETTINGS_ROUTE)}
@@ -305,7 +305,7 @@ const DasboardSidePanel = ({
             </Text>
           </Pressable>
         )}
-        <Pressable
+        {/* <Pressable
           onPress={() => goToScreen(ABOUT_US_ROUTE)}
           style={[
             styles.sectionItem,
@@ -319,8 +319,8 @@ const DasboardSidePanel = ({
           <Text numberOfLines={1} style={[styles.sideItemTitle]}>
             {SIDE_PANEL_ABOUT_US_OPTION}
           </Text>
-        </Pressable>
-        <Pressable
+        </Pressable> */}
+        {/* <Pressable
           onPress={() => goToScreen(CONTACT_US_ROUTE)}
           style={[
             styles.sectionItem,
@@ -334,7 +334,7 @@ const DasboardSidePanel = ({
           <Text numberOfLines={1} style={[styles.sideItemTitle]}>
             {SIDE_PANEL_CONTACT_US_OPTION}
           </Text>
-        </Pressable>
+        </Pressable> */}
         {!isLoggedIn && (
           <Pressable
             onPress={() => goToScreen(LOGIN_ROUTE)}
