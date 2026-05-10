@@ -1,20 +1,14 @@
 const app = require("./src/app");
-const configConstants = require("./src/constants/config.contants");
+const configConstants = require("./src/constants/config.constants");
 const mongoose = require("mongoose");
 const { logger } = require("./src/utils/logger");
 
 (async () => {
   try {
     //Set up mongoose connection to MongoDB Atlas Database
-    await mongoose
-      .connect(configConstants.MONGODB_URI)
-      .then((db) => {
-        logger(`Application connected to MongoDB successfully.`);
-      })
-      .catch((error) => {
-        logger("\nConnection to MongoDB failed!");
-        throw error;
-      });
+    await mongoose.connect(configConstants.MONGODB_URI);
+    logger(`Application connected to MongoDB successfully.`);
+    
     app.on("error", (err) => {
       logger("\nError thrown from app.on(): ", err);
       throw err;
@@ -27,7 +21,7 @@ const { logger } = require("./src/utils/logger");
     };
     app.listen(PORT, listenFunc);
   } catch (err) {
-    logger("\nError occurred!\n", err);
-    throw err;
+    logger("\nConnection to MongoDB failed!\n", err);
+    process.exit(1);
   }
 })();

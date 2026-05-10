@@ -2,7 +2,7 @@ const User = require("./../models/userSchema.js");
 const cookieOptions = require("../models/utils/authCookieOptions.js");
 const getUniqueUsername = require("../utils/getUniqueUsername.js");
 const { logger } = require("../utils/logger.js");
-const ENV_CONSTANTS = require("../constants/config.contants.js");
+const ENV_CONSTANTS = require("../constants/config.constants.js");
 const sendEmail = require("../utils/email/sendEmail.js");
 
 /****************************************************************************************

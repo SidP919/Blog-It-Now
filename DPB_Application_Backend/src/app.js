@@ -3,7 +3,7 @@ const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
-const ENV_CONSTANTS = require("./constants/config.contants");
+const ENV_CONSTANTS = require("./constants/config.constants");
 
 // Array of allowed origins
 const corsOriginArr = [ENV_CONSTANTS.CLIENT_URL, ENV_CONSTANTS.CLIENT_APP_URL];

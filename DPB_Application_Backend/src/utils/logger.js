@@ -1,4 +1,4 @@
-const ENV_CONSTANTS = require("../constants/config.contants");
+const ENV_CONSTANTS = require("../constants/config.constants");
 
 const isProduction = ENV_CONSTANTS.NODE_ENV === 'production';
 // Use in place of console.log():

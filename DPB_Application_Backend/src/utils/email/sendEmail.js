@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 const handlebars = require("handlebars");
 const fs = require("fs");
 const path = require("path");
-const ENV_CONSTANTS = require("../../constants/config.contants");
+const ENV_CONSTANTS = require("../../constants/config.constants");
 const { logger } = require("../logger");
 /**
  * Please note below sendEmail will only work when we fulfill below conditions in mentioned order:

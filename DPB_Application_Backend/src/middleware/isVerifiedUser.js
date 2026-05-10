@@ -1,4 +1,4 @@
-const ENV_CONSTANTS = require("../constants/config.contants");
+const ENV_CONSTANTS = require("../constants/config.constants");
 const User = require("../models/userSchema");
 const { logger } = require("../utils/logger");
 

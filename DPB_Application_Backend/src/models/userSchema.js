@@ -5,7 +5,7 @@ const { randomBytes, createHash } = require("crypto");
 const USER_SCHEMA_CONSTS = require("./utils/userSchemaConsts.js");
 const AUTH_ROLES = require("./utils/authRoles.js");
 const AUTH_CONSTANTS = require("../constants/auth.constants.js");
-const ENV_CONSTANTS = require("../constants/config.contants.js");
+const ENV_CONSTANTS = require("../constants/config.constants.js");
 
 const userSchema = Schema(
   {

@@ -1,4 +1,4 @@
-const { APP_EMAIL } = require("../constants/config.contants");
+const { APP_EMAIL } = require("../constants/config.constants");
 const AUTH_ROLES = require("../models/utils/authRoles");
 const { logger } = require("../utils/logger");
 
