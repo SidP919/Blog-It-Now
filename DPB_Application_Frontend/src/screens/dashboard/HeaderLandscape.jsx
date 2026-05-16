@@ -221,7 +221,7 @@ const ProfileMenu = ({
   goToScreen,
   setShowProfileSubMenu,
   currentScreen,
-  isAuthor=false,
+  isAuthor = false,
   styles,
 }) => {
   const [hoverOn, setHoverOn] = useState('');

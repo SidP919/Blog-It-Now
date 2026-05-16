@@ -12,6 +12,7 @@ export const colorProfiles = {
     DARK_LINK_PRIMARY: '#c697ff',
     DANGER: '#ff0000',
     SUCCESS: '#046A38',
+    LIGHT_WHITE: '#ffffff',
   },
   ORANGE: {
     LIGHT_PRIMARY: '#ff8f00',
@@ -26,6 +27,7 @@ export const colorProfiles = {
     DARK_LINK_PRIMARY: '#ffe082',
     DANGER: '#ff0000',
     SUCCESS: '#046A38',
+    LIGHT_WHITE: '#ffffff',
   },
 };
 
@@ -38,7 +40,9 @@ export const getColors = appColor => ({
     DARK: colorProfiles[appColor].DARK_PRIMARY, // '#5e10bc', '#ff6f00'
   },
   bgColor: {
-    LIGHT: colorProfiles[appColor].LIGHT_SECONDARY, // '#eee1ff', '#fffce2'
+    // LIGHT: colorProfiles[appColor].LIGHT_SECONDARY, // '#eee1ff', '#fffce2'
+    //Experimental change: making bgColor plain white in light mode
+    LIGHT: colorProfiles[appColor].LIGHT_WHITE, // '#ffffff', '#ffffff'
     DARK: colorProfiles[appColor].DARK_SECONDARY, // '#2c0c56', '#913f00'
   },
   headerTitle: {
