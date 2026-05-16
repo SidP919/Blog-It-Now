@@ -16,6 +16,7 @@ import HeroSection from './HeroSection';
 import {
   ifMobileDevice,
   ifTablet,
+  ifWebLargeLandscapeMode,
   ifWebSmallLandscapeMode,
   logger,
 } from '../../utils/utils';
@@ -30,6 +31,7 @@ import useCustomNavigate from '../../hooks/useCustomNavigate';
 
 const HomeScreen = () => {
   const welcomeQuote = useSelector(getWelcomeQuote);
+  const ifWebLargeDevice = ifWebLargeLandscapeMode() && !ifTablet();
   const {
     screenHeight,
     screenWidth,
@@ -69,6 +71,7 @@ const HomeScreen = () => {
     smSize,
     mdText,
     smText,
+    ifWebLargeDevice,
   );
 
   const dispatch = useDispatch();
@@ -101,7 +104,7 @@ const HomeScreen = () => {
           homeStyles.homeScreenContent,
         ]}
         stickyHeaderIndices={[0]}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={ifWebLargeDevice ? true : false}>
         <Pressable style={[homeStyles.heroSectionContainer]}>
           <HeroSection />
         </Pressable>
@@ -135,6 +138,7 @@ const homeStyle = (
   smSize,
   mdText,
   smText,
+  ifWebLargeDevice,
 ) =>
   StyleSheet.create({
     homeScreenContent: {
@@ -150,9 +154,11 @@ const homeStyle = (
     },
     belowHeroSectionView: {
       zIndex: 11,
+      width: ifWebLargeDevice ? screenWidth - 16 : screenWidth,
     },
     belowHeroSectionContainer: {
       height: isLandscapeMode && ifWebSmallLandscapeMode() ? 56 : 85,
+      width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
       paddingTop: 0,
@@ -180,7 +186,7 @@ const homeStyle = (
       paddingVertical: 4,
     },
     homeSectionContainer: {
-      width: screenWidth,
+      width: '100%',
       minWidth: 304,
       height: screenHeight - (ifMobileDevice() || ifTablet() ? 56 : 85),
       position: 'relative',
