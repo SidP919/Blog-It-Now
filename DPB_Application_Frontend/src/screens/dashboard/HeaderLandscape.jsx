@@ -240,26 +240,28 @@ const ProfileMenu = ({
     <View style={[styles.subMenuView]}>
       {PROFILE_MENUS_ARRAY.map((menu, i) => {
         return (
-          <Pressable
-            key={`${menu.title}${i}`}
-            style={[styles.subMenuItem]}
-            onPress={() =>
-              menu.route !== LOGOUT_ROUTE
-                ? goToScreen(menu.route)
-                : onLogoutPress()
-            }
-            onHoverIn={() => setHoverOn(menu.route)}
-            onHoverOut={() => setHoverOn('')}>
-            <Text
-              style={[
-                styles.headerTitle,
-                styles.subMenuTitle,
-                [currentScreen, hoverOn].includes(menu.route) &&
-                  styles.currentScreen,
-              ]}>
-              {menu.title}
-            </Text>
-          </Pressable>
+          menu && (
+            <Pressable
+              key={`${menu.title}${i}`}
+              style={[styles.subMenuItem]}
+              onPress={() =>
+                menu.route !== LOGOUT_ROUTE
+                  ? goToScreen(menu.route)
+                  : onLogoutPress()
+              }
+              onHoverIn={() => setHoverOn(menu.route)}
+              onHoverOut={() => setHoverOn('')}>
+              <Text
+                style={[
+                  styles.headerTitle,
+                  styles.subMenuTitle,
+                  [currentScreen, hoverOn].includes(menu.route) &&
+                    styles.currentScreen,
+                ]}>
+                {menu.title}
+              </Text>
+            </Pressable>
+          )
         );
       })}
     </View>
