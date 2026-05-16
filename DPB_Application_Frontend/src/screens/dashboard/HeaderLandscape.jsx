@@ -180,6 +180,7 @@ const HeaderLandscape = ({currentScreen = 'Home'}) => {
                   showProfileSubMenu={showProfileSubMenu}
                   setShowProfileSubMenu={setShowProfileSubMenu}
                   currentScreen={currentScreen}
+                  isAuthor={isAuthor}
                   styles={styles}
                 />
               </Pressable>
@@ -220,11 +221,13 @@ const ProfileMenu = ({
   goToScreen,
   setShowProfileSubMenu,
   currentScreen,
+  isAuthor=false,
   styles,
 }) => {
   const [hoverOn, setHoverOn] = useState('');
   const PROFILE_MENUS_ARRAY = [
     {route: PROFILE_ROUTE, title: MY_PROFILE_MENU},
+    isAuthor && {route: DASHBOARD_ROUTE, title: DASHBOARD_MENU},
     {route: SETTINGS_ROUTE, title: SETTINGS_MENU},
     {route: LOGOUT_ROUTE, title: LOG_OUT_MENU},
   ];
