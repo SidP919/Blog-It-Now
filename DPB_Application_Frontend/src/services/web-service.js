@@ -92,11 +92,11 @@ export async function logoutHandler() {
           showCustomAlert(GENERIC_ERROR_TITLE, GENERIC_ERROR_MSG, GENERIC);
         }
       } else {
-        logger('logoutHandler: Response is empty it seems.');
+        logger('logoutHandler: Response is empty it seems.', {response});
       }
     })
     .catch(err => {
-      logger('logoutHandler: Response Error:', err);
+      logger('logoutHandler: Server Error:', err);
     });
 }
 

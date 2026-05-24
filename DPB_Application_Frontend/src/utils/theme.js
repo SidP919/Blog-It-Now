@@ -4,7 +4,7 @@ export const colorProfiles = {
     DARK_PRIMARY: '#5e10bc',
     LIGHT_SECONDARY: '#eee1ff',
     DARK_SECONDARY: '#2c0c56',
-    TEXT_PRIMARY: '#ffffcf',
+    TEXT_PRIMARY: '#ffffff',
     LIGHT_TEXT_PRIMARY: '#2c0c56',
     LIGHT_TEXT_SECONDARY: '#758283',
     DARK_TEXT_SECONDARY: '#cad5e2',
@@ -17,7 +17,7 @@ export const colorProfiles = {
   ORANGE: {
     LIGHT_PRIMARY: '#ff8f00',
     DARK_PRIMARY: '#ff6f00',
-    LIGHT_SECONDARY: '#fffce2',
+    LIGHT_SECONDARY: '#ffffff',
     DARK_SECONDARY: '#913f00',
     TEXT_PRIMARY: '#ffffff',
     LIGHT_TEXT_PRIMARY: '#913f00',
@@ -40,54 +40,54 @@ export const getColors = appColor => ({
     DARK: colorProfiles[appColor].DARK_PRIMARY, // '#5e10bc', '#ff6f00'
   },
   bgColor: {
-    // LIGHT: colorProfiles[appColor].LIGHT_SECONDARY, // '#eee1ff', '#fffce2'
+    // LIGHT: colorProfiles[appColor].LIGHT_SECONDARY, // '#eee1ff', '#ffffff'
     //Experimental change: making bgColor plain white in light mode
     LIGHT: colorProfiles[appColor].LIGHT_WHITE, // '#ffffff', '#ffffff'
     DARK: colorProfiles[appColor].DARK_SECONDARY, // '#2c0c56', '#913f00'
   },
   headerTitle: {
-    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   headerLogo: {
-    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   sideBarHeaderLogo: {
     LIGHT: colorProfiles[appColor].LIGHT_PRIMARY, // '#8729fd', '#ff8f00'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   sideBarItemLogo: {
-    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   title: {
     LIGHT: colorProfiles[appColor].LIGHT_PRIMARY, // '#8729fd', '#ff8f00'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   mdTitle: {
     LIGHT: colorProfiles[appColor].DARK_PRIMARY, // '#5e10bc', '#ff6f00'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   text: {
     LIGHT: colorProfiles[appColor].LIGHT_TEXT_PRIMARY, // '#2c0c56', '#913f00'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   placeHolderText: {
     LIGHT: colorProfiles[appColor].LIGHT_TEXT_SECONDARY, // '#758283', '#cad5e2'
     DARK: colorProfiles[appColor].DARK_TEXT_SECONDARY, // '#758283', '#cad5e2'
   },
   btnBgColor: {
-    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
     DARK: colorProfiles[appColor].DARK_SECONDARY, // '#2c0c56', '#913f00'
   },
   btnText: {
     LIGHT: colorProfiles[appColor].DARK_PRIMARY, // '#5e10bc', '#ff6f00'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   border: {
     LIGHT: colorProfiles[appColor].DARK_PRIMARY, // '#5e10bc', '#ff6f00'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   activeItem: {
     LIGHT: colorProfiles[appColor].DARK_PRIMARY, // '#5e10bc', '#ff6f00'
@@ -102,28 +102,28 @@ export const getColors = appColor => ({
     DARK: colorProfiles[appColor].DARK_TEXT_SECONDARY, // '#758283', '#cad5e2'
   },
   alertBg: {
-    LIGHT: colorProfiles[appColor].LIGHT_SECONDARY, // '#eee1ff', '#fffce2'
+    LIGHT: colorProfiles[appColor].LIGHT_SECONDARY, // '#eee1ff', '#ffffff'
     DARK: colorProfiles[appColor].DARK_SECONDARY, // '#2c0c56', '#913f00'
   },
   alertTitle: {
     LIGHT: colorProfiles[appColor].DARK_PRIMARY, // '#5e10bc', '#ff6f00'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   alertMsg: {
     LIGHT: colorProfiles[appColor].DARK_PRIMARY, // '#5e10bc', '#ff6f00'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   alertBtnBg: {
     LIGHT: colorProfiles[appColor].LIGHT_PRIMARY, // '#8729fd', '#ff8f00'
     DARK: colorProfiles[appColor].DARK_PRIMARY, // '#5e10bc', '#ff6f00'
   },
   alertBtnText: {
-    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   alertBorder: {
     LIGHT: colorProfiles[appColor].DARK_PRIMARY, // '#5e10bc', '#ff6f00'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   linkColor: {
     LIGHT: colorProfiles[appColor].LIGHT_LINK_PRIMARY, // '#6e00ff', '#ffc107'
@@ -134,39 +134,39 @@ export const getColors = appColor => ({
     DARK: colorProfiles[appColor].DARK_PRIMARY, // '#5e10bc', '#ff6f00'
   },
   cardText: {
-    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   inputView: {
-    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
     DARK: colorProfiles[appColor].DARK_SECONDARY, // '#2c0c56', '#913f00'
   },
   inputIcon: {
     LIGHT: colorProfiles[appColor].DARK_PRIMARY, // '#5e10bc', '#ff6f00'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   inputText: {
     LIGHT: colorProfiles[appColor].DARK_PRIMARY, // '#5e10bc', '#ff6f00'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   iconOnBgColor: {
-    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   dotZeroColor: {
-    LIGHT: colorProfiles[appColor].LIGHT_SECONDARY, // '#eee1ff', '#fffce2'
+    LIGHT: colorProfiles[appColor].LIGHT_SECONDARY, // '#eee1ff', '#ffffff'
     DARK: colorProfiles[appColor].DARK_SECONDARY, // '#2c0c56', '#913f00'
   },
   dotOneColor: {
     LIGHT: colorProfiles[appColor].DARK_PRIMARY, // '#5e10bc', '#ff6f00'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
   danger: {
     LIGHT: colorProfiles[appColor].DANGER, // '#ff0000', '#ff0000'
     DARK: colorProfiles[appColor].DANGER, // '#ff0000', '#ff0000'
   },
   dangerBtnText: {
-    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
-    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffcf', '#ffffff'
+    LIGHT: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
+    DARK: colorProfiles[appColor].TEXT_PRIMARY, // '#ffffff', '#ffffff'
   },
 });

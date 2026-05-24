@@ -68,7 +68,7 @@ const MoreBlogs = ({moreBlogs}) => {
   const {navigate} = useCustomNavigate();
   const handleOnBlogPress = item => {
     console.log(`${item.title} is being loaded...`);
-    navigate(READ_BLOG_ROUTE, {state: {item}});
+    navigate(READ_BLOG_ROUTE, {state: {blog: item}});
   };
   const [isApiLoading, setIsApiLoading] = useState(false);
 

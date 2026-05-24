@@ -69,15 +69,15 @@ const ReadBlogScreen = ({route = null}) => {
   const {params} = useCustomRouteParams(route);
   const {navigate} = useCustomNavigate();
   const topBlogs = useSelector(getTopBlogsData);
-  const item = params?.item;
+  const blog = params?.blog;
   const [blogData, setBlogData] = useState(null);
   const [isApiLoading, setIsApiLoading] = useState(false);
 
   useEffect(() => {
-    if (item && (!blogData || item._id !== blogData.id)) {
+    if (blog && (!blogData || blog._id !== blogData.id)) {
       setIsApiLoading(true);
       webService
-        .getData(`blogs/getBlog/${item._id}`)
+        .getData(`blogs/getBlog/${blog._id}`)
         .then(response => response.data)
         .then(data => {
           setBlogData(data?.blog);
@@ -85,17 +85,17 @@ const ReadBlogScreen = ({route = null}) => {
           setIsApiLoading(false);
         })
         .catch(err => {
-          logger(`ReadBlogScreen: blogs/getBlog/${item._id} threw error:`, err);
+          logger(`ReadBlogScreen: blogs/getBlog/${blog._id} threw error:`, err);
           setIsApiLoading(false);
         });
     }
-  }, [blogData, item]);
+  }, [blogData, blog]);
 
   useEffect(() => {
-    if (isWeb && !item) {
+    if (isWeb && !blog) {
       navigate(DEFAULT_ROUTE, {replace: true});
     }
-  }, [item, navigate]);
+  }, [blog, navigate]);
 
   return (
     <HeaderWrapper

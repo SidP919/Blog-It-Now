@@ -7,6 +7,7 @@ import {
 } from '../../redux/slices/BlogsDataSlice';
 import useCommonParams from '../../hooks/useCommonParams';
 import {
+  CREATE_BLOG_ROUTE,
   DATA_REFRESH_MSG_ARR,
   GET_MY_BLOGS,
   READ_BLOG_ROUTE,
@@ -73,7 +74,7 @@ const MyBlogs = () => {
 
   const handleOnBlogPress = item => {
     logger(`${item.title} is being loaded...`);
-    navigate(READ_BLOG_ROUTE, {state: {item}});
+    navigate(READ_BLOG_ROUTE, {state: {blog: item}});
   };
 
   if (isApiLoading) {
@@ -91,7 +92,7 @@ const MyBlogs = () => {
         <TextWithLink
           text={CREATE_BLOG_BTN_TEXT}
           word={CREATE_BLOG_BTN_TEXT}
-          onPressDoThis={() => navigate('Home')}
+          onPressDoThis={() => navigate(CREATE_BLOG_ROUTE)}
         />
       </View>
       {myBlogs?.length > 0 ? (
