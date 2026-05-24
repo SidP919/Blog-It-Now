@@ -26,13 +26,25 @@ const createBlog = async (req, res) => {
       });
     }
 
-    let transformedTags =
-      tags && tags?.length > 0
-        ? [...new Set(tags.map((t) => t?.toLowerCase().trim()))]
-        : [category.toLowerCase()];
-    transformedTags = transformedTags.includes(category.toLowerCase())
-      ? transformedTags
-      : [category.toLowerCase(), ...transformedTags];
+    const rawTags =
+      Array.isArray(tags) ? tags :
+      typeof tags === 'string' ? tags.split(',') :
+      [];
+
+    const transformedTags = rawTags.length > 0
+      ? [...new Set(
+          rawTags
+            .map(tag => {
+              const value = tag ? String(tag).toLowerCase().trim() : '';
+              return value.length > 32 ? value.slice(0, 32) : value;
+            })
+            .filter(Boolean),
+        )]
+      : [category.toLowerCase()];
+
+    if (!transformedTags.includes(category.toLowerCase())) {
+      transformedTags.unshift(category.toLowerCase());
+    }
 
     // Create the blog
     const newBlog = await Blog.create({
