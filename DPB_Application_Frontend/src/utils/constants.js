@@ -26,12 +26,17 @@ export const VERIFY_EMAIL_API = '/auth/verifyEmail';
 // BLOGS APIs:
 export const GET_TOP_BLOGS = '/blogs/getTopBlogs';
 export const GET_MY_BLOGS = '/blogs/getBlogsByAuthor';
+export const GET_BLOG_BY_ID = '/blogs/getBlogById/';
+export const CREATE_BLOG_API = '/blogs/createBlog';
+export const PUBLISH_BLOG_API = '/blogs/publishBlog/';
+export const DELETE_BLOG_API = '/blogs/deleteBlog/';
 // OTHER DATA APIs & constants:
 export const GET_OTHER_DATA = '/otherData/getData';
 export const ANDROID_DOWNLOAD_LINK = 'ANDROID_DOWNLOAD_LINK';
 export const IOS_DOWNLOAD_LINK = 'IOS_DOWNLOAD_LINK';
-export const GET_ANDROID_LINK = `/otherData/getData?key=${ANDROID_DOWNLOAD_LINK}`;
-export const GET_IOS_LINK = `/otherData/getData?key=${IOS_DOWNLOAD_LINK}`;
+export const GET_ANDROID_LINK = `${GET_OTHER_DATA}?key=${ANDROID_DOWNLOAD_LINK}`;
+export const GET_IOS_LINK = `${GET_OTHER_DATA}?key=${IOS_DOWNLOAD_LINK}`;
+export const GET_BLOG_CATEGORIES = `${GET_OTHER_DATA}?key=BLOG_CATEGORIES`;
 
 // ======================================= Navigation-Route constants =======================================
 export const DEFAULT_ROUTE = 'Home';
@@ -49,6 +54,7 @@ export const EXPLORE_BLOGS_ROUTE = 'ExploreBlogs';
 export const ABOUT_US_ROUTE = 'AboutUs';
 export const CONTACT_US_ROUTE = 'ContactUs';
 export const READ_BLOG_ROUTE = 'ReadBlog';
+export const CREATE_BLOG_ROUTE = 'CreateBlog';
 export const MAIN_ROUTES_ARR = [
   'Home',
   'Profile',

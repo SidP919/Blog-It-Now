@@ -183,7 +183,7 @@ export const formCardStyle = (
       ...Platform.select({
         web: {
           outlineStyle: 'none',
-          paddingStart: 8,
+          paddingStart: 16,
         },
       }),
     },

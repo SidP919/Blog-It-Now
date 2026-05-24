@@ -241,8 +241,16 @@ export const ABOUT_US_TITLE = 'ABOUT US';
 export const CONTACT_US_TITLE = 'CONTACT US';
 
 // ReadBlogScreen content
-export const READ_BLOG_TITLE = 'READ IT NOW';
+export const READ_BLOG_TITLE = 'Read It Now';
 export const MORE_BLOGS_TITLE = 'More Blogs for you';
+
+// CreateBlogScreen content
+export const CREATE_BLOG_TITLE = 'Create It Now';
+export const CREATE_BLOG_MAIN_TITLE = 'Fill details to create your blog';
+export const CREATE_BLOG_BUTTON_SAVE_PREVIEW = 'Save & Preview';
+export const CREATE_BLOG_BUTTON_SAVE_PUBLISH = 'Save & Publish';
+export const CREATE_BLOG_MANDATORY_FIELDS_MSG =
+  'Please fill all mandatory fields (marked with *) to create your blog!';
 
 // LogoutScreen content
 export const LOGOUT_TITLE = 'LOG OUT';

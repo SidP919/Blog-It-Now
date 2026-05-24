@@ -39,6 +39,7 @@ import {
   SETTINGS_ROUTE,
   DEFAULT_ROUTE,
   READ_BLOG_ROUTE,
+  CREATE_BLOG_ROUTE,
 } from '../utils/constants';
 import {getIsApiLoading} from '../redux/slices/ApiLoadingSlice';
 import ThreeDotsLoader from '../components/ThreeDotsLoader';
@@ -48,6 +49,7 @@ import AboutUsScreen from '../screens/about_us/AboutUsScreen';
 import ContactUsScreen from '../screens/contact_us/ContactUsScreen';
 import useCommonParams from '../hooks/useCommonParams';
 import ReadBlogScreen from '../screens/read_blog/ReadBlogScreen';
+import CreateBlog from '../screens/create_blog/CreateBlog';
 
 const Stack = createStackNavigator();
 
@@ -166,6 +168,15 @@ const AppNavigator = () => {
             headerShown: false,
           }}
         />
+        {isAuthor && (
+          <Stack.Screen
+            name={CREATE_BLOG_ROUTE}
+            component={CreateBlog}
+            options={{
+              headerShown: false,
+            }}
+          />
+        )}
         <Stack.Screen
           name={LOGOUT_ROUTE}
           component={LogoutScreen}

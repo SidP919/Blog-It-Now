@@ -47,6 +47,7 @@ import {
   SETTINGS_ROUTE,
   VERIFY_EMAIL_ROUTE,
   READ_BLOG_ROUTE,
+  CREATE_BLOG_ROUTE,
 } from '../utils/constants';
 import webService from '../services/web-service';
 import RegisterScreen from '../screens/register/RegisterScreen';
@@ -64,6 +65,7 @@ import AboutUsScreen from '../screens/about_us/AboutUsScreen';
 import ContactUsScreen from '../screens/contact_us/ContactUsScreen';
 import useCommonParams from '../hooks/useCommonParams';
 import ReadBlogScreen from '../screens/read_blog/ReadBlogScreen';
+import CreateBlog from '../screens/create_blog/CreateBlog';
 
 const AppNavigator = () => {
   const dispatch = useDispatch();
@@ -175,6 +177,11 @@ const AppNavigator = () => {
           <Route path={`/${SETTINGS_ROUTE}`} element={<SettingsScreen />} />
         ) : (
           <Route path={`/${SETTINGS_ROUTE}`} element={<ForbiddenScreen />} />
+        )}
+        {isAuthor ? (
+          <Route path={`/${CREATE_BLOG_ROUTE}`} end element={<CreateBlog />} />
+        ) : (
+          <Route path={`/${CREATE_BLOG_ROUTE}`} element={<ForbiddenScreen />} />
         )}
         {isLoggedIn ? (
           <Route path={`/${LOGOUT_ROUTE}`} element={<LogoutScreen />} />
