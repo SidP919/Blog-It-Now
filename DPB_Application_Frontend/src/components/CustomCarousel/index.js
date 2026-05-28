@@ -155,18 +155,21 @@ const CustomCarousel = ({
           <FlatList
             data={data}
             style={styles.cardListView}
-            renderItem={({item}) => {
+            renderItem={({item, index}) => {
               return (
                 <RenderItem
                   item={item}
                   itemWidth={itemWidth}
                   setContinueAutoScroll={setContinueAutoScroll}
                   handleOnBlogPress={() => handleOnBlogPress(item)}
+                  index={index}
                 />
               );
             }}
             ItemSeparatorComponent={
-              !ifMobileDevice() && <View style={[styles.itemSeparatorView]} />
+              !(ifMobileDevice() || (isMobileNative && ifTablet())) && (
+                <View style={[styles.itemSeparatorView]} />
+              )
             }
             pagingEnabled
             horizontal
