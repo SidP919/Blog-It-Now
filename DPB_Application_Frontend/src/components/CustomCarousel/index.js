@@ -155,14 +155,14 @@ const CustomCarousel = ({
           <FlatList
             data={data}
             style={styles.cardListView}
-            renderItem={({item, index}) => {
+            renderItem={({item, index: itemIndex}) => {
               return (
                 <RenderItem
                   item={item}
                   itemWidth={itemWidth}
                   setContinueAutoScroll={setContinueAutoScroll}
                   handleOnBlogPress={() => handleOnBlogPress(item)}
-                  index={index}
+                  itemIndex={itemIndex}
                 />
               );
             }}

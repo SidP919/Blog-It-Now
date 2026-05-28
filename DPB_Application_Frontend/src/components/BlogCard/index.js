@@ -23,7 +23,7 @@ const BlogCard = ({
   itemWidth,
   setContinueAutoScroll,
   handleOnBlogPress,
-  index,
+  itemIndex,
 }) => {
   const {
     screenHeight,
@@ -52,7 +52,7 @@ const BlogCard = ({
     mdText,
     smText,
     itemWidth,
-    index,
+    itemIndex,
   );
 
   return (
@@ -156,7 +156,7 @@ const style = (
   mdText,
   smText,
   itemWidth,
-  index,
+  itemIndex,
 ) =>
   StyleSheet.create({
     container: {
@@ -185,7 +185,7 @@ const style = (
           ? 16
           : 0,
       marginEnd:
-        isMobileNative && ifTablet() && (index + 1) % 3 !== 0 ? 16 : null,
+        isMobileNative && ifTablet() && (itemIndex + 1) % 3 !== 0 ? 16 : null,
     },
     imgView: {
       flex: isLandscapeMode && ifWebSmallLandscapeMode() ? null : 1,
