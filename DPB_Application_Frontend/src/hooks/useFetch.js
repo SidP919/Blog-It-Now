@@ -37,13 +37,14 @@ const useFetch = (
   }, [API, dispatch, dispatchMethod, keyName]);
 
   useEffect(() => {
-    if (Array.isArray(currentVal) && currentVal.length === 0) {
+    if (currentVal === null || currentVal === undefined) {
       fetchData();
     }
 
     const dataFetchInterval = setInterval(fetchData, delay);
     return () => clearInterval(dataFetchInterval);
-  }, [currentVal, delay, fetchData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [delay, fetchData]); //adding CurrentVal in dependency array is causing infinite loop of API calls
 
   return {isApiLoading, fetchData};
 };

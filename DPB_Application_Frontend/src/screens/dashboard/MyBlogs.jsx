@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React from 'react';
+import {useSelector} from 'react-redux';
 import {
   getMyBlogsData,
   setMyBlogsData,
@@ -15,22 +15,12 @@ import {
 import CustomCarousel from '../../components/CustomCarousel';
 import BlogCard from '../../components/BlogCard';
 import NoDataView from '../../components/NoDataView';
-import {
-  ifMobileDevice,
-  ifTablet,
-  ifTabletLandscapeMode,
-  logger,
-} from '../../utils/utils';
+import {ifMobileDevice, ifTablet, logger} from '../../utils/utils';
 import TitleView from '../../components/TitleView';
-import {
-  CREATE_BLOG_BTN_TEXT,
-  MY_BLOGS_HEADING,
-  PLEASE_WAIT_TEXT,
-} from '../../utils/content';
+import {CREATE_BLOG_BTN_TEXT, MY_BLOGS_HEADING} from '../../utils/content';
 import useCustomNavigate from '../../hooks/useCustomNavigate';
 import TextWithLink from '../../components/TextWithLink';
 import useFetch from '../../hooks/useFetch';
-import ThreeDotsLoader from '../../components/ThreeDotsLoader';
 import DataRefreshLoader from '../../components/DataRefreshLoader';
 
 const MyBlogs = () => {
@@ -87,7 +77,7 @@ const MyBlogs = () => {
         <TitleView
           title={MY_BLOGS_HEADING}
           textAlign={'left'}
-          count={myBlogs.length}
+          count={myBlogs?.length || 0}
         />
         <TextWithLink
           text={CREATE_BLOG_BTN_TEXT}
