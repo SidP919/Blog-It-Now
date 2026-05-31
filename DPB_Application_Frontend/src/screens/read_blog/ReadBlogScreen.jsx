@@ -1,9 +1,14 @@
 import {Pressable, ScrollView, StyleSheet, Text} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import useCommonParams from '../../hooks/useCommonParams';
 import {READ_BLOG_TITLE} from '../../utils/content';
-import {DEFAULT_ROUTE, READ_BLOG_ROUTE} from '../../utils/constants';
+import {
+  DEFAULT_ROUTE,
+  GET_BLOG_BY_ID,
+  GET_BLOG_FOR_USER,
+  READ_BLOG_ROUTE,
+} from '../../utils/constants';
 import {postAuthScreenStyle} from '../../utils/commonStyles';
 import HeaderWrapper from '../HeaderWrapper';
 import {
@@ -21,6 +26,7 @@ import useCustomNavigate from '../../hooks/useCustomNavigate';
 import {getTopBlogsData} from '../../redux/slices/BlogsDataSlice';
 import MoreBlogs from './MoreBlogs';
 import useCustomRouteParams from '../../hooks/useCustomRouteParams';
+import {debounce} from '../../utils/apiUtils';
 
 const ReadBlogScreen = ({route = null}) => {
   const {
@@ -73,29 +79,42 @@ const ReadBlogScreen = ({route = null}) => {
   const [blogData, setBlogData] = useState(null);
   const [isApiLoading, setIsApiLoading] = useState(false);
 
-  useEffect(() => {
-    if (blog && (!blogData || blog._id !== blogData.id)) {
-      setIsApiLoading(true);
-      webService
-        .getData(`blogs/getBlog/${blog._id}`)
-        .then(response => response.data)
-        .then(data => {
-          setBlogData(data?.blog);
-          logger('blog: data:', data);
-          setIsApiLoading(false);
-        })
-        .catch(err => {
-          logger(`ReadBlogScreen: blogs/getBlog/${blog._id} threw error:`, err);
-          setIsApiLoading(false);
-        });
+  const fetchBlogData = useCallback(async () => {
+    if (!blog?._id) {
+      if (isWeb) {
+        navigate(DEFAULT_ROUTE, {replace: true});
+      }
+      return;
     }
-  }, [blogData, blog]);
+
+    setIsApiLoading(true);
+    try {
+      const endpoint = `${isLoggedIn ? GET_BLOG_FOR_USER : GET_BLOG_BY_ID}/${
+        blog._id
+      }`;
+      const response = await webService.getData(endpoint);
+      setBlogData(response?.data?.blog);
+      logger('ReadBlogScreen: fetched blog data', response?.data);
+    } catch (err) {
+      logger(`ReadBlogScreen: blogs/getBlog/${blog?._id} threw error:`, err);
+    } finally {
+      setIsApiLoading(false);
+    }
+  }, [blog, navigate, isLoggedIn]);
+
+  const debouncedFetchBlogData = useMemo(
+    () => debounce(fetchBlogData, 1000),
+    [fetchBlogData],
+  );
 
   useEffect(() => {
-    if (isWeb && !blog) {
-      navigate(DEFAULT_ROUTE, {replace: true});
+    if (blog && (!blogData || blog._id !== blogData.id)) {
+      debouncedFetchBlogData();
     }
-  }, [blog, navigate]);
+    return () => {
+      debouncedFetchBlogData.cancel?.();
+    };
+  }, [blogData, blog, debouncedFetchBlogData]);
 
   return (
     <HeaderWrapper
@@ -106,8 +125,13 @@ const ReadBlogScreen = ({route = null}) => {
         contentContainerStyle={[styles.screenContent]}
         showsVerticalScrollIndicator={false}>
         <Pressable style={[customStyles.blogScreenContent]}>
-          {blogData && <BlogContent blogData={blogData} />}
-          {topBlogs && blogData && (
+          {blogData && (
+            <BlogContent
+              blogData={blogData}
+              refreshBlog={debouncedFetchBlogData}
+            />
+          )}
+          {blogData && (
             <MoreBlogs
               moreBlogs={topBlogs?.filter(b => b._id !== blogData.id)}
             />

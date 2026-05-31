@@ -73,7 +73,7 @@ const MoreBlogs = ({moreBlogs}) => {
   const [isApiLoading, setIsApiLoading] = useState(false);
 
   useEffect(() => {
-    if (!moreBlogs.length) {
+    if (!moreBlogs?.length) {
       (async () => {
         setIsApiLoading(true);
         await webService

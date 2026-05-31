@@ -229,10 +229,20 @@ const webService = {
     }
   },
 
+  putData: async (API, data) => {
+    try {
+      const response = await axiosInstance.put(API, data).then(res => res);
+      return response;
+    } catch (error) {
+      dispatch(setIsApiLoading(false));
+      throw error;
+    }
+  },
+
   updateData: async (API, id, data) => {
     try {
       const response = await axiosInstance
-        .put(`${API}${id}`, data)
+        .put(`${API}/${id}`, data)
         .then(res => {
           return res;
         });

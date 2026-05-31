@@ -243,6 +243,13 @@ export const CONTACT_US_TITLE = 'CONTACT US';
 // ReadBlogScreen content
 export const READ_BLOG_TITLE = 'Read It Now';
 export const MORE_BLOGS_TITLE = 'More Blogs for you';
+export const LIKE_BTN_TXT = 'Like';
+export const DISLIKE_BTN_TXT = 'Dislike';
+export const LIKES_BTN_TXT = 'Likes';
+export const DISLIKES_BTN_TXT = 'Dislikes';
+export const BLOG_LOGIN_REQ_HD = 'Login Required';
+export const BLOG_LOGIN_REQ_MSG = 'Please login to like/dislike the blog.';
+export const BLOG_HAPPY_READ_MSG = 'Happy read!';
 
 // CreateBlogScreen content
 export const CREATE_BLOG_TITLE = 'Create It Now';

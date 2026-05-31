@@ -26,10 +26,12 @@ export const VERIFY_EMAIL_API = '/auth/verifyEmail';
 // BLOGS APIs:
 export const GET_TOP_BLOGS = '/blogs/getTopBlogs';
 export const GET_MY_BLOGS = '/blogs/getBlogsByAuthor';
-export const GET_BLOG_BY_ID = '/blogs/getBlogById/';
+export const GET_BLOG_BY_ID = '/blogs/getBlog';
+export const GET_BLOG_FOR_USER = '/blogs/getBlogForUser';
 export const CREATE_BLOG_API = '/blogs/createBlog';
-export const PUBLISH_BLOG_API = '/blogs/publishBlog/';
-export const DELETE_BLOG_API = '/blogs/deleteBlog/';
+export const PUBLISH_BLOG_API = '/blogs/publishBlog';
+export const DELETE_BLOG_API = '/blogs/deleteBlog';
+export const LIKE_DISLIKE_BLOG_API = 'blogs/likeDislike';
 // OTHER DATA APIs & constants:
 export const GET_OTHER_DATA = '/otherData/getData';
 export const ANDROID_DOWNLOAD_LINK = 'ANDROID_DOWNLOAD_LINK';

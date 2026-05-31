@@ -17,6 +17,7 @@ import {
   BLOG_CATEGORY_TITLE,
   BLOG_DATE_TITLE,
 } from '../../utils/content';
+import {postAuthScreenStyle} from '../../utils/commonStyles';
 
 const BlogCard = ({
   item,
@@ -38,6 +39,19 @@ const BlogCard = ({
     mdText,
     smText,
   } = useCommonParams();
+
+  const commonStyles = postAuthScreenStyle(
+    screenHeight,
+    screenWidth,
+    theme,
+    isLandscapeMode,
+    Colors,
+    bigSize,
+    mdSize,
+    smSize,
+    mdText,
+    smText,
+  );
 
   const styles = style(
     screenHeight,
@@ -111,14 +125,14 @@ const BlogCard = ({
             {formattedDate(item.lastUpdated)}
           </Text>
         </View>
-        <View style={[styles.likeDislikeView]}>
+        <View style={[commonStyles.likeDislikeView, styles.likeDislikeView]}>
           <Img
             source={LIKE_SOLID_ICON}
             width={16}
             height={16}
             color={Colors.sideBarHeaderLogo[theme]}
           />
-          <Text style={[styles.likeDislikeText]}>
+          <Text style={[commonStyles.likeDislikeText]}>
             {getPrettyNumber(item.likesCount)}
           </Text>
           <Img
@@ -127,7 +141,7 @@ const BlogCard = ({
             height={16}
             color={Colors.sideBarHeaderLogo[theme]}
           />
-          <Text style={[styles.likeDislikeText]}>
+          <Text style={[commonStyles.likeDislikeText]}>
             {getPrettyNumber(item.dislikesCount)}
           </Text>
         </View>
@@ -245,30 +259,10 @@ const style = (
       alignItems: 'center',
     },
     likeDislikeView: {
-      flexDirection: 'row',
-      flexWrap:
-        isLandscapeMode && ifWebSmallLandscapeMode() ? 'wrap' : 'nowrap',
-      maxWidth: 82,
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      paddingVertical: 6,
       position:
         isLandscapeMode && ifWebSmallLandscapeMode() ? 'absolute' : null,
       bottom: isLandscapeMode && ifWebSmallLandscapeMode() ? '10%' : null,
       left: isLandscapeMode && ifWebSmallLandscapeMode() ? '-64%' : null,
-      backgroundColor:
-        isLandscapeMode && ifWebSmallLandscapeMode()
-          ? Colors.bgColor[theme]
-          : null,
       opacity: isLandscapeMode && ifWebSmallLandscapeMode() ? 0.5 : 1,
-      borderRadius: 8,
-    },
-    likeDislikeText: {
-      fontSize: mdSize,
-      fontWeight: '700',
-      fontFamily: FONT_INTER_MEDIUM,
-      textAlign: 'left',
-      color: Colors.title[theme],
-      minWidth: 41,
     },
   });

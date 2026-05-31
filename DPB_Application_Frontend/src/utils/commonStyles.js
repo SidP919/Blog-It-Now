@@ -319,6 +319,28 @@ export const postAuthScreenStyle = (
         },
       }),
     },
+    likeDislikeView: {
+      flexDirection: 'row',
+      flexWrap:
+        isLandscapeMode && ifWebSmallLandscapeMode() ? 'wrap' : 'nowrap',
+      maxWidth: 82,
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      paddingVertical: 6,
+      backgroundColor:
+        isLandscapeMode && ifWebSmallLandscapeMode()
+          ? Colors.bgColor[theme]
+          : null,
+      borderRadius: 8,
+    },
+    likeDislikeText: {
+      fontSize: mdSize,
+      fontWeight: '700',
+      fontFamily: FONT_INTER_MEDIUM,
+      textAlign: 'left',
+      color: Colors.title[theme],
+      minWidth: 41,
+    },
   });
 
 export const nativeAppLinksStyle = (
