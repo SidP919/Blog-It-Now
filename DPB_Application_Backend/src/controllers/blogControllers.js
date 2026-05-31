@@ -375,6 +375,12 @@ const getBlogById = async (req, res) => {
       });
     }
 
+     // Check if current user has liked this blog
+    const user = req.user;
+    const userLiked = user ? blog.likes.includes(user._id) : false;
+    const userDisliked = user ? blog.dislikes.includes(user._id) : false;
+
+
     blog = {
       id: blog._id,
       title: blog.title,
@@ -391,6 +397,8 @@ const getBlogById = async (req, res) => {
       tags: blog.tags,
       createdAt: blog.createdAt,
       updatedAt: blog.updatedAt,
+      liked: userLiked,
+      disliked: userDisliked,
     };
 
     res.status(200).json({
