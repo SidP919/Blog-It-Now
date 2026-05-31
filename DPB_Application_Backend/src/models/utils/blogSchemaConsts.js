@@ -1,9 +1,9 @@
 const BLOG_SCHEMA_CONSTS = Object.freeze({
   TITLE_MAX_LENGTH: 100,
   TITLE_MIN_LENGTH: 4,
-  CONTENT_MAX_LENGTH: 6000,
+  CONTENT_MAX_LENGTH: 10000,
   CONTENT_MIN_LENGTH: 150,
-  THUMBNAIL_MAX_LENGTH: 500,
+  THUMBNAIL_MAX_LENGTH: 1000,
   BLOG_CATEGORIES: [
     "Application Development",
     "AI/ML",
@@ -24,6 +24,7 @@ const BLOG_SCHEMA_CONSTS = Object.freeze({
     "Sciences",
     "Sports",
     "Entertainment",
+    "Astrophysics",
     "Other",
   ].map(c => c.toLowerCase()),
   COMMENT_MAX_LENGTH: 150,
