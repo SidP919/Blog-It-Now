@@ -1,5 +1,7 @@
 const Blog = require("../models/blogSchema");
 const User = require("../models/userSchema");
+const Comment = require("../models/commentSchema");
+const Reply = require("../models/replySchema");
 const { logger } = require("../utils/logger");
 const markdown = require("markdown-it")();
 
@@ -26,21 +28,25 @@ const createBlog = async (req, res) => {
       });
     }
 
-    const rawTags =
-      Array.isArray(tags) ? tags :
-      typeof tags === 'string' ? tags.split(',') :
-      [];
+    const rawTags = Array.isArray(tags)
+      ? tags
+      : typeof tags === "string"
+        ? tags.split(",")
+        : [];
 
-    const transformedTags = rawTags.length > 0
-      ? [...new Set(
-          rawTags
-            .map(tag => {
-              const value = tag ? String(tag).toLowerCase().trim() : '';
-              return value.length > 32 ? value.slice(0, 32) : value;
-            })
-            .filter(Boolean),
-        )]
-      : [category.toLowerCase()];
+    const transformedTags =
+      rawTags.length > 0
+        ? [
+            ...new Set(
+              rawTags
+                .map((tag) => {
+                  const value = tag ? String(tag).toLowerCase().trim() : "";
+                  return value.length > 32 ? value.slice(0, 32) : value;
+                })
+                .filter(Boolean),
+            ),
+          ]
+        : [category.toLowerCase()];
 
     if (!transformedTags.includes(category.toLowerCase())) {
       transformedTags.unshift(category.toLowerCase());
@@ -375,7 +381,7 @@ const getBlogById = async (req, res) => {
       });
     }
 
-     // Check if current user has liked this blog
+    // Check if current user has liked this blog
     const user = req.user;
     const userLiked = user ? blog.likes.includes(user._id) : false;
     const userDisliked = user ? blog.dislikes.includes(user._id) : false;
@@ -444,11 +450,13 @@ const likeDislike = async (req, res) => {
       target = await Blog.findById(targetId);
     } else if (targetType?.toLowerCase() === "comment") {
       target = await Comment.findById(targetId);
+    } else if (targetType?.toLowerCase() === "reply") {
+      target = await Reply.findById(targetId);
     } else {
       return res.status(400).json({
         success: false,
         message:
-          'You are trying to like/dislike an unknown entity! Use "blog" or "comment".',
+          'You are trying to like/dislike an unknown entity! Use "blog", "comment" or "reply".',
       });
     }
 
@@ -465,13 +473,13 @@ const likeDislike = async (req, res) => {
         target.likes.push(user._id);
         // Remove user from dislikes if present
         target.dislikes = target.dislikes.filter(
-          (userId) => userId.toString() !== user._id.toString()
+          (userId) => userId.toString() !== user._id.toString(),
         );
         actionStr = action + "d";
       } else {
         // if already liked and want to remove the like
         target.likes = target.likes.filter(
-          (userId) => userId.toString() !== user._id.toString()
+          (userId) => userId.toString() !== user._id.toString(),
         );
         actionStr = "removed the " + action + " on";
       }
@@ -481,13 +489,13 @@ const likeDislike = async (req, res) => {
         target.dislikes.push(user._id);
         // Remove user from likes if present
         target.likes = target.likes.filter(
-          (userId) => userId.toString() !== user._id.toString()
+          (userId) => userId.toString() !== user._id.toString(),
         );
         actionStr = action + "d";
       } else {
         // if already disliked and want to remove the dislike
         target.dislikes = target.dislikes.filter(
-          (userId) => userId.toString() !== user._id.toString()
+          (userId) => userId.toString() !== user._id.toString(),
         );
         actionStr = "removed the " + action + " on";
       }
@@ -510,7 +518,7 @@ const likeDislike = async (req, res) => {
     console.error(error);
     res.status(405).json({
       success: false,
-      message: "Error occurred while liking/disliking blog/comment!",
+      message: "Error occurred while liking/disliking blog/comment/reply!",
     });
   }
 };

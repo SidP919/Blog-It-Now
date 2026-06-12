@@ -15,6 +15,8 @@ const {
   createComment,
   editComment,
   getCommentsForBlog,
+  getRepliesForComment,
+  createReply,
   deleteComment,
 } = require("../controllers/commentControllers");
 const {
@@ -62,6 +64,12 @@ router.post(
   isVerifiedUser,
   createComment
 );
+router.post(
+  "/createReply/:commentId",
+  authenticate,
+  isVerifiedUser,
+  createReply
+);
 router.put(
   "/editComment/:commentId",
   authenticate,
@@ -75,6 +83,7 @@ router.delete(
   deleteComment
 );
 router.get("/getComments/:blogId", getCommentsForBlog);
+router.get("/getReplies/:commentId", getRepliesForComment);
 
 // filter blogs routes
 router.get("/getBlogs/:sortBy", getSortedBlogs);
