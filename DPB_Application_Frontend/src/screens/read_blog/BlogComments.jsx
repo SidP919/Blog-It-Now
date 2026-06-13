@@ -57,6 +57,7 @@ import {
   REPLIES_TITLE,
   REPLY_REQ_MSG,
   REPLY_TITLE,
+  TOTAL,
   UNKNOWN,
   VIEW_BTN_TXT,
 } from '../../utils/content';
@@ -513,7 +514,11 @@ const BlogComments = forwardRef(({blogId, refreshBlog}, ref) => {
         {commentReplies.expanded && (
           <View style={customStyles.repliesSection}>
             {commentReplies.loading && (
-              <ThreeDotsLoader theme={theme} hideBrand={true} />
+              <ThreeDotsLoader
+                theme={theme}
+                hideBrand={true}
+                placement="flex-end"
+              />
             )}
 
             {activeReplyCommentId === (comment.id || comment._id) && (
@@ -621,7 +626,7 @@ const BlogComments = forwardRef(({blogId, refreshBlog}, ref) => {
     <View style={[styles.sectionContainer, customStyles.commentsContainer]}>
       <View style={customStyles.headerRow}>
         <Text style={[styles.sectionTitle, customStyles.commentsTitle]}>
-          {`${COMMENTS_TITLE} (` + (totalComments || 0) + ')'}
+          {`${TOTAL} ${COMMENTS_TITLE} (` + (totalComments || 0) + ')'}
         </Text>
         <View style={customStyles.sortWrapper}>
           {SORT_OPTIONS.map(option => (
@@ -671,7 +676,7 @@ const BlogComments = forwardRef(({blogId, refreshBlog}, ref) => {
           data={comments}
           renderItem={renderComment}
           keyExtractor={item => item.id || item._id}
-          scrollEnabled={false}
+          scrollEnabled={true}
           nestedScrollEnabled
           removeClippedSubviews={false}
           initialNumToRender={comments.length || COMMENTS_PAGE_SIZE}
@@ -762,7 +767,7 @@ const style = (
       color: Colors.btnText[theme],
     },
     sortButtonTextActive: {
-      color: Colors.btnText[theme],
+      color: Colors.iconOnBgColor[theme],
       fontWeight: '700',
     },
     commentInputContainer: {
@@ -778,7 +783,7 @@ const style = (
     },
     commentInput: {
       flex: 1,
-      minHeight: ifMobileDevice() ? 60 : 172,
+      minHeight: 120,
       borderColor: Colors.border[theme],
       borderWidth: 1,
       borderRadius: 12,
@@ -788,6 +793,7 @@ const style = (
       maxWidth: '100%',
       fontSize: smText,
       color: Colors.inputText[theme],
+      textAlignVertical: 'center',
     },
     addButtonWrapper: {
       width: '100%',
@@ -909,7 +915,7 @@ const style = (
     },
     replyInput: {
       width: '100%',
-      minHeight: ifMobileDevice() ? 50 : 60,
+      minHeight: 100,
       borderColor: Colors.border[theme],
       borderWidth: 1,
       borderRadius: 12,

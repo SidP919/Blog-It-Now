@@ -2,7 +2,13 @@ import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import useCommonParams from '../../hooks/useCommonParams';
-import {PLEASE_WAIT_TEXT, READ_BLOG_TITLE} from '../../utils/content';
+import {
+  COMMENTS_TITLE,
+  PLEASE_WAIT_TEXT,
+  READ_BLOG_TITLE,
+  READ_MORE_BLOGS,
+  SECTION,
+} from '../../utils/content';
 import {
   DEFAULT_ROUTE,
   GET_BLOG_BY_ID,
@@ -30,6 +36,8 @@ import useCustomRouteParams from '../../hooks/useCustomRouteParams';
 import {debounce} from '../../utils/apiUtils';
 import ThreeDotsLoader from '../../components/ThreeDotsLoader';
 import BlogComments from './BlogComments';
+import Img from '../../components/Img';
+import {DOWN_ARROW, UP_ARROW} from '../../utils/images';
 
 const ReadBlogScreen = ({route = null}) => {
   const {
@@ -83,6 +91,11 @@ const ReadBlogScreen = ({route = null}) => {
   const [isApiLoading, setIsApiLoading] = useState(false);
 
   const commentsRef = useRef(null);
+  const isCollapsible =
+    ((ifMobileDevice() || isMobileNative) && !isLandscapeMode) ||
+    ifWebSmallLandscapeMode();
+  const [showMoreBlogs, setShowMoreBlogs] = useState(!isCollapsible);
+  const [showComments, setShowComments] = useState(!isCollapsible);
 
   const fetchBlogData = useCallback(async () => {
     if (!blog?._id) {
@@ -161,15 +174,76 @@ const ReadBlogScreen = ({route = null}) => {
               refreshBlog={debouncedFetchBlogData}
               commentsRef={commentsRef}
             />
-            <MoreBlogs
-              moreBlogs={topBlogs?.filter(b => b._id !== blogData?.id)}
-            />
-            {!isLandscapeMode && !ifWebLargeLandscapeMode() && (
-              <BlogComments
-                blogId={blogData?.id}
-                refreshBlog={debouncedFetchBlogData}
-                ref={commentsRef}
+            {(!isLandscapeMode && !ifWebLargeLandscapeMode()) ||
+            ifWebSmallLandscapeMode() ? (
+              <>
+                <Pressable
+                  onPress={() => setShowMoreBlogs(s => !s)}
+                  style={[customStyles.sectionContainer]}>
+                  <Text
+                    style={[styles.sectionTitle, customStyles.sectionTitle]}>
+                    {READ_MORE_BLOGS}
+                  </Text>
+                  {showMoreBlogs ? (
+                    <Img
+                      source={DOWN_ARROW}
+                      size={20}
+                      color={Colors.title[theme]}
+                    />
+                  ) : (
+                    <Img
+                      source={UP_ARROW}
+                      size={20}
+                      color={Colors.title[theme]}
+                    />
+                  )}
+                </Pressable>
+                {showMoreBlogs && (
+                  <MoreBlogs
+                    moreBlogs={topBlogs?.filter(b => b._id !== blogData?.id)}
+                  />
+                )}
+              </>
+            ) : (
+              <MoreBlogs
+                moreBlogs={topBlogs?.filter(b => b._id !== blogData?.id)}
               />
+            )}
+            {((!isLandscapeMode && !ifWebLargeLandscapeMode()) ||
+              ifWebSmallLandscapeMode()) && (
+              <>
+                <Pressable
+                  onPress={() => setShowComments(s => !s)}
+                  style={[
+                    customStyles.sectionContainer,
+                    !showComments ? customStyles.commentsHidden : null,
+                  ]}>
+                  <Text
+                    style={[styles.sectionTitle, customStyles.sectionTitle]}>
+                    {COMMENTS_TITLE} {SECTION}
+                  </Text>
+                  {showComments ? (
+                    <Img
+                      source={DOWN_ARROW}
+                      size={20}
+                      color={Colors.title[theme]}
+                    />
+                  ) : (
+                    <Img
+                      source={UP_ARROW}
+                      size={20}
+                      color={Colors.title[theme]}
+                    />
+                  )}
+                </Pressable>
+                {showComments && (
+                  <BlogComments
+                    blogId={blogData?.id}
+                    refreshBlog={debouncedFetchBlogData}
+                    ref={commentsRef}
+                  />
+                )}
+              </>
             )}
           </Pressable>
         )}
@@ -288,5 +362,23 @@ const style = (
       textAlign: 'left',
       color: Colors.title[theme],
       minWidth: 41,
+    },
+    sectionContainer: {
+      width: screenWidth * 0.94,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 14,
+      color: Colors.btnText[theme],
+      backgroundColor: Colors.btnBgColor[theme],
+      borderColor: Colors.border[theme],
+      borderWidth: 2,
+      marginBottom: 24,
+    },
+    commentsHidden: {
+      marginBottom: 32,
+    },
+    sectionTitle: {
+      textDecorationLine: 'none',
     },
   });

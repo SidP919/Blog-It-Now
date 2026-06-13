@@ -11,6 +11,7 @@ const ThreeDotsLoader = ({
   size = null,
   loaderMsg = null,
   hideBrand = false,
+  placement = 'center',
 }) => {
   const {Colors, bigSize, mdSize, smSize, mdText, smText} = useCommonParams();
   const styles = style(
@@ -23,6 +24,7 @@ const ThreeDotsLoader = ({
     smSize,
     mdText,
     smText,
+    placement,
   );
   const [dotOne] = useState(new Animated.Value(0));
   const [dotTwo] = useState(new Animated.Value(0));
@@ -156,13 +158,14 @@ const style = (
   smSize,
   mdText,
   smText,
+  placement,
 ) =>
   StyleSheet.create({
     apiLoaderView: {
       position: 'absolute',
       width: '100%',
       height: '100%',
-      justifyContent: 'center',
+      justifyContent: placement,
       alignItems: 'center',
       backgroundColor: Colors.bgColor[theme],
       zIndex: 3,

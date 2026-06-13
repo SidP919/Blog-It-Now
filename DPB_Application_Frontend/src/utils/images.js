@@ -33,3 +33,5 @@ export const DISLIKE_SOLID_ICON = require('../assets/solid_dislike.png');
 export const BLOG_BG = require('../assets/blog_bg.png');
 export const RIGHT_PLAY_ICON = require('../assets/right_play.png');
 export const LEFT_PLAY_ICON = require('../assets/left_play.png');
+export const DOWN_ARROW = require('../assets/down_arrow.png');
+export const UP_ARROW = require('../assets/up_arrow.png');

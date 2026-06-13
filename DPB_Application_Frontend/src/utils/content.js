@@ -243,6 +243,7 @@ export const CONTACT_US_TITLE = 'CONTACT US';
 // ReadBlogScreen content
 export const READ_BLOG_TITLE = 'Read It Now';
 export const MORE_BLOGS_TITLE = 'More Blogs for you';
+export const READ_MORE_BLOGS = 'Read More Blogs';
 export const LIKE_BTN_TXT = 'Like';
 export const DISLIKE_BTN_TXT = 'Dislike';
 export const LIKES_BTN_TXT = 'Likes';
@@ -252,6 +253,8 @@ export const MOST_RECENT = 'Most recent';
 export const COMMENT_TITLE = 'Comment';
 export const REPLY_TITLE = 'Reply';
 export const COMMENTS_TITLE = 'Comments';
+export const SECTION = 'Section';
+export const TOTAL = 'Total';
 export const REPLIES_TITLE = 'Replies';
 export const BLOG_LOGIN_REQ_HD = 'Login Required';
 export const BLOG_LOGIN_REQ_MSG = 'Please login to perform this action.';
