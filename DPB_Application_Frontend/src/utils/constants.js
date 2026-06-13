@@ -32,6 +32,10 @@ export const CREATE_BLOG_API = '/blogs/createBlog';
 export const PUBLISH_BLOG_API = '/blogs/publishBlog';
 export const DELETE_BLOG_API = '/blogs/deleteBlog';
 export const LIKE_DISLIKE_BLOG_API = 'blogs/likeDislike';
+export const GET_COMMENTS_API = '/blogs/getComments';
+export const GET_REPLIES_API = '/blogs/getReplies';
+export const CREATE_COMMENT_API = '/blogs/createComment';
+export const CREATE_REPLY_API = '/blogs/createReply';
 // OTHER DATA APIs & constants:
 export const GET_OTHER_DATA = '/otherData/getData';
 export const ANDROID_DOWNLOAD_LINK = 'ANDROID_DOWNLOAD_LINK';
@@ -87,3 +91,6 @@ export const DATA_REFRESH_MSG_ARR = [
   "It's taking longer than expected",
   'Please make sure you have a stable internet connection',
 ];
+// ReadBlogScreen:
+export const COMMENTS_PAGE_SIZE = 10;
+export const REPLIES_PAGE_SIZE = 5;

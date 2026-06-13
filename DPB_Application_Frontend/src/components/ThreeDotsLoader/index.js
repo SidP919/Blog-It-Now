@@ -6,7 +6,12 @@ import Img from '../Img';
 import {BRAND_ICON} from '../../utils/images';
 import useCommonParams from '../../hooks/useCommonParams';
 
-const ThreeDotsLoader = ({theme, size = null, loaderMsg = null}) => {
+const ThreeDotsLoader = ({
+  theme,
+  size = null,
+  loaderMsg = null,
+  hideBrand = false,
+}) => {
   const {Colors, bigSize, mdSize, smSize, mdText, smText} = useCommonParams();
   const styles = style(
     theme,
@@ -88,12 +93,14 @@ const ThreeDotsLoader = ({theme, size = null, loaderMsg = null}) => {
 
   return (
     <View style={[styles.apiLoaderView]}>
-      <Img
-        source={BRAND_ICON}
-        width={bigSize * 6} //152
-        height={bigSize * 4} //106
-        color={Colors.dotOneColor[theme]}
-      />
+      {!hideBrand && (
+        <Img
+          source={BRAND_ICON}
+          width={bigSize * 6} //152
+          height={bigSize * 4} //106
+          color={Colors.dotOneColor[theme]}
+        />
+      )}
       <View style={[styles.dotsContainer]}>
         <Text style={[loaderMsg && styles.loaderTitle]}>{loaderMsg}</Text>
         <Animated.View

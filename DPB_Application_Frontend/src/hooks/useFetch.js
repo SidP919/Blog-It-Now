@@ -41,7 +41,9 @@ const useFetch = (
       fetchData();
     }
 
-    const dataFetchInterval = setInterval(fetchData, delay);
+    const randomInterval =
+      Math.floor(Math.random() * (delay + 5000 - delay + 1)) + delay;
+    const dataFetchInterval = setInterval(fetchData, randomInterval);
     return () => clearInterval(dataFetchInterval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delay, fetchData]); //adding CurrentVal in dependency array is causing infinite loop of API calls

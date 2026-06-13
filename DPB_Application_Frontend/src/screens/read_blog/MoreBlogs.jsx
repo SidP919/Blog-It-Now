@@ -126,7 +126,7 @@ const MoreBlogs = ({moreBlogs}) => {
               item={item}
               itemWidth={
                 isLandscapeMode && !ifWebSmallLandscapeMode()
-                  ? screenWidth * 0.3
+                  ? screenWidth * 0.3 - 24
                   : isMobileNative && ifMobileDevice()
                   ? screenWidth - 64
                   : screenWidth * 0.9
@@ -165,7 +165,7 @@ const style = (
     relatedBlogsContainer: {
       width:
         isLandscapeMode && !ifWebSmallLandscapeMode()
-          ? screenWidth * 0.32
+          ? screenWidth * 0.32 - 24
           : screenWidth * 0.94,
       alignItems:
         isLandscapeMode && !ifWebSmallLandscapeMode() ? 'flex-start' : 'center',
@@ -177,7 +177,7 @@ const style = (
     cardListView: {
       width:
         isLandscapeMode && !ifWebSmallLandscapeMode()
-          ? screenWidth * 0.318
+          ? '100%'
           : screenWidth * 0.94,
       marginBottom: 8,
     },

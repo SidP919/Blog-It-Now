@@ -168,7 +168,7 @@ export const YOU_TEXT = 'You😊 ';
 export const DEFAULT_WELCOME_QUOTE = `❝ Never Forget This. Yes. That You Are Unstoppable.❞ – ${DEVELOPER_NAME}`;
 export const BLOG_AUTHOR_TITLE = 'Author: ';
 export const BLOG_CATEGORY_TITLE = 'Category: ';
-export const BLOG_DATE_TITLE = 'Last Updated: ';
+export const BLOG_DATE_TITLE = 'Publish Date: ';
 export const TOP_BLOGS_TITLE = 'Our Top Blogs';
 
 // DashboardScreen content
@@ -247,9 +247,28 @@ export const LIKE_BTN_TXT = 'Like';
 export const DISLIKE_BTN_TXT = 'Dislike';
 export const LIKES_BTN_TXT = 'Likes';
 export const DISLIKES_BTN_TXT = 'Dislikes';
+export const MOST_LIKED = 'Most liked';
+export const MOST_RECENT = 'Most recent';
+export const COMMENT_TITLE = 'Comment';
+export const REPLY_TITLE = 'Reply';
+export const COMMENTS_TITLE = 'Comments';
+export const REPLIES_TITLE = 'Replies';
 export const BLOG_LOGIN_REQ_HD = 'Login Required';
-export const BLOG_LOGIN_REQ_MSG = 'Please login to like/dislike the blog.';
+export const BLOG_LOGIN_REQ_MSG = 'Please login to perform this action.';
+export const UNKNOWN = 'Unknown';
+export const COMMENT_REQ_MSG = 'Please enter a comment before adding.';
+export const REPLY_REQ_MSG = 'Please enter a reply before adding.';
 export const BLOG_HAPPY_READ_MSG = 'Happy read!';
+export const HIDE_REPLIES_BTN_TXT = 'Hide Replies';
+export const VIEW_BTN_TXT = 'View';
+export const LD_MORE_REPLIES_BTN_TXT = 'Load more replies';
+export const ADD_REPLY_PLACEHOLDER = 'Add a reply...';
+export const ADDING_BTN_TXT = 'Adding...';
+export const ADD_REPLY_BTN_TXT = 'Add Reply';
+export const ADD_COMMENT_BTN_TXT = 'Add Comment';
+export const NO_REPLIES_YET = 'No replies yet.';
+export const NO_COMMENTS_YET = 'Be the first to add a comment.';
+export const ADD_COMMENT_PLACEHOLDER = 'Add a public comment...';
 
 // CreateBlogScreen content
 export const CREATE_BLOG_TITLE = 'Create It Now';

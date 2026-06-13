@@ -4,7 +4,12 @@ import useCommonParams from '../../hooks/useCommonParams';
 import TitleThumbnail from '../../components/TitleThumbnail';
 import HtmlRenderer from '../../components/HtmlRenderer';
 import {postAuthScreenStyle} from '../../utils/commonStyles';
-import {ifWebSmallLandscapeMode, logger, GENERIC} from '../../utils/utils';
+import {
+  ifWebSmallLandscapeMode,
+  logger,
+  GENERIC,
+  ifWebLargeLandscapeMode,
+} from '../../utils/utils';
 import {formattedDate} from '../../utils/jsUtils';
 import {
   BLOG_AUTHOR_TITLE,
@@ -30,12 +35,11 @@ import useCustomNavigate from '../../hooks/useCustomNavigate';
 import webService, {showCustomAlert} from '../../services/web-service';
 import {LIKE_DISLIKE_BLOG_API} from '../../utils/constants';
 
-const BlogContent = ({blogData, refreshBlog}) => {
+const BlogContent = ({blogData, refreshBlog, commentsRef}) => {
   const {
     screenHeight,
     screenWidth,
     theme,
-    appColor,
     isLandscapeMode,
     isLoggedIn,
     Colors,
@@ -90,13 +94,6 @@ const BlogContent = ({blogData, refreshBlog}) => {
       return;
     }
 
-    // if (
-    //   (action === 'like' && isLiked) ||
-    //   (action === 'dislike' && isDisliked)
-    // ) {
-    //   return;
-    // }
-
     setIsProcessing(true);
     try {
       await webService.putData(LIKE_DISLIKE_BLOG_API, {
@@ -138,7 +135,7 @@ const BlogContent = ({blogData, refreshBlog}) => {
         <View style={customStyles.blogInfoDetailsView}>
           {[
             `${BLOG_AUTHOR_TITLE}${blogData?.author}`,
-            `${BLOG_DATE_TITLE} ${formattedDate(blogData?.updatedAt)}`,
+            `${BLOG_DATE_TITLE} ${formattedDate(blogData?.createdAt)}`,
             `${BLOG_CATEGORY_TITLE}${blogData?.category?.toUpperCase()}`,
             BLOG_HAPPY_READ_MSG,
           ].map((text, i) => (
@@ -190,7 +187,13 @@ const BlogContent = ({blogData, refreshBlog}) => {
           contentWidth={customStyles.blogContentView.width}
         />
       </View>
-      <BlogComments blogData={blogData} />
+      {isLandscapeMode && ifWebLargeLandscapeMode() && (
+        <BlogComments
+          blogId={blogId}
+          refreshBlog={refreshBlog}
+          ref={commentsRef}
+        />
+      )}
     </View>
   );
 };
@@ -214,7 +217,7 @@ const style = (
     blogSecContainer: {
       width:
         isLandscapeMode && !ifWebSmallLandscapeMode()
-          ? screenWidth * 0.64
+          ? screenWidth * 0.64 - 24
           : screenWidth * 0.94,
       alignItems:
         isLandscapeMode && !ifWebSmallLandscapeMode() ? 'flex-start' : 'center',
@@ -267,9 +270,6 @@ const style = (
       flexWrap: 'wrap',
       alignItems: 'flex-end',
       justifyContent: 'flex-end',
-      // borderColor: Colors.border[theme],
-      // borderWidth: isLandscapeMode ? 3 : 2,
-      // borderRadius: 24,
       overflow: 'hidden',
       marginBottom: 8,
       paddingVertical: 8,

@@ -39,12 +39,16 @@ export function getPrettyNumber(value) {
 }
 
 export function formattedDate(inputDate) {
-  return new Date(inputDate).toLocaleDateString(['en-GB', 'en-US'], {
-    day: 'numeric',
-    month: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    timeZoneName: 'shortGeneric',
-  });
+  return new Date(inputDate)
+    .toLocaleDateString(['en-GB', 'en-US'], {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true, // for am/pm format
+    })
+    .replace(',', '')
+    .replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$1-$2-$3')
+    .toUpperCase();
 }

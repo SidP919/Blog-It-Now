@@ -11,6 +11,8 @@ const ButtonA = ({
   title = DEFAULT_BTN_TEXT,
   border = null,
   customStyle = null,
+  isDisabled = false,
+  size = 'md',
 }) => {
   const {bigSize, mdSize, smSize, mdText, smText} = useCommonParams();
   const styles = style(
@@ -23,6 +25,7 @@ const ButtonA = ({
     smSize,
     mdText,
     smText,
+    size,
   );
   const [isPressed, setIsPressed] = useState(false);
 
@@ -35,6 +38,7 @@ const ButtonA = ({
   };
   return (
     <Pressable
+      disabled={isDisabled}
       onPress={func}
       style={[styles.buttonView, isPressed && styles.btnHover]}
       onPressIn={handlePressIn}
@@ -54,11 +58,12 @@ const style = (
   smSize,
   mdText,
   smText,
+  size,
 ) =>
   StyleSheet.create({
     buttonView: {
-      paddingHorizontal: 16,
-      paddingVertical: 12,
+      paddingHorizontal: size === 'md' ? mdText : smText,
+      paddingVertical: smText,
       marginVertical: 8,
       marginHorizontal: 8,
       borderRadius: 14,
@@ -70,7 +75,7 @@ const style = (
       ...customStyle,
     },
     buttonText: {
-      fontSize: mdText,
+      fontSize: size === 'md' ? mdText : smText,
       fontWeight: '700',
       fontFamily: FONT_INTER_BOLD,
       color: color,

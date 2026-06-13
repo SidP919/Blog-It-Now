@@ -1,8 +1,8 @@
-import {Pressable, ScrollView, StyleSheet, Text} from 'react-native';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import useCommonParams from '../../hooks/useCommonParams';
-import {READ_BLOG_TITLE} from '../../utils/content';
+import {PLEASE_WAIT_TEXT, READ_BLOG_TITLE} from '../../utils/content';
 import {
   DEFAULT_ROUTE,
   GET_BLOG_BY_ID,
@@ -14,6 +14,7 @@ import HeaderWrapper from '../HeaderWrapper';
 import {
   ifMobileDevice,
   ifTablet,
+  ifWebLargeLandscapeMode,
   ifWebSmallLandscapeMode,
   isMobileNative,
   isWeb,
@@ -27,6 +28,8 @@ import {getTopBlogsData} from '../../redux/slices/BlogsDataSlice';
 import MoreBlogs from './MoreBlogs';
 import useCustomRouteParams from '../../hooks/useCustomRouteParams';
 import {debounce} from '../../utils/apiUtils';
+import ThreeDotsLoader from '../../components/ThreeDotsLoader';
+import BlogComments from './BlogComments';
 
 const ReadBlogScreen = ({route = null}) => {
   const {
@@ -79,6 +82,8 @@ const ReadBlogScreen = ({route = null}) => {
   const [blogData, setBlogData] = useState(null);
   const [isApiLoading, setIsApiLoading] = useState(false);
 
+  const commentsRef = useRef(null);
+
   const fetchBlogData = useCallback(async () => {
     if (!blog?._id) {
       if (isWeb) {
@@ -86,7 +91,6 @@ const ReadBlogScreen = ({route = null}) => {
       }
       return;
     }
-
     setIsApiLoading(true);
     try {
       const endpoint = `${isLoggedIn ? GET_BLOG_FOR_USER : GET_BLOG_BY_ID}/${
@@ -109,6 +113,13 @@ const ReadBlogScreen = ({route = null}) => {
 
   useEffect(() => {
     if (blog && (!blogData || blog._id !== blogData.id)) {
+      logger(
+        'ReadBlogScreen: blog or blogData changed, fetching blog data...',
+        {
+          blog,
+          blogData,
+        },
+      );
       debouncedFetchBlogData();
     }
     return () => {
@@ -123,20 +134,45 @@ const ReadBlogScreen = ({route = null}) => {
       isApiLoading={isApiLoading}>
       <ScrollView
         contentContainerStyle={[styles.screenContent]}
-        showsVerticalScrollIndicator={false}>
-        <Pressable style={[customStyles.blogScreenContent]}>
-          {blogData && (
+        showsVerticalScrollIndicator={true}
+        scrollEventThrottle={200}
+        onScroll={e => {
+          const {layoutMeasurement, contentOffset, contentSize} = e.nativeEvent;
+          const paddingToBottom = 60; // tweak as needed
+          if (
+            layoutMeasurement.height + contentOffset.y >=
+            contentSize.height - paddingToBottom
+          ) {
+            commentsRef.current?.loadMoreComments?.();
+          }
+        }}>
+        {!blogData ? (
+          <View style={styles.apiLoadingView}>
+            <ThreeDotsLoader
+              theme={theme}
+              size={smText}
+              loaderMsg={PLEASE_WAIT_TEXT}
+            />
+          </View>
+        ) : (
+          <Pressable style={[customStyles.blogScreenContent]}>
             <BlogContent
               blogData={blogData}
               refreshBlog={debouncedFetchBlogData}
+              commentsRef={commentsRef}
             />
-          )}
-          {blogData && (
             <MoreBlogs
-              moreBlogs={topBlogs?.filter(b => b._id !== blogData.id)}
+              moreBlogs={topBlogs?.filter(b => b._id !== blogData?.id)}
             />
-          )}
-        </Pressable>
+            {!isLandscapeMode && !ifWebLargeLandscapeMode() && (
+              <BlogComments
+                blogId={blogData?.id}
+                refreshBlog={debouncedFetchBlogData}
+                ref={commentsRef}
+              />
+            )}
+          </Pressable>
+        )}
       </ScrollView>
     </HeaderWrapper>
   );
@@ -179,11 +215,18 @@ const style = (
       marginRight: isMobileNative && ifMobileDevice() ? 32 : null,
     },
     blogScreenContent: {
-      width: screenWidth,
+      width:
+        isLandscapeMode && !ifWebSmallLandscapeMode()
+          ? screenWidth - 48
+          : screenWidth,
       flexDirection: 'row',
-      justifyContent: 'space-evenly',
+      justifyContent:
+        isLandscapeMode && !ifWebSmallLandscapeMode()
+          ? 'space-between'
+          : 'center',
       flexWrap: 'wrap',
       marginTop: 8,
+      marginHorizontal: isLandscapeMode && !ifWebSmallLandscapeMode() ? 24 : 0,
     },
     infoView: {
       width: isLandscapeMode && ifWebSmallLandscapeMode() ? '60%' : '100%',
